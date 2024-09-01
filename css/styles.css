@@ -1,6 +1,7 @@
 /* テキスト用CSS */
 *{
-  font-family:"ＭＳ Ｐゴシック",sans-serif;
+  font-family: "misaki_gothic_2nd";
+  image-rendering: pixelated;
 }
 
 .center-text {
@@ -149,4 +150,46 @@ input[type=radio] {
   width: 100%;  /* 幅を全体に広げる */
   height: 100%; /* 高さを全体に広げる */
   pointer-events: none; /* 他の要素の操作を妨げないようにする */
+}
+
+/* ゲームっぽいテーブルスタイル */
+.table-game {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+  font-family: 'Press Start 2P', cursive; /* ゲームっぽいフォント */
+}
+
+.table-game th, .table-game td {
+  border: 2px solid #444;
+  padding: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+.table-game th {
+  background-color: #333;
+  font-size: 1.2em;
+}
+
+.table-game td {
+  background-color: #222;
+}
+
+.table-game tr:nth-child(even) td {
+  background-color: #333;
+}
+
+.table-game tr:hover td {
+  background-color: #555;
+}
+
+.table-game h2 {
+  font-family: 'Press Start 2P', cursive;
+  color: #eee;
+  text-align: center;
+}
+
+.center-text {
+  text-align: center;
 }
