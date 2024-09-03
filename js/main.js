@@ -51,8 +51,8 @@ function createDisplay(mode) {
     tag += '         <thead>';
     tag += '             <tr>';
     tag += '                 <th>曲</th>';
-    tag += '                 <th>MV公開日</th>';
     tag += '                 <th>公開から</th>';
+    tag += '                 <th>MV公開日</th>';
     // tag += '                 <th>何年何か月</th>';
     tag += '             </tr>';
     tag += '         </thead>';
@@ -76,11 +76,11 @@ function createDisplay(mode) {
         // table各行生成
         tag += '             <tr>';
         tag += ' <td>' + song[appsettings.songNameCol] + '</td>';
-        tag += ' <td>' + MVReleaseDateStr + '</td>';
         tag +=
           ' <td> ' +
           Math.floor((todayDate - MVReleaseDate) / (1000 * 60 * 60 * 24)) +
           '日</td>';
+        tag += ' <td>' + MVReleaseDateStr + '</td>';
         // tag += ' <td>' + `${years}年 ${months}か月` + '</td>';
         tag += '             </tr>';
       }
