@@ -138,3 +138,48 @@ function changeColor(plusCount) {
     'Color ↺ <br>(' + (colorIndexNow + 1) + '/' + colorSets.length + ')'
   );
 }
+
+// 未来日までの日数取得
+function getDaysToNextMonthDay(pastDateString) {
+  const today = new Date();
+  const [year, month, day] = pastDateString.split('/').map(Number);
+
+  let nextDate = new Date(today.getFullYear(), month - 1, day); // 月は0始まりなので-1
+  if (nextDate < today) nextDate.setFullYear(today.getFullYear() + 1);
+
+  return Math.ceil((nextDate - today) / (1000 * 60 * 60 * 24));
+}
+
+// 未来日までの年数取得
+function getYearsToNextMonthDay(pastDateString) {
+  const today = new Date();
+  const [year, month, day] = pastDateString.split('/').map(Number);
+
+  return (
+    today.getFullYear() -
+    year +
+    (new Date(today.getFullYear(), month - 1, day) < today ? 1 : 0)
+  );
+}
+
+// 二次元配列を月日でソート
+function sortByMonthDay(arr) {
+  const today = new Date();
+
+  function daysToToday(dateString) {
+    const [, month, day] = dateString.split('/').map(Number);
+    const date = new Date(today.getFullYear(), month - 1, day);
+    if (date < today) date.setFullYear(today.getFullYear() + 1);
+    return (date - today) / (1000 * 60 * 60 * 24);
+  }
+
+  // 配列のコピーを作成
+  const arrCopy = [...arr];
+
+  // コピーをソート
+  return arrCopy.sort(
+    (a, b) =>
+      daysToToday(a[appsettings.MVReleaseDateCol]) -
+      daysToToday(b[appsettings.MVReleaseDateCol])
+  );
+}
