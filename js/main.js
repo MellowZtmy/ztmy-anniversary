@@ -27,13 +27,19 @@ $(document).ready(async function () {
     appsettings = await getJsonData('appsettings.json');
 
     // 2. 楽曲情報読み込み
-    songsData = await fetchCsvData(appsettings.songsFileName, 4);
+    songsData = await fetchCsvData(
+      appsettings.songsFileName,
+      appsettings.songSkipRowCount
+    );
     mvsData = songsData.filter(
       (row) => row[appsettings.MVReleaseDateCol] !== appsettings.noDataString
     );
 
     // 3. カラーセット読み込み
-    colorSets = await fetchCsvData(appsettings.colorSetsFileName, 1);
+    colorSets = await fetchCsvData(
+      appsettings.colorSetsFileName,
+      appsettings.colorSkipRowCount
+    );
 
     // 5. 開始画面を表示
     createDisplay(display.FUTURE);
@@ -56,13 +62,6 @@ function createDisplay(mode) {
     // 過去情報描画
     tag += ' <h2 class="h2-display">Past</h2>';
     tag += '     <table class="table-game" border="1">';
-    tag += '         <thead>';
-    tag += '             <tr>';
-    tag += '                 <th>曲</th>';
-    tag += '                 <th>公開から</th>';
-    tag += '                 <th>MV公開日</th>';
-    tag += '             </tr>';
-    tag += '         </thead>';
     tag += '         <tbody>';
     mvsData.forEach(function (song) {
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
@@ -72,7 +71,9 @@ function createDisplay(mode) {
 
       // table各行生成
       tag += '             <tr>';
-      tag += ' <td>' + song[appsettings.songNameCol] + '</td>';
+      tag += ' <td>' + song[appsettings.songNameCol];
+      tag += '<br>';
+      tag += 'MV公開から</td>';
       tag +=
         ' <td> ' +
         Math.floor((todayDate - MVReleaseDate) / (1000 * 60 * 60 * 24)) +

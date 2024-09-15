@@ -141,10 +141,10 @@ function changeColor(plusCount) {
 
 // 未来日までの日数取得
 function getDaysToNextMonthDay(pastDateString) {
-  const today = new Date();
-  const [year, month, day] = pastDateString.split('/').map(Number);
+  const today = new Date(new Date().setHours(0, 0, 0, 0));
+  const [, month, day] = pastDateString.split('/').map(Number);
 
-  let nextDate = new Date(today.getFullYear(), month - 1, day); // 月は0始まりなので-1
+  let nextDate = new Date(today.getFullYear(), month - 1, day);
   if (nextDate < today) nextDate.setFullYear(today.getFullYear() + 1);
 
   return Math.ceil((nextDate - today) / (1000 * 60 * 60 * 24));
@@ -164,7 +164,7 @@ function getYearsToNextMonthDay(pastDateString) {
 
 // 二次元配列を月日でソート
 function sortByMonthDay(arr) {
-  const today = new Date();
+  const today = new Date(new Date().setHours(0, 0, 0, 0));
 
   function daysToToday(dateString) {
     const [, month, day] = dateString.split('/').map(Number);
