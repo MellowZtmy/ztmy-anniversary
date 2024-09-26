@@ -142,6 +142,10 @@ function createDisplay(mode) {
     });
     tag += '         </div>';
   }
+
+  //バージョン情報
+  tag += ' <p class="right-text">' + appsettings.version + '</p>';
+
   // タグ流し込み
   $('#display').append(tag);
 
