@@ -110,9 +110,9 @@ function createDisplay(mode) {
         getDaysToNextMonthDay(MVReleaseDateStr) +
         '</span>日</div>';
       // MV表示
-      tag += '    <!--MV Youtube--> ';
-      tag += '            <div class="margin-top-20" id="mv"> ';
-      tag += '              <div style="position: relative; width: 100%;"> ';
+      tag += '            <!--MV Youtube--> ';
+      // tag += '            <div class="margin-top-20"> ';
+      // tag += '              <div style="position: relative; width: 100%;"> ';
       tag += '                 <iframe ';
       tag +=
         '                       src="https://www.youtube.com/embed/' +
@@ -122,14 +122,15 @@ function createDisplay(mode) {
         '" ';
       tag += '                  frameborder="0" ';
       tag += '                  width="100%" ';
-      tag += '                  height="100%" ';
+      tag += '                  height: auto;';
+      tag += '                  aspect-ratio: 16 / 9; ';
       tag +=
         '                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ';
       tag += '                  allowfullscreen="" ';
       tag += '                  data-gtm-yt-inspected-32118529_704="true">';
       tag += '                </iframe> ';
-      tag += '             </div> ';
-      tag += '           </div> ';
+      // tag += '             </div> ';
+      // tag += '           </div> ';
       // ここまでMV
       tag += '           <div class="mv-date">' + MVReleaseDateStr + '</div>';
       tag += '        </div>';
