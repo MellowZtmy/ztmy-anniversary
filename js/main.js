@@ -98,41 +98,41 @@ function createDisplay(mode) {
     sortedMvsData.forEach(function (song) {
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       // table各行生成
-      tag += '             <div class="mv-item">';
+      tag += '      <div class="mv-item">';
       tag +=
-        ' <div class="mv-name">' +
+        '              <div class="mv-name">' +
         song[appsettings.songNameCol] +
         '<br><span class="highlight">' +
         getYearsToNextMonthDay(MVReleaseDateStr) +
         '</span>周年まで</div>';
       tag +=
-        ' <div class="mv-days">あと <span class="highlight">' +
+        '                  <div class="mv-days">あと <span class="highlight">' +
         getDaysToNextMonthDay(MVReleaseDateStr) +
         '</span>日</div>';
       // MV表示
       tag += '    <!--MV Youtube--> ';
-      tag += '    <div class="margin-top-20" id="mv"> ';
-      tag += '      <div style="position: relative; width: 100%;"> ';
-      tag += '          <iframe ';
+      tag += '            <div class="margin-top-20" id="mv"> ';
+      tag += '              <div style="position: relative; width: 100%;"> ';
+      tag += '                 <iframe ';
       tag +=
-        '            src="https://www.youtube.com/embed/' +
+        '                       src="https://www.youtube.com/embed/' +
         song[appsettings.mvIdCol] +
         '?loop=1&playlist=' +
         song[appsettings.mvIdCol] +
         '" ';
-      tag += '            frameborder="0" ';
-      tag += '            width="100%" ';
-      tag += '            height="100%" ';
+      tag += '                  frameborder="0" ';
+      tag += '                  width="100%" ';
+      tag += '                  height="100%" ';
       tag +=
-        '            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ';
-      tag += '            allowfullscreen="" ';
-      tag += '            data-gtm-yt-inspected-32118529_704="true" ';
-      tag += '          ></iframe> ';
-      tag += '      </div> ';
-      tag += '    <div class="mv-date">' + MVReleaseDateStr + '</div>';
-      tag += '    </div> ';
+        '                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ';
+      tag += '                  allowfullscreen="" ';
+      tag += '                  data-gtm-yt-inspected-32118529_704="true">';
+      tag += '                </iframe> ';
+      tag += '             </div> ';
+      tag += '           </div> ';
       // ここまでMV
-      tag += '             </div>';
+      tag += '           <div class="mv-date">' + MVReleaseDateStr + '</div>';
+      tag += '        </div>';
     });
     tag += '         </div>';
   }
