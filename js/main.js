@@ -97,6 +97,11 @@ function createDisplay(mode) {
     tag += '     <div class="mv-list">';
     sortedMvsData.forEach(function (song) {
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
+      const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
+      // 100日以内のものを表示
+      if (mvLeftDays > 100) {
+        return;
+      }
       // table各行生成
       tag += '      <div class="mv-item">';
       tag +=
@@ -107,7 +112,7 @@ function createDisplay(mode) {
         '</span>周年まで</div>';
       tag +=
         '                  <div class="mv-days">あと <span class="highlight">' +
-        getDaysToNextMonthDay(MVReleaseDateStr) +
+        mvLeftDays +
         '</span>日</div>';
       // MV表示
       tag += '            <!--MV Youtube--> ';
