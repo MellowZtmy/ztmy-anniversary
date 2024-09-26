@@ -57,6 +57,10 @@ function createDisplay(mode) {
   // 変数初期化
   var tag = '';
 
+  // カラーチェンジ
+  tag +=
+    ' <h2 id="changeColor" class="center-text margin-top-20" onclick="changeColor(1)">Color ↺</h2>';
+
   // タグ作成
   if (mode === display.PAST) {
     // 過去情報描画
@@ -90,26 +94,49 @@ function createDisplay(mode) {
     var sortedMvsData = sortByMonthDay(mvsData);
     // 未来情報描画
     tag += ' <h2 class="h2-display">Future</h2>';
-    tag += '     <table class="table-game" border="1">';
-    tag += '         <tbody>';
+    tag += '     <div class="mv-list">';
     sortedMvsData.forEach(function (song) {
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       // table各行生成
-      tag += '             <tr>';
+      tag += '             <div class="mv-item">';
       tag +=
-        ' <td>' +
+        ' <div class="mv-name">' +
         song[appsettings.songNameCol] +
-        '<br>' +
+        '<br><span class="highlight">' +
         getYearsToNextMonthDay(MVReleaseDateStr) +
-        '周年まで</td>';
-      tag += ' <td>あと ' + getDaysToNextMonthDay(MVReleaseDateStr) + '日</td>';
-      tag += ' <td>' + MVReleaseDateStr + '</td>';
-      tag += '             </tr>';
+        '</span>周年まで</div>';
+      tag +=
+        ' <div class="mv-days">あと <span class="highlight">' +
+        getDaysToNextMonthDay(MVReleaseDateStr) +
+        '</span>日</div>';
+      // MV表示
+      tag += '    <!--MV Youtube--> ';
+      tag += '    <div class="margin-top-20" id="mv"> ';
+      tag += '      <div style="position: relative; width: 100%;"> ';
+      tag += '        <div> ';
+      tag += '          <iframe ';
+      tag +=
+        '            src="https://www.youtube.com/embed/' +
+        song[appsettings.mvIdCol] +
+        '?loop=1&playlist=' +
+        song[appsettings.mvIdCol] +
+        '" ';
+      tag += '            frameborder="0" ';
+      tag += '            width="100%" ';
+      tag += '            height="100%" ';
+      tag +=
+        '            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ';
+      tag += '            allowfullscreen="" ';
+      tag += '            data-gtm-yt-inspected-32118529_704="true" ';
+      tag += '          ></iframe> ';
+      tag += '        </div> ';
+      tag += '      </div> ';
+      tag += '    </div> ';
+      // ここまでMV
+      tag += ' <div class="mv-date">' + MVReleaseDateStr + '</div>';
+      tag += '             </div>';
     });
-    tag += '         </tbody>';
-    tag += '     </table>';
-    tag +=
-      ' <h2 id="changeColor" class="center-text margin-top-20" onclick="changeColor(1)">Color ↺</h2>';
+    tag += '         </div>';
   }
   // タグ流し込み
   $('#display').append(tag);

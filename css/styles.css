@@ -1,3 +1,65 @@
+/* mv用CSS */
+.mv-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.mv-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mv-name {
+  font-weight: bold;
+  color: #333;
+}
+
+.mv-days {
+  color: #ff6347;
+  font-size: 1.2em;
+}
+
+.mv-date {
+  color: #555;
+  font-style: italic;
+}
+
+/* 強調スタイル */
+.highlight {
+  font-weight: bold;
+  font-size: 1.4em;
+  color: #ff4500; /* 濃いオレンジで強調 */
+}
+
+@media (max-width: 600px) {
+  .mv-item {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  /* スマホ用の調整 */
+  .mv-days {
+      width: 100%;
+      text-align: center;  /* 中央寄せ */
+      margin-top: 5px;
+  }
+
+  .mv-date {
+      width: 100%;
+      text-align: right;  /* 右寄せ */
+      margin-top: 5px;
+  }
+}
+
+
 /* テキスト用CSS */
 *{
   font-family: "misaki_gothic_2nd";
