@@ -93,7 +93,7 @@ function createDisplay(mode) {
     // 楽曲を日付順に並び変える
     var sortedMvsData = sortByMonthDay(mvsData);
     // 未来情報描画
-    tag += ' <h2 class="h2-display">Future</h2>';
+    tag += ' <h2 class="h2-display">MV</h2>';
     tag += '     <div class="mv-list">';
     sortedMvsData.forEach(function (song) {
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
