@@ -57,6 +57,12 @@ function createDisplay(mode) {
   // 変数初期化
   var tag = '';
 
+  // 今日日付
+  tag +=
+    ' <p class="right-text">TODAY:' +
+    new Date().toLocaleDateString('ja-JP').replace(/\./g, '/') +
+    '</p>';
+
   // カラーチェンジ
   tag +=
     ' <h2 id="changeColor" class="center-text margin-top-20" onclick="changeColor(1)">Color ↺</h2>';
