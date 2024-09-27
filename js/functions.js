@@ -137,19 +137,6 @@ function changeColor(plusCount) {
   $('#changeColor').html(
     'Color ↺ <br>(' + (colorIndexNow + 1) + '/' + colorSets.length + ')'
   );
-
-  // カードの色編集
-  // bodyの背景色を取得し、RGBを明るくする
-  // const bodyColor = $('body').css('background-color');
-  // const lightenColor = (color, percent) => {
-  //   const rgb = color
-  //     .match(/\d+/g)
-  //     .map((num) => Math.min(255, parseInt(num) + percent));
-  //   return `rgb(${rgb.join(',')})`;
-  // };
-
-  // // mv-itemに明るくした色を適用
-  // $('.mv-item').css('background-color', lightenColor(bodyColor, 40));
 }
 
 // 未来日までの日数取得

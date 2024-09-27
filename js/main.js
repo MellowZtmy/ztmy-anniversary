@@ -3,8 +3,8 @@
  */
 // 画面表示モード
 const display = {
-  PAST: 1,
-  FUTURE: 2,
+  MV: 1,
+  ALBUM: 2,
 };
 // 設定ファイル情報
 var appsettings = [];
@@ -42,7 +42,7 @@ $(document).ready(async function () {
     );
 
     // 5. 開始画面を表示
-    createDisplay(display.FUTURE);
+    createDisplay(display.MV);
   } catch (error) {
     // エラーハンドリング
     showError('Failed to load data:', error);
@@ -59,13 +59,9 @@ function createDisplay(mode) {
 
   // 今日日付
   tag +=
-    ' <p class="right-text">TODAY:' +
+    ' <p class="center-text">' +
     new Date().toLocaleDateString('ja-JP').replace(/\./g, '/') +
     '</p>';
-
-  // カラーチェンジ
-  tag +=
-    ' <h2 id="changeColor" class="center-text margin-top-20" onclick="changeColor(1)">Color ↺</h2>';
 
   // タグ作成
   if (mode === display.PAST) {
@@ -95,21 +91,31 @@ function createDisplay(mode) {
     tag += '     </table>';
     tag +=
       ' <h2 id="changeColor" class="center-text margin-top-20" onclick="changeColor(1)">Color ↺</h2>';
-  } else if (mode === display.FUTURE) {
+  } else if (mode === display.MV) {
     // 楽曲を日付順に並び変える
     var sortedMvsData = sortByMonthDay(mvsData);
     // 未来情報描画
     tag += ' <h2 class="h2-display">MV</h2>';
     tag += '     <div class="mv-list">';
-    sortedMvsData.forEach(function (song) {
+    sortedMvsData.forEach(function (song, index) {
+      // MV日付情報取得
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
-      // 100日以内のものを表示
-      if (mvLeftDays > 100) {
+      // 曲名でカラー配列取得
+      var colorSet = colorSets.find(
+        (row) => row[0] === song[appsettings.songNameCol]
+      );
+      // 10個まで表示
+      if (index >= appsettings.cardPerPage) {
         return;
       }
       // table各行生成
-      tag += '      <div class="mv-item">';
+      tag +=
+        '      <div class="mv-item" style="background:' +
+        (colorSet ? colorSet[1] : '#f0f0f0') +
+        '; color: ' +
+        (colorSet ? colorSet[1] : '#f0f0f0') +
+        ';">';
       tag +=
         '              <div class="mv-name">' +
         song[appsettings.songNameCol] +
@@ -148,6 +154,10 @@ function createDisplay(mode) {
     });
     tag += '         </div>';
   }
+
+  // カラーチェンジ
+  tag +=
+    ' <h2 id="changeColor" class="center-text margin-top-20" onclick="changeColor(1)">Color ↺</h2>';
 
   //バージョン情報
   tag += ' <p class="right-text">' + appsettings.version + '</p>';
