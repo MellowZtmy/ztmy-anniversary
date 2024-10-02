@@ -1,3 +1,11 @@
+/* 画面タイトル用CSS */
+h1 {
+  padding: 1rem 2rem;
+  border-top: 3px solid ;
+  border-bottom: 3px solid ;
+  cursor: pointer;
+}
+
 .h2-display {
   border-bottom: 2px dashed;
   padding-bottom: 5px;
@@ -22,12 +30,6 @@
   text-align: right;
 }
 
-h1 {
-  padding: 1rem 2rem;
-  border-top: 3px solid ;
-  border-bottom: 3px solid ;
-  cursor: pointer;
-}
 
 .margin-top-20 {
   margin: 20px auto auto auto;
@@ -113,4 +115,14 @@ h1 {
 
 .visibility-hidden{
   visibility: hidden;
+}
+
+/* 紙吹雪用CSS */
+.confetti canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;  /* 幅を全体に広げる */
+  height: 100%; /* 高さを全体に広げる */
+  pointer-events: none; /* 他の要素の操作を妨げないようにする */
 }
