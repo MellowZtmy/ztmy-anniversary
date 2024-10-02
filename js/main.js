@@ -59,7 +59,7 @@ function createDisplay(mode) {
 
   // 今日日付
   tag +=
-    ' <p class="center-text">' +
+    ' <p class="right-text">TODAY：' +
     new Date().toLocaleDateString('ja-JP').replace(/\./g, '/') +
     '</p>';
 
@@ -140,6 +140,15 @@ function createDisplay(mode) {
       tag += '             </div> ';
       tag += '           </div> ';
       // ここまでMV
+
+      tag +=
+        '              <div class="mv-info">作詞：' +
+        song[appsettings.writerCol] +
+        '<br>作曲：' +
+        song[appsettings.composerCol] +
+        '<br>編曲：' +
+        song[appsettings.arrangerCol] +
+        '</div>';
       tag += '           <div class="mv-date">' + MVReleaseDateStr + '</div>';
       tag += '        </div>';
     });
@@ -151,7 +160,7 @@ function createDisplay(mode) {
     ' <h2 id="changeColor" class="center-text margin-top-20" onclick="changeColor(1)">Color ↺</h2>';
 
   //バージョン情報
-  tag += ' <p class="right-text">' + appsettings.version + '</p>';
+  //tag += ' <p class="right-text">' + appsettings.version + '</p>';
 
   // タグ流し込み
   $('#display').append(tag);
