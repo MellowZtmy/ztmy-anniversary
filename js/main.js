@@ -101,21 +101,12 @@ function createDisplay(mode) {
       // MV日付情報取得
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
-      // 曲名でカラー配列取得
-      var colorSet = colorSets.find(
-        (row) => row[0] === song[appsettings.songNameCol]
-      );
-      // 10個まで表示
+      // N個まで表示
       if (index >= appsettings.cardPerPage) {
         return;
       }
       // table各行生成
-      tag +=
-        '      <div class="mv-item" style="background:' +
-        (colorSet ? colorSet[1] : '#f0f0f0') +
-        '; color: ' +
-        (colorSet ? colorSet[1] : '#f0f0f0') +
-        ';">';
+      tag += '      <div class="mv-item">';
       tag +=
         '              <div class="mv-name">' +
         song[appsettings.songNameCol] +
