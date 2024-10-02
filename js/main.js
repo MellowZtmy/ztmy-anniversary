@@ -3,8 +3,7 @@
  */
 // 画面表示モード
 const display = {
-  MV: 1,
-  ALBUM: 2,
+  TOP: 1,
 };
 // 設定ファイル情報
 var appsettings = [];
@@ -42,7 +41,7 @@ $(document).ready(async function () {
     );
 
     // 5. 開始画面を表示
-    createDisplay(display.MV);
+    createDisplay(display.TOP);
   } catch (error) {
     // エラーハンドリング
     showError('Failed to load data:', error);
@@ -64,34 +63,7 @@ function createDisplay(mode) {
     '</p>';
 
   // タグ作成
-  if (mode === display.PAST) {
-    // 過去情報描画
-    tag += ' <h2 class="h2-display">Past</h2>';
-    tag += '     <table class="table-game" border="1">';
-    tag += '         <tbody>';
-    mvsData.forEach(function (song) {
-      const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
-      // 入力された日付と現在の日付をDateオブジェクトに変換
-      const MVReleaseDate = new Date(MVReleaseDateStr);
-      const todayDate = new Date();
-
-      // table各行生成
-      tag += '             <tr>';
-      tag += ' <td>' + song[appsettings.songNameCol];
-      tag += '<br>';
-      tag += 'MV公開から</td>';
-      tag +=
-        ' <td> ' +
-        Math.floor((todayDate - MVReleaseDate) / (1000 * 60 * 60 * 24)) +
-        '日</td>';
-      tag += ' <td>' + MVReleaseDateStr + '</td>';
-      tag += '             </tr>';
-    });
-    tag += '         </tbody>';
-    tag += '     </table>';
-    tag +=
-      ' <h2 id="changeColor" class="center-text margin-top-20" onclick="changeColor(1)">Color ↺</h2>';
-  } else if (mode === display.MV) {
+  if (mode === display.TOP) {
     // 楽曲を日付順に並び変える
     var sortedMvsData = sortByMonthDay(mvsData);
     // 未来情報描画
@@ -145,6 +117,33 @@ function createDisplay(mode) {
       tag += '        </div>';
     });
     tag += '         </div>';
+
+    // 過去情報描画
+    tag += ' <h2 class="h2-display">Past</h2>';
+    tag += '     <table class="table-game" border="1">';
+    tag += '         <tbody>';
+    mvsData.forEach(function (song) {
+      const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
+      // 入力された日付と現在の日付をDateオブジェクトに変換
+      const MVReleaseDate = new Date(MVReleaseDateStr);
+      const todayDate = new Date();
+
+      // table各行生成
+      tag += '             <tr>';
+      tag += ' <td>' + song[appsettings.songNameCol];
+      tag += '<br>';
+      tag += 'MV公開から</td>';
+      tag +=
+        ' <td> ' +
+        Math.floor((todayDate - MVReleaseDate) / (1000 * 60 * 60 * 24)) +
+        '日</td>';
+      tag += ' <td>' + MVReleaseDateStr + '</td>';
+      tag += '             </tr>';
+    });
+    tag += '         </tbody>';
+    tag += '     </table>';
+    tag +=
+      ' <h2 id="changeColor" class="center-text margin-top-20" onclick="changeColor(1)">Color ↺</h2>';
   }
 
   // カラーチェンジ
