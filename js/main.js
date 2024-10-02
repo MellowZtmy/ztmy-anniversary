@@ -148,6 +148,8 @@ function createDisplay(mode) {
         song[appsettings.composerCol] +
         '<br>編曲：' +
         song[appsettings.arrangerCol] +
+        '<br>MV監督：' +
+        song[appsettings.mvDirectorCol] +
         '</div>';
       tag += '           <div class="mv-date">' + MVReleaseDateStr + '</div>';
       tag += '        </div>';
