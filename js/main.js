@@ -59,7 +59,7 @@ function createDisplay(mode) {
 
   // 今日日付
   tag +=
-    ' <p class="right-text">TODAY：' +
+    ' <p class="right-text date-text">TODAY：' +
     new Date().toLocaleDateString('ja-JP').replace(/\./g, '/') +
     '</p>';
 
@@ -119,26 +119,16 @@ function createDisplay(mode) {
         '</span>日</div>';
       // MV表示
       tag += '            <!--MV Youtube--> ';
-      tag += '            <div class="margin-top-20"> ';
-      tag += '              <div style="position: relative; width: 100%;"> ';
+      tag += '            <div class="mv-iframe-container">';
       tag += '                 <iframe ';
       tag +=
         '                       src="https://www.youtube.com/embed/' +
         song[appsettings.mvIdCol] +
         '?loop=1&playlist=' +
         song[appsettings.mvIdCol] +
-        '" ';
-      tag += '                  frameborder="0" ';
-      tag += '                  width="100%" ';
-      tag += '                  height: auto;';
-      tag += '                  aspect-ratio: 16 / 9; ';
-      tag +=
-        '                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ';
-      tag += '                  allowfullscreen="" ';
-      tag += '                  data-gtm-yt-inspected-32118529_704="true">';
+        '" frameborder="0" allowfullscreen>';
       tag += '                </iframe> ';
       tag += '             </div> ';
-      tag += '           </div> ';
       // ここまでMV
 
       tag +=
@@ -148,7 +138,7 @@ function createDisplay(mode) {
         song[appsettings.composerCol] +
         '<br>編曲：' +
         song[appsettings.arrangerCol] +
-        '<br>MV監督：' +
+        '<br>監督：' +
         song[appsettings.mvDirectorCol] +
         '</div>';
       tag += '           <div class="mv-date">' + MVReleaseDateStr + '</div>';

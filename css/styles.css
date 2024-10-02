@@ -1,56 +1,89 @@
 /* mv用CSS */
+.mv-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
 .mv-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  max-width: 600px;
-  margin: 0 auto;
+  gap: 20px;
 }
 
 .mv-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  flex-direction: column;
-  align-items: flex-start;
+  background-color: #fafafa;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.mv-item:hover {
+  background-color: #f4f4f4;
 }
 
 .mv-name {
   font-weight: bold;
+  font-size: 1.2em;
   color: #333;
 }
 
 .mv-days {
   color: #ff6347;
-  font-size: 1.2em;
+  font-size: 1.4em;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.mv-iframe-container {
+  position: relative;
   width: 100%;
-  text-align: center;  /* 中央寄せ */
-  margin-top: 5px;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+  margin-top: 15px;
+}
+
+.mv-iframe-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.mv-info, .mv-date {
+  margin-top: 15px;
+  font-size: 0.9em;
+  color: #555;
 }
 
 .mv-info {
   font-weight: bold;
-  color: #333;
-  width: 100%;
-  margin-left: 30px;
 }
 
 .mv-date {
-  color: #555;
+  text-align: right;
   font-style: italic;
-  width: 100%;
-  text-align: right;  /* 右寄せ */
-  margin-top: 5px;
 }
 
 /* 強調スタイル */
 .highlight {
   font-weight: bold;
   font-size: 1.4em;
-  color: #ff4500; /* 濃いオレンジで強調 */
+  color: #ff4500;
+}
+
+.date-text {
+  font-size: 1em;
+  /* color: #888; */
+}
+
+.h2-display {
+  border-bottom: 2px dashed;
+  padding-bottom: 5px;
+  font-size: 1.5em;
+  text-align: center;
 }
 
 /* テキスト用CSS */
@@ -60,7 +93,7 @@
 }
 
 .center-text {
-    text-align: center;
+  text-align: center;
     flex-grow: 1;
 }
 
@@ -69,11 +102,7 @@
 }
 
 .right-text {
-    text-align: right;
-}
-
-.bold-text {
-  font-weight: bold;
+  text-align: right;
 }
 
 h1 {
@@ -83,108 +112,7 @@ h1 {
   cursor: pointer;
 }
 
-h2.h2-display{
-  border-bottom: 2px dashed ;
-  padding-bottom: 5px;
-}
 
-.font-one-point-two {
-  font-size: 1.2rem;
-}
-
-.font-one-point-five {
-  font-size: 1.5rem;
-}
-
-.text-correct {
-  color: #0f5132 !important;
-}
-
-.text-incorrect {
-  color: #FF0000 !important;
-}
-
-/* ボタン用CSS */
-*,
-*:before,
-*:after {
-  -webkit-box-sizing: inherit;
-  box-sizing: inherit;
-}
-
-html {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.btn,
-a.btn,
-button.btn {
-  font-size: 1.6rem;
-  font-weight: 700;
-  line-height: 1.5;
-  position: relative;
-  display: block;
-  padding: 1rem 4rem;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-  text-align: center;
-  text-decoration: none;
-  letter-spacing: 0.1em;
-  color: #212529;
-  border-radius: 0.5rem;
-  margin: 20px auto auto auto;
-}
-
-.btn--radius, a.btn--radius, button.btn--radius{
-  border-radius:100vh;
-}
-
-/* ラジオボタン用CSS */
-input[type=radio] {
-  display: none; /* ラジオボタンを非表示にする */
-}
-
-.choice-radio-label {
-  display: flex; /* ブロックレベル要素化する */
-  line-height: 45px; /* 行の高さを指定する */
-  height: 50px; /* ボックスの高さを指定する */
-  padding-left: 20px; /* ボックス内左側の余白を指定する */
-  padding-right: 10px; /* ボックス内御右側の余白を指定する */
-  border: 2px solid ;/* ボックスの境界線を実線で指定する */
-  border-radius: 25px; /* 角丸を指定する */
-  font-size: 1.2em;
-  justify-content: space-between; /* テキストを右寄せするための設定 */
-  align-items: center; /* 垂直方向の中央揃え */
-}
-
-.label-correct {
-  color: #ff1c1c !important;
-  background-color: #e7d1d1 !important;
-}
-
-.label-incorrect {
-  color: #1100ff !important;
-  background-color: #a4e1ff !important;
-}
-
-/* 画像用CSS */
-.album {
-  width: 80px;
-  height: 80px;
-  transition: filter 0.3s ease;
-}
-
-.darkened {
-  filter: brightness(0.3);
-}
-
-/* 画面表示用CSS */
 .margin-top-20 {
   margin: 20px auto auto auto;
 }
@@ -195,14 +123,4 @@ input[type=radio] {
 
 .visibility-hidden{
   visibility: hidden;
-}
-
-/* 紙吹雪用CSS */
-.confetti canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;  /* 幅を全体に広げる */
-  height: 100%; /* 高さを全体に広げる */
-  pointer-events: none; /* 他の要素の操作を妨げないようにする */
 }
