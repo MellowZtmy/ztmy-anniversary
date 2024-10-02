@@ -64,20 +64,25 @@ function createDisplay(mode) {
 
   // タグ作成
   if (mode === display.TOP) {
+    //////////////////////////////////////////
+    // MV情報
+    //////////////////////////////////////////
     // 楽曲を日付順に並び変える
     var sortedMvsData = sortByMonthDay(mvsData);
-    // 未来情報描画
+    // MV情報描画
     tag += ' <h2 class="h2-display">MV</h2>';
     tag += '     <div class="mv-list">';
     sortedMvsData.forEach(function (song, index) {
-      // MV日付情報取得
-      const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
-      const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
       // N個まで表示
       if (index >= appsettings.cardPerPage) {
         return;
       }
-      // table各行生成
+
+      // MV日付情報取得
+      const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
+      const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
+
+      // 各MV生成
       tag += '      <div class="mv-item">';
       tag +=
         '              <div class="mv-name">' +
@@ -89,7 +94,7 @@ function createDisplay(mode) {
         '                  <div class="mv-days">あと <span class="highlight">' +
         mvLeftDays +
         '</span>日</div>';
-      // MV表示
+      // MV Youtube表示
       tag += '            <!--MV Youtube--> ';
       tag += '            <div class="mv-iframe-container">';
       tag += '                 <iframe ';
@@ -101,8 +106,9 @@ function createDisplay(mode) {
         '" frameborder="0" allowfullscreen>';
       tag += '                </iframe> ';
       tag += '             </div> ';
-      // ここまでMV
+      // ここまでMV Youtube
 
+      // MV 情報
       tag +=
         '              <div class="mv-info">作詞：' +
         song[appsettings.writerCol] +
@@ -113,12 +119,49 @@ function createDisplay(mode) {
         '<br>監督：' +
         song[appsettings.mvDirectorCol] +
         '</div>';
+
+      // アルバム
+      var album = song[appsettings.albumCol];
+      if (album !== appsettings.noDataString) {
+        tag +=
+          ' <img src="' +
+          appsettings.albumImagePath +
+          album +
+          '.jpg" id="' +
+          album +
+          '" alt="' +
+          album +
+          '" class="album">';
+      }
+
+      // ミニアルバム
+      var minialbum = song[appsettings.minialbumCol];
+      if (minialbum !== appsettings.noDataString) {
+        tag +=
+          ' <img src="' +
+          appsettings.minialbumImagePath +
+          minialbum +
+          '.jpg" id="' +
+          minialbum +
+          '" alt="' +
+          minialbum +
+          '" class="album">';
+      }
+
+      // MV公開年月日
       tag += '           <div class="mv-date">' + MVReleaseDateStr + '</div>';
+
       tag += '        </div>';
     });
     tag += '         </div>';
 
+    //////////////////////////////////////////
+    // アルバム
+    //////////////////////////////////////////
+
+    //////////////////////////////////////////
     // 過去情報描画
+    //////////////////////////////////////////
     tag += ' <h2 class="h2-display">Past</h2>';
     tag += '     <table class="table-game" border="1">';
     tag += '         <tbody>';
@@ -142,8 +185,6 @@ function createDisplay(mode) {
     });
     tag += '         </tbody>';
     tag += '     </table>';
-    tag +=
-      ' <h2 id="changeColor" class="center-text margin-top-20" onclick="changeColor(1)">Color ↺</h2>';
   }
 
   // カラーチェンジ
