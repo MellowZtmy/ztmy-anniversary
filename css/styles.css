@@ -123,6 +123,7 @@ h1 {
   height: 80px;
   border-radius: 10px;
   margin-top: 20px;
+  transition: filter 0.3s ease;
 }
 
 .album-container {
