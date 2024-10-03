@@ -5,6 +5,8 @@
 const display = {
   TOP: 1,
 };
+// 画面ロードした日時を取得
+const globalToday = new Date();
 // 設定ファイル情報
 var appsettings = [];
 // 全楽曲情報
@@ -13,8 +15,6 @@ var songsData = [];
 var mvsData = [];
 // カラーセット
 var colorSets = [];
-// 画面表示モード
-var currentDisplay;
 
 /**
  * 【イベント処理】
@@ -59,7 +59,7 @@ function createDisplay(mode) {
   // 今日日付
   tag +=
     ' <p class="right-text date-text">TODAY：' +
-    new Date().toLocaleDateString('ja-JP').replace(/\./g, '/') +
+    globalToday.toLocaleDateString('ja-JP').replace(/\./g, '/') +
     '</p>';
 
   // タグ作成
@@ -167,7 +167,7 @@ function createDisplay(mode) {
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       // 入力された日付と現在の日付をDateオブジェクトに変換
       const MVReleaseDate = new Date(MVReleaseDateStr);
-      const todayDate = new Date();
+      const todayDate = globalToday;
 
       // table各行生成
       tag += '             <tr>';
@@ -197,7 +197,4 @@ function createDisplay(mode) {
 
   // CSS適用
   changeColor(0);
-
-  // displaymode
-  currentDisplay = mode;
 }
