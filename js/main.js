@@ -121,32 +121,30 @@ function createDisplay(mode) {
         '</div>';
 
       // アルバム
+      tag += ' <div class="album-container">';
       var album = song[appsettings.albumCol];
       if (album !== appsettings.noDataString) {
         tag +=
-          ' <img src="' +
+          '<img src="' +
           appsettings.albumImagePath +
           album +
-          '.jpg" id="' +
+          '.jpg" alt="' +
           album +
-          '" alt="' +
-          album +
-          '" class="album">';
+          '"class="album">';
       }
 
       // ミニアルバム
       var minialbum = song[appsettings.minialbumCol];
       if (minialbum !== appsettings.noDataString) {
         tag +=
-          ' <img src="' +
+          '<img src="' +
           appsettings.minialbumImagePath +
           minialbum +
-          '.jpg" id="' +
-          minialbum +
-          '" alt="' +
+          '.jpg" alt="' +
           minialbum +
           '" class="album">';
       }
+      tag += '        </div>';
 
       // MV公開年月日
       tag += '           <div class="mv-date">' + MVReleaseDateStr + '</div>';
