@@ -157,32 +157,32 @@ function createDisplay(mode) {
     // アルバム
     //////////////////////////////////////////
 
-    //////////////////////////////////////////
-    // 過去情報描画
-    //////////////////////////////////////////
-    tag += ' <h2 class="h2-display">Past</h2>';
-    tag += '     <table class="table-game" border="1">';
-    tag += '         <tbody>';
-    mvsData.forEach(function (song) {
-      const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
-      // 入力された日付と現在の日付をDateオブジェクトに変換
-      const MVReleaseDate = new Date(MVReleaseDateStr);
-      const todayDate = globalToday;
+    // //////////////////////////////////////////
+    // // 過去情報描画
+    // //////////////////////////////////////////
+    // tag += ' <h2 class="h2-display">Past</h2>';
+    // tag += '     <table class="table-game" border="1">';
+    // tag += '         <tbody>';
+    // mvsData.forEach(function (song) {
+    //   const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
+    //   // 入力された日付と現在の日付をDateオブジェクトに変換
+    //   const MVReleaseDate = new Date(MVReleaseDateStr);
+    //   const todayDate = globalToday;
 
-      // table各行生成
-      tag += '             <tr>';
-      tag += ' <td>' + song[appsettings.songNameCol];
-      tag += '<br>';
-      tag += 'MV公開から</td>';
-      tag +=
-        ' <td> ' +
-        Math.floor((todayDate - MVReleaseDate) / (1000 * 60 * 60 * 24)) +
-        '日</td>';
-      tag += ' <td>' + MVReleaseDateStr + '</td>';
-      tag += '             </tr>';
-    });
-    tag += '         </tbody>';
-    tag += '     </table>';
+    //   // table各行生成
+    //   tag += '             <tr>';
+    //   tag += ' <td>' + song[appsettings.songNameCol];
+    //   tag += '<br>';
+    //   tag += 'MV公開から</td>';
+    //   tag +=
+    //     ' <td> ' +
+    //     Math.floor((todayDate - MVReleaseDate) / (1000 * 60 * 60 * 24)) +
+    //     '日</td>';
+    //   tag += ' <td>' + MVReleaseDateStr + '</td>';
+    //   tag += '             </tr>';
+    // });
+    // tag += '         </tbody>';
+    // tag += '     </table>';
   }
 
   // カラーチェンジ
