@@ -95,7 +95,6 @@ function createDisplay(mode) {
         mvLeftDays +
         '</span>日</div>';
       // MV Youtube表示
-      tag += '            <!--MV Youtube--> ';
       tag += '            <div class="mv-iframe-container">';
       tag += '                 <iframe ';
       tag +=
@@ -110,7 +109,8 @@ function createDisplay(mode) {
 
       // MV 情報
       tag +=
-        '              <div class="mv-info">作詞：' +
+        '<div class="mv-info-container">' +
+        '<div class="mv-info">作詞：' +
         song[appsettings.writerCol] +
         '<br>作曲：' +
         song[appsettings.composerCol] +
@@ -144,14 +144,15 @@ function createDisplay(mode) {
           minialbum +
           '" class="album">';
       }
-      tag += '        </div>';
+      tag += '        </div>'; //mv-info
+      tag += '        </div>'; //mv-info-container
 
       // MV公開年月日
       tag += '           <div class="mv-date">' + MVReleaseDateStr + '</div>';
 
-      tag += '        </div>';
+      tag += '        </div>'; //mv-item
     });
-    tag += '         </div>';
+    tag += '         </div>'; //mv-list
 
     //////////////////////////////////////////
     // アルバム

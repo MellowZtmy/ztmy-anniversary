@@ -37,7 +37,6 @@ h1 {
 .margin-bottom-100 {
   margin: auto auto 100px auto;
 }
-
 /* mv用CSS */
 .mv-list {
   display: flex;
@@ -61,6 +60,13 @@ h1 {
   font-weight: bold;
   font-size: 1.2em;
   color: #555;
+}
+
+/* 強調スタイル */
+.highlight {
+  font-weight: bold;
+  font-size: 1.4em;
+  color: #d2691e;
 }
 
 .mv-days {
@@ -88,28 +94,25 @@ h1 {
   height: 100%;
 }
 
-.mv-info, .mv-date {
+
+/* 横並びにするためのスタイル */
+.mv-info-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 15px;
-  font-size: 1em;
-  color: #555;
 }
 
 .mv-info {
+  margin-top: 15px;
+  font-size: 1em;
+  color: #555;
   font-weight: bold;
 }
 
-.mv-date {
+.album-container {
   text-align: right;
-  font-style: italic;
-  font-family: "Georgia", serif;
-  color: #888;
-}
-
-/* 強調スタイル */
-.highlight {
-  font-weight: bold;
-  font-size: 1.4em;
-  color: #d2691e;
+  margin-left: 10px;
 }
 
 /* 画像用CSS */
@@ -117,7 +120,7 @@ h1 {
   width: 80px;
   height: 80px;
   border-radius: 10px;
-  margin-top: 20px;
+  margin-left: 5px;
   transition: transform 0.3s ease;
 }
 
@@ -125,9 +128,15 @@ h1 {
   transform: scale(1.1);
 }
 
-.album-container {
+/* 日付スタイル */
+.mv-date {
   text-align: right;
+  font-style: italic;
+  font-family: "Georgia", serif;
+  color: #888;
+  margin-top: 15px;
 }
+
 
 /* 紙吹雪用CSS */
 .confetti canvas {
