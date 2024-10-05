@@ -163,7 +163,7 @@ function getYearsToNextMonthDay(pastDateString) {
 }
 
 // 二次元配列を月日でソート
-function sortByMonthDay(arr) {
+function sortByMonthDay(arr, sortColIndex) {
   const today = new Date(globalToday.setHours(0, 0, 0, 0));
 
   function daysToToday(dateString) {
@@ -178,8 +178,36 @@ function sortByMonthDay(arr) {
 
   // コピーをソート
   return arrCopy.sort(
-    (a, b) =>
-      daysToToday(a[appsettings.MVReleaseDateCol]) -
-      daysToToday(b[appsettings.MVReleaseDateCol])
+    (a, b) => daysToToday(a[sortColIndex]) - daysToToday(b[sortColIndex])
   );
+}
+
+// ページングタグ作成
+function createPagingTag(currentPage, data) {
+  // 変数初期化
+  var tag = '';
+  var pageIndex = 0;
+
+  // タグ生成
+  tag += '<div class="pagination">';
+
+  // 前ページ(最初のページじゃない場合表示)
+  if (currentPage > 1) {
+    tag += ' <a onclick="paging(' + (currentPage - 1) + ')">←</a>';
+  }
+
+  // 設定ファイルの「1ページ当たり表示数」分行う
+  for (let i = 0; i < data.length; i += appsettings.cardPerPage) {
+    pageIndex++;
+    tag += ' <a onclick="paging(' + pageIndex + ')">' + pageIndex + '</a>';
+  }
+
+  // 次ページ(最終ページじゃない場合表示)
+  if (pageIndex > currentPage) {
+    tag += ' <a onclick="paging(' + (currentPage + 1) + ')">→</a>';
+  }
+
+  tag += '</div>';
+
+  return tag;
 }

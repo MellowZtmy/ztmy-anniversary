@@ -1,9 +1,9 @@
 /**
  * 【定数設定】
  */
-// 画面表示モード
+// 画面表示モード、表示文字列
 const display = {
-  TOP: 1,
+  MV: 'MV',
 };
 // 画面ロードした日時を取得
 const globalToday = new Date();
@@ -13,6 +13,10 @@ var appsettings = [];
 var songsData = [];
 // MV曲情報
 var mvsData = [];
+// MV現在ページ
+var mvCurrentPage = 1;
+// アルバム現在ページ
+var albumCurrentPage = 1;
 // カラーセット
 var colorSets = [];
 
@@ -41,7 +45,7 @@ $(document).ready(async function () {
     );
 
     // 5. 開始画面を表示
-    createDisplay(display.TOP);
+    createDisplay(display.MV);
   } catch (error) {
     // エラーハンドリング
     showError('Failed to load data:', error);
@@ -50,6 +54,9 @@ $(document).ready(async function () {
 
 // 画面タグ作成
 function createDisplay(mode) {
+  // 楽曲を日付順に並び変える TODO アルバムに対応
+  var sortedMvsData = sortByMonthDay(mvsData, appsettings.MVReleaseDateCol);
+
   // タグクリア
   $('#display').empty();
 
@@ -62,15 +69,18 @@ function createDisplay(mode) {
     globalToday.toLocaleDateString('ja-JP').replace(/\./g, '/') +
     '</p>';
 
+  // タイトル TODO アルバムに対応
+  tag += ' <h2 class="h2-display">' + mode + '</h2>';
+
+  // ページング作成 TODO アルバムに対応
+  tag += createPagingTag(mvCurrentPage, sortedMvsData);
+
   // タグ作成
-  if (mode === display.TOP) {
+  if (mode === display.MV) {
     //////////////////////////////////////////
     // MV情報
     //////////////////////////////////////////
-    // 楽曲を日付順に並び変える
-    var sortedMvsData = sortByMonthDay(mvsData);
     // MV情報描画
-    tag += ' <h2 class="h2-display">MV</h2>';
     tag += '     <div class="mv-list">';
     sortedMvsData.forEach(function (song, index) {
       // ページング表示
@@ -153,30 +163,21 @@ function createDisplay(mode) {
       tag += '        </div>'; //mv-item
     });
     tag += '         </div>'; //mv-list
-    // 隠れているものを表示
-    tag +=
-      '          <div class="center-text margin-top-20" onclick="showMV();">もっと見る</div>';
-
     //////////////////////////////////////////
     // アルバム
     //////////////////////////////////////////
   }
 
+  // ページング作成 TODO アルバムに対応
+  tag += createPagingTag(mvCurrentPage, sortedMvsData);
+
   // カラーチェンジ
   tag +=
     ' <h2 id="changeColor" class="center-text margin-top-20" onclick="changeColor(1)">Color ↺</h2>';
-
-  //バージョン情報
-  //tag += ' <p class="right-text">' + appsettings.version + '</p>';
 
   // タグ流し込み
   $('#display').append(tag);
 
   // CSS適用
   changeColor(0);
-}
-
-// ページング
-function showMV() {
-  $('[name="mv"]').show();
 }
