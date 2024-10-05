@@ -73,20 +73,17 @@ function createDisplay(mode) {
     tag += ' <h2 class="h2-display">MV</h2>';
     tag += '     <div class="mv-list">';
     sortedMvsData.forEach(function (song, index) {
-      // // N個まで表示
-      // if (index >= appsettings.cardPerPage) {
-      //   return;
-      // }
+      // ページング表示
+      if (index >= appsettings.cardPerPage) {
+        return;
+      }
 
       // MV日付情報取得
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
 
       // 各MV生成
-      tag +=
-        '      <div name="mv" class="mv-item" ' +
-        (index < appsettings.cardPerPage ? '' : 'hidden') +
-        '>';
+      tag += '      <div name="mv" class="mv-item" >';
       tag +=
         '              <div class="mv-name">' +
         song[appsettings.songNameCol] +
@@ -179,7 +176,7 @@ function createDisplay(mode) {
   changeColor(0);
 }
 
+// ページング
 function showMV() {
-  // mv表示
   $('[name="mv"]').show();
 }
