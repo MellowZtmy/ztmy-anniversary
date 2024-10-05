@@ -73,17 +73,20 @@ function createDisplay(mode) {
     tag += ' <h2 class="h2-display">MV</h2>';
     tag += '     <div class="mv-list">';
     sortedMvsData.forEach(function (song, index) {
-      // N個まで表示
-      if (index >= appsettings.cardPerPage) {
-        return;
-      }
+      // // N個まで表示
+      // if (index >= appsettings.cardPerPage) {
+      //   return;
+      // }
 
       // MV日付情報取得
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
 
       // 各MV生成
-      tag += '      <div class="mv-item">';
+      tag +=
+        '      <div name="mv" class="mv-item" ' +
+        (index < appsettings.cardPerPage ? '' : 'hidden') +
+        '>';
       tag +=
         '              <div class="mv-name">' +
         song[appsettings.songNameCol] +
@@ -153,37 +156,13 @@ function createDisplay(mode) {
       tag += '        </div>'; //mv-item
     });
     tag += '         </div>'; //mv-list
+    // 隠れているものを表示
+    tag +=
+      '          <div class="center-text margin-top-20" onclick="showMV();">もっと見る</div>';
 
     //////////////////////////////////////////
     // アルバム
     //////////////////////////////////////////
-
-    // //////////////////////////////////////////
-    // // 過去情報描画
-    // //////////////////////////////////////////
-    // tag += ' <h2 class="h2-display">Past</h2>';
-    // tag += '     <table class="table-game" border="1">';
-    // tag += '         <tbody>';
-    // mvsData.forEach(function (song) {
-    //   const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
-    //   // 入力された日付と現在の日付をDateオブジェクトに変換
-    //   const MVReleaseDate = new Date(MVReleaseDateStr);
-    //   const todayDate = globalToday;
-
-    //   // table各行生成
-    //   tag += '             <tr>';
-    //   tag += ' <td>' + song[appsettings.songNameCol];
-    //   tag += '<br>';
-    //   tag += 'MV公開から</td>';
-    //   tag +=
-    //     ' <td> ' +
-    //     Math.floor((todayDate - MVReleaseDate) / (1000 * 60 * 60 * 24)) +
-    //     '日</td>';
-    //   tag += ' <td>' + MVReleaseDateStr + '</td>';
-    //   tag += '             </tr>';
-    // });
-    // tag += '         </tbody>';
-    // tag += '     </table>';
   }
 
   // カラーチェンジ
@@ -198,4 +177,9 @@ function createDisplay(mode) {
 
   // CSS適用
   changeColor(0);
+}
+
+function showMV() {
+  // mv表示
+  $('[name="mv"]').show();
 }
