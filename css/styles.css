@@ -16,6 +16,7 @@ h1 {
 *{
   font-family: "misaki_gothic_2nd";
   image-rendering: pixelated;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .center-text {
@@ -157,13 +158,10 @@ h1 {
 }
 
 .pagination a {
-  /* color: #333; */
   padding: 10px 15px;
   margin: 0 5px;
-  border: 1px solid #ddd;
   border-radius: 5px;
   text-decoration: none;
-  transition: background-color 0.3s, color 0.3s;
 }
 
 .pagination a:hover {
@@ -172,12 +170,9 @@ h1 {
 }
 
 .pagination a.active {
-  background-color: #007bff;
-  color: #fff;
-  border: 1px solid #007bff;
+  border: 1px solid ;
 }
 
 .pagination a.disabled {
   pointer-events: none;
-  opacity: 0.5;
 }
