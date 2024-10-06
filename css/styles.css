@@ -147,3 +147,37 @@ h1 {
   height: 100%; /* 高さを全体に広げる */
   pointer-events: none; /* 他の要素の操作を妨げないようにする */
 }
+
+/* ページネーション用 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.pagination a {
+  /* color: #333; */
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+  background-color: #f0f0f0;
+  color: #007bff;
+}
+
+.pagination a.active {
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+}
+
+.pagination a.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}

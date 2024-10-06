@@ -183,7 +183,7 @@ function sortByMonthDay(arr, sortColIndex) {
 }
 
 // ページングタグ作成
-function createPagingTag(currentPage, data) {
+function createPagingTag(currentPage, listLength) {
   // 変数初期化
   var tag = '';
   var pageIndex = 0;
@@ -191,21 +191,40 @@ function createPagingTag(currentPage, data) {
   // タグ生成
   tag += '<div class="pagination">';
 
-  // 前ページ(最初のページじゃない場合表示)
-  if (currentPage > 1) {
-    tag += ' <a onclick="paging(' + (currentPage - 1) + ')">←</a>';
-  }
+  // // 前ページ(最初のページじゃない場合非活性)
+  // tag +=
+  //   ' <a class="' +
+  //   (currentPage > 1 ? 'disabled' : 'active') +
+  //   'onclick="createDisplay(' +
+  //   currentMode +
+  //   ',' +
+  //   (currentPage - 1) +
+  //   ')">←</a>';
 
-  // 設定ファイルの「1ページ当たり表示数」分行う
-  for (let i = 0; i < data.length; i += appsettings.cardPerPage) {
+  // 設定ファイルの「1ページ当たり表示数」分行ループ
+  for (let i = 0; i < listLength; i += appsettings.cardPerPage) {
     pageIndex++;
-    tag += ' <a onclick="paging(' + pageIndex + ')">' + pageIndex + '</a>';
+    tag +=
+      ' <a class="' +
+      (currentPage === pageIndex ? 'disabled' : 'active') +
+      '" onclick="createDisplay(' +
+      currentMode +
+      ',' +
+      pageIndex +
+      ')">' +
+      pageIndex +
+      '</a>';
   }
 
-  // 次ページ(最終ページじゃない場合表示)
-  if (pageIndex > currentPage) {
-    tag += ' <a onclick="paging(' + (currentPage + 1) + ')">→</a>';
-  }
+  // // 次ページ(最終ページじゃない場合非活性)
+  // tag +=
+  //   ' <a class="' +
+  //   (pageIndex > currentPage ? 'disabled' : 'active') +
+  //   'onclick="createDisplay(' +
+  //   currentMode +
+  //   ',' +
+  //   (currentPage + 1) +
+  //   ')">→</a>';
 
   tag += '</div>';
 

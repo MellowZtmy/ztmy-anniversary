@@ -2,8 +2,8 @@
  * 【定数設定】
  */
 // 画面表示モード、表示文字列
-const display = {
-  MV: 'MV',
+const DISPLAY = {
+  MV: { code: 0, name: 'MV' },
 };
 // 画面ロードした日時を取得
 const globalToday = new Date();
@@ -13,12 +13,10 @@ var appsettings = [];
 var songsData = [];
 // MV曲情報
 var mvsData = [];
-// MV現在ページ
-var mvCurrentPage = 1;
-// アルバム現在ページ
-var albumCurrentPage = 1;
 // カラーセット
 var colorSets = [];
+// 現在モード
+var currentMode;
 
 /**
  * 【イベント処理】
@@ -45,7 +43,7 @@ $(document).ready(async function () {
     );
 
     // 5. 開始画面を表示
-    createDisplay(display.MV);
+    createDisplay(DISPLAY.MV.code, 1);
   } catch (error) {
     // エラーハンドリング
     showError('Failed to load data:', error);
@@ -53,9 +51,16 @@ $(document).ready(async function () {
 });
 
 // 画面タグ作成
-function createDisplay(mode) {
+function createDisplay(mode, page) {
   // 楽曲を日付順に並び変える TODO アルバムに対応
   var sortedMvsData = sortByMonthDay(mvsData, appsettings.MVReleaseDateCol);
+
+  // 表示開始/終了index
+  var listStartIndex = appsettings.cardPerPage * (page - 1);
+  var listEndIndex = listStartIndex + appsettings.cardPerPage;
+
+  // モード TODO アルバムに対応
+  currentMode = mode;
 
   // タグクリア
   $('#display').empty();
@@ -70,24 +75,21 @@ function createDisplay(mode) {
     '</p>';
 
   // タイトル TODO アルバムに対応
-  tag += ' <h2 class="h2-display">' + mode + '</h2>';
+  tag +=
+    ' <h2 class="h2-display">' +
+    Object.values(DISPLAY).find((item) => item.code === mode).name +
+    '</h2>';
 
   // ページング作成 TODO アルバムに対応
-  tag += createPagingTag(mvCurrentPage, sortedMvsData);
+  tag += createPagingTag(page, sortedMvsData.length);
 
   // タグ作成
-  if (mode === display.MV) {
+  if (mode === DISPLAY.MV.code) {
     //////////////////////////////////////////
     // MV情報
     //////////////////////////////////////////
-    // MV情報描画
     tag += '     <div class="mv-list">';
-    sortedMvsData.forEach(function (song, index) {
-      // ページング表示
-      if (index >= appsettings.cardPerPage) {
-        return;
-      }
-
+    sortedMvsData.slice(listStartIndex, listEndIndex).forEach(function (song) {
       // MV日付情報取得
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
@@ -163,13 +165,10 @@ function createDisplay(mode) {
       tag += '        </div>'; //mv-item
     });
     tag += '         </div>'; //mv-list
-    //////////////////////////////////////////
-    // アルバム
-    //////////////////////////////////////////
   }
 
   // ページング作成 TODO アルバムに対応
-  tag += createPagingTag(mvCurrentPage, sortedMvsData);
+  tag += createPagingTag(page, sortedMvsData.length);
 
   // カラーチェンジ
   tag +=
