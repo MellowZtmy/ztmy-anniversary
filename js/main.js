@@ -1,9 +1,11 @@
 /**
  * 【定数設定】
  */
-// 画面表示モード、表示文字列
-const DISPLAY = {
-  MV: { code: 0, name: 'MV' },
+// 画面表示モード、表示文字列、ページ
+var DISPLAY = {
+  MV: { code: 0, name: 'MV', page: 1 },
+  ALBUM: { code: 1, name: 'Album', page: 1 },
+  LIVE: { code: 2, name: 'Live', page: 1 },
 };
 // 画面ロードした日時を取得
 const globalToday = new Date();
@@ -15,8 +17,6 @@ var songsData = [];
 var mvsData = [];
 // カラーセット
 var colorSets = [];
-// 現在モード
-var currentMode;
 
 /**
  * 【イベント処理】
@@ -59,9 +59,6 @@ function createDisplay(mode, page) {
   var listStartIndex = appsettings.cardPerPage * (page - 1);
   var listEndIndex = listStartIndex + appsettings.cardPerPage;
 
-  // モード TODO アルバムに対応
-  currentMode = mode;
-
   // タグクリア
   $('#display').empty();
 
@@ -74,14 +71,24 @@ function createDisplay(mode, page) {
     globalToday.toLocaleDateString('ja-JP').replace(/\./g, '/') +
     '</p>';
 
-  // タイトル TODO アルバムに対応
-  tag +=
-    ' <h2 class="h2-display">' +
-    Object.values(DISPLAY).find((item) => item.code === mode).name +
-    '</h2>';
+  // タイトル
+  tag += ' <div class="tab-content">';
+  Object.values(DISPLAY).forEach(function (display) {
+    tag +=
+      ' <div onclick="createDisplay(' +
+      display.code +
+      ',' +
+      display.page +
+      ')" class="tab-item ' +
+      (display.code === mode ? 'tab-selected' : 'tab-unselected') +
+      '">' +
+      display.name +
+      '</div>';
+  });
+  tag += ' </div>';
 
   // ページング作成 TODO アルバムに対応
-  tag += createPagingTag(page, sortedMvsData.length);
+  tag += createPagingTag(mode, page, sortedMvsData.length);
 
   // タグ作成
   if (mode === DISPLAY.MV.code) {
@@ -168,7 +175,7 @@ function createDisplay(mode, page) {
   }
 
   // ページング作成 TODO アルバムに対応
-  tag += createPagingTag(page, sortedMvsData.length);
+  tag += createPagingTag(mode, page, sortedMvsData.length);
 
   // カラーチェンジ
   tag +=
@@ -179,4 +186,12 @@ function createDisplay(mode, page) {
 
   // CSS適用
   changeColor(0);
+
+  // ページング保持
+  for (let key in DISPLAY) {
+    if (DISPLAY[key].code === mode) {
+      DISPLAY[key].page = page;
+      break;
+    }
+  }
 }

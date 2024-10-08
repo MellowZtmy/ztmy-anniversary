@@ -12,10 +12,38 @@ h1 {
   font-size: 1.5em;
 }
 
+/* タブ切り替え用 */
+.tab-content {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+
+.tab-item {
+  flex: 1;
+  padding: 15px 0;
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer;
+  border: 2px solid ;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.tab-selected {
+  border-bottom: none;
+}
+
+.tab-unselected {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+}
+
+
 /* テキスト用CSS */
 *{
   font-family: "misaki_gothic_2nd";
-  image-rendering: pixelated;
   transition: background-color 0.3s, color 0.3s;
 }
 
@@ -38,6 +66,7 @@ h1 {
 .margin-bottom-100 {
   margin: auto auto 100px auto;
 }
+
 /* mv用CSS */
 .mv-list {
   display: flex;
@@ -95,8 +124,6 @@ h1 {
   height: 100%;
 }
 
-
-/* 横並びにするためのスタイル */
 .mv-info-container {
   display: flex;
   justify-content: space-between;
@@ -162,11 +189,7 @@ h1 {
   margin: 0 5px;
   border-radius: 5px;
   text-decoration: none;
-}
-
-.pagination a:hover {
-  background-color: #f0f0f0;
-  color: #007bff;
+  cursor: pointer;
 }
 
 .pagination a.active {

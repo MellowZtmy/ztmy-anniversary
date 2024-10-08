@@ -183,23 +183,13 @@ function sortByMonthDay(arr, sortColIndex) {
 }
 
 // ページングタグ作成
-function createPagingTag(currentPage, listLength) {
+function createPagingTag(currentMode, currentPage, listLength) {
   // 変数初期化
   var tag = '';
   var pageIndex = 0;
 
   // タグ生成
   tag += '<div class="pagination">';
-
-  // // 前ページ(最初のページじゃない場合非活性)
-  // tag +=
-  //   ' <a class="' +
-  //   (currentPage > 1 ? 'disabled' : 'active') +
-  //   'onclick="createDisplay(' +
-  //   currentMode +
-  //   ',' +
-  //   (currentPage - 1) +
-  //   ')">←</a>';
 
   // 設定ファイルの「1ページ当たり表示数」分行ループ
   for (let i = 0; i < listLength; i += appsettings.cardPerPage) {
@@ -215,16 +205,6 @@ function createPagingTag(currentPage, listLength) {
       pageIndex +
       '</a>';
   }
-
-  // // 次ページ(最終ページじゃない場合非活性)
-  // tag +=
-  //   ' <a class="' +
-  //   (pageIndex > currentPage ? 'disabled' : 'active') +
-  //   'onclick="createDisplay(' +
-  //   currentMode +
-  //   ',' +
-  //   (currentPage + 1) +
-  //   ')">→</a>';
 
   tag += '</div>';
 
