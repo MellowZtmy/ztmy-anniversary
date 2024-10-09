@@ -202,44 +202,18 @@ function createDisplay(mode, page) {
         leftDays +
         '</span>日</div>';
 
-      // アルバム 画像
-      tag += ' <div class="album-container-for-album">';
+      // Album ティザー or プレイリストYoutube表示
+      tag += '            <div class="card-iframe-container">';
+      tag += '                 <iframe ';
       tag +=
-        '<img src="' +
-        appsettings.albumImagePath +
-        album[2] +
-        '.jpg" alt="' +
-        album[2] +
-        '"class="album-for-album">';
-      tag += '        </div>'; //album-container-for-album
-      // ここまで アルバム 画像
-
-      // Album ティザー Youtube表示
-      if (album[8] !== appsettings.noDataString) {
-        tag += '            <div class="card-iframe-container">';
-        tag += '                 <iframe ';
-        tag +=
-          '                       src="https://www.youtube.com/embed/' +
-          album[8] +
-          '?loop=1&playlist=' +
-          album[8] +
-          '" frameborder="0" allowfullscreen>';
-        tag += '                </iframe> ';
-        tag += '             </div> ';
-      }
-      // ここまでAlbum ティザー Youtube
-
-      // // Album Youtube表示
-      // tag += '            <div class="card-iframe-container">';
-      // tag += '                 <iframe ';
-      // tag +=
-      //   '                       src="https://www.youtube.com/embed/' +
-      //   'videoseries?list=' +
-      //   album[5] +
-      //   '" frameborder="0" allowfullscreen>';
-      // tag += '                </iframe> ';
-      // tag += '             </div> ';
-      // // ここまでAlbum Youtube
+        '                       src="https://www.youtube.com/embed/' +
+        (album[8] !== appsettings.noDataString
+          ? album[8] + '?loop=1&playlist=' + album[8]
+          : 'videoseries?list=' + album[5]) +
+        '" frameborder="0" allowfullscreen>';
+      tag += '                </iframe> ';
+      tag += '             </div> ';
+      // ここまでAlbum ティザー or プレイリストYoutube表示
 
       // アルバム 情報
       tag += '<div class="card-info-container">';
@@ -252,6 +226,18 @@ function createDisplay(mode, page) {
       //   '<br>監督：' +
       //   album[appsettings.mvDirectorCol] +
       //   '</div>';
+
+      // アルバム 画像
+      tag += ' <div class="album-container-for-album">';
+      tag +=
+        '<img src="' +
+        appsettings.albumImagePath +
+        album[2] +
+        '.jpg" alt="' +
+        album[2] +
+        '"class="album album-for-album">';
+      tag += '        </div>'; //album-container-for-album
+      // ここまで アルバム 画像
 
       tag += '        </div>'; //card-info-container
 
