@@ -201,17 +201,32 @@ function createDisplay(mode, page) {
         '                  <div class="card-days">あと <span class="highlight">' +
         leftDays +
         '</span>日</div>';
-      // Album Youtube表示
-      tag += '            <div class="card-iframe-container">';
-      tag += '                 <iframe ';
-      tag +=
-        '                       src="https://www.youtube.com/embed/' +
-        'videoseries?list=' +
-        album[5] +
-        '" frameborder="0" allowfullscreen>';
-      tag += '                </iframe> ';
-      tag += '             </div> ';
-      // ここまでAlbum Youtube
+      // Album ティザー Youtube表示
+      if (album[8] !== appsettings.noDataString) {
+        tag += '            <div class="card-iframe-container">';
+        tag += '                 <iframe ';
+        tag +=
+          '                       src="https://www.youtube.com/embed/' +
+          album[8] +
+          '?loop=1&playlist=' +
+          album[8] +
+          '" frameborder="0" allowfullscreen>';
+        tag += '                </iframe> ';
+        tag += '             </div> ';
+      }
+      // ここまでAlbum ティザー Youtube
+
+      // // Album Youtube表示
+      // tag += '            <div class="card-iframe-container">';
+      // tag += '                 <iframe ';
+      // tag +=
+      //   '                       src="https://www.youtube.com/embed/' +
+      //   'videoseries?list=' +
+      //   album[5] +
+      //   '" frameborder="0" allowfullscreen>';
+      // tag += '                </iframe> ';
+      // tag += '             </div> ';
+      // // ここまでAlbum Youtube
 
       // アルバム 情報
       tag += '<div class="card-info-container">';
