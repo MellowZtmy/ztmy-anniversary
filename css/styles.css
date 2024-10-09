@@ -138,13 +138,13 @@ h1 {
   font-weight: bold;
 }
 
-.card-album-container {
+/* アルバム画像用CSS MV */
+.album-container-for-mv {
   text-align: right;
   margin-left: 10px;
 }
 
-/* 画像用CSS */
-.album {
+.album-for-mv  {
   width: 80px;
   height: 80px;
   border-radius: 10px;
@@ -152,7 +152,18 @@ h1 {
   transition: transform 0.3s ease;
 }
 
-.album:hover {
+/* アルバム画像用CSS アルバム */
+.album-container-for-album {
+  text-align: center;
+}
+
+.album-for-album  {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* アルバム画像用CSS 共通 */
+.album :hover {
   transform: scale(1.1);
 }
 

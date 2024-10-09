@@ -147,7 +147,7 @@ function createDisplay(mode, page) {
         '</div>';
 
       // アルバム
-      tag += ' <div class="card-album-container">';
+      tag += ' <div class="album-container-for-mv">';
       var album = song[appsettings.albumCol];
       if (album !== appsettings.noDataString) {
         tag +=
@@ -156,7 +156,7 @@ function createDisplay(mode, page) {
           album +
           '.jpg" alt="' +
           album +
-          '"class="album">';
+          '"class="album album-for-mv">';
       }
 
       // ミニアルバム
@@ -168,9 +168,9 @@ function createDisplay(mode, page) {
           minialbum +
           '.jpg" alt="' +
           minialbum +
-          '" class="album">';
+          '" class="album album-for-mv">';
       }
-      tag += '        </div>'; //card-album-container
+      tag += '        </div>'; //album-container-for-mv
       tag += '        </div>'; //card-info-container
 
       // MV公開年月日
@@ -201,6 +201,19 @@ function createDisplay(mode, page) {
         '                  <div class="card-days">あと <span class="highlight">' +
         leftDays +
         '</span>日</div>';
+
+      // アルバム 画像
+      tag += ' <div class="album-container-for-album">';
+      tag +=
+        '<img src="' +
+        appsettings.albumImagePath +
+        album[2] +
+        '.jpg" alt="' +
+        album[2] +
+        '"class="album-for-album">';
+      tag += '        </div>'; //album-container-for-album
+      // ここまで アルバム 画像
+
       // Album ティザー Youtube表示
       if (album[8] !== appsettings.noDataString) {
         tag += '            <div class="card-iframe-container">';
@@ -240,16 +253,6 @@ function createDisplay(mode, page) {
       //   album[appsettings.mvDirectorCol] +
       //   '</div>';
 
-      // アルバム
-      tag += ' <div class="card-album-container">';
-      tag +=
-        '<img src="' +
-        appsettings.albumImagePath +
-        album[2] +
-        '.jpg" alt="' +
-        album[2] +
-        '"class="album">';
-      tag += '        </div>'; //card-album-container
       tag += '        </div>'; //card-info-container
 
       // MV公開年月日
