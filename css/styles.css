@@ -68,13 +68,13 @@ h1 {
 }
 
 /* mv用CSS */
-.mv-list {
+.card-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.mv-item {
+.card-item {
   background-color: #fafafa;
   padding: 20px;
   border-radius: 12px;
@@ -82,11 +82,11 @@ h1 {
   transition: background-color 0.3s ease;
 }
 
-.mv-item:hover {
+.card-item:hover {
   background-color: #f4f4f4;
 }
 
-.mv-name {
+.card-name {
   font-weight: bold;
   font-size: 1.2em;
   color: #555;
@@ -99,14 +99,14 @@ h1 {
   color: #d2691e;
 }
 
-.mv-days {
+.card-days {
   color: #ff6347;
   font-size: 1.4em;
   text-align: center;
   margin-top: 10px;
 }
 
-.mv-iframe-container {
+.card-iframe-container {
   position: relative;
   width: 100%;
   padding-top: 56.25%; /* 16:9 aspect ratio */
@@ -116,7 +116,7 @@ h1 {
   overflow: hidden;
 }
 
-.mv-iframe-container iframe {
+.card-iframe-container iframe {
   position: absolute;
   top: 0;
   left: 0;
@@ -124,21 +124,21 @@ h1 {
   height: 100%;
 }
 
-.mv-info-container {
+.card-info-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 15px;
 }
 
-.mv-info {
+.card-info {
   margin-top: 15px;
   font-size: 1em;
   color: #555;
   font-weight: bold;
 }
 
-.mv-album-container {
+.card-album-container {
   text-align: right;
   margin-left: 10px;
 }
@@ -157,7 +157,7 @@ h1 {
 }
 
 /* 日付スタイル */
-.mv-date {
+.card-date {
   text-align: right;
   font-style: italic;
   font-family: "Georgia", serif;

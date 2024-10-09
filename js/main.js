@@ -102,26 +102,26 @@ function createDisplay(mode, page) {
     //////////////////////////////////////////
     // MV情報
     //////////////////////////////////////////
-    tag += '     <div class="mv-list">';
+    tag += '     <div class="card-list">';
     sortedData.slice(listStartIndex, listEndIndex).forEach(function (song) {
       // MV日付情報取得
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
 
       // 各MV生成
-      tag += '      <div name="mv" class="mv-item" >';
+      tag += '      <div class="card-item" >';
       tag +=
-        '              <div class="mv-name">' +
+        '              <div class="card-name">' +
         song[appsettings.songNameCol] +
         '<br><span class="highlight">' +
         getYearsToNextMonthDay(MVReleaseDateStr) +
         '</span>周年まで</div>';
       tag +=
-        '                  <div class="mv-days">あと <span class="highlight">' +
+        '                  <div class="card-days">あと <span class="highlight">' +
         mvLeftDays +
         '</span>日</div>';
       // MV Youtube表示
-      tag += '            <div class="mv-iframe-container">';
+      tag += '            <div class="card-iframe-container">';
       tag += '                 <iframe ';
       tag +=
         '                       src="https://www.youtube.com/embed/' +
@@ -135,8 +135,8 @@ function createDisplay(mode, page) {
 
       // MV 情報
       tag +=
-        '<div class="mv-info-container">' +
-        '<div class="mv-info">作詞：' +
+        '<div class="card-info-container">' +
+        '<div class="card-info">作詞：' +
         song[appsettings.writerCol] +
         '<br>作曲：' +
         song[appsettings.composerCol] +
@@ -147,7 +147,7 @@ function createDisplay(mode, page) {
         '</div>';
 
       // アルバム
-      tag += ' <div class="mv-album-container">';
+      tag += ' <div class="card-album-container">';
       var album = song[appsettings.albumCol];
       if (album !== appsettings.noDataString) {
         tag +=
@@ -164,60 +164,58 @@ function createDisplay(mode, page) {
       if (minialbum !== appsettings.noDataString) {
         tag +=
           '<img src="' +
-          appsettings.minialbumImagePath +
+          appsettings.albumImagePath +
           minialbum +
           '.jpg" alt="' +
           minialbum +
           '" class="album">';
       }
-      tag += '        </div>'; //mv-album-container
-      tag += '        </div>'; //mv-info-container
+      tag += '        </div>'; //card-album-container
+      tag += '        </div>'; //card-info-container
 
       // MV公開年月日
-      tag += '           <div class="mv-date">' + MVReleaseDateStr + '</div>';
+      tag += '           <div class="card-date">' + MVReleaseDateStr + '</div>';
 
-      tag += '        </div>'; //mv-item
+      tag += '        </div>'; //card-item
     });
-    tag += '         </div>'; //mv-list
+    tag += '         </div>'; //card-list
   } else if (mode === DISPLAY.ALBUM.code) {
     //////////////////////////////////////////
     // アルバム情報
     //////////////////////////////////////////
-    tag += '     <div class="mv-list">';
+    tag += '     <div class="card-list">';
     sortedData.slice(listStartIndex, listEndIndex).forEach(function (album) {
       // アルバム日付情報取得
       const releaseDateStr = album[display.sortCol];
       const leftDays = getDaysToNextMonthDay(releaseDateStr);
 
       // 各MV生成
-      tag += '      <div name="mv" class="mv-item" >';
+      tag += '      <div class="card-item" >';
       tag +=
-        '              <div class="mv-name">' +
+        '              <div class="card-name">' +
         album[2] +
         '<br><span class="highlight">' +
         getYearsToNextMonthDay(releaseDateStr) +
         '</span>周年まで</div>';
       tag +=
-        '                  <div class="mv-days">あと <span class="highlight">' +
+        '                  <div class="card-days">あと <span class="highlight">' +
         leftDays +
         '</span>日</div>';
-      // // MV Youtube表示
-      // tag += '            <div class="mv-iframe-container">';
-      // tag += '                 <iframe ';
-      // tag +=
-      //   '                       src="https://www.youtube.com/embed/' +
-      //   album[appsettings.mvIdCol] +
-      //   '?loop=1&playlist=' +
-      //   album[appsettings.mvIdCol] +
-      //   '" frameborder="0" allowfullscreen>';
-      // tag += '                </iframe> ';
-      // tag += '             </div> ';
-      // // ここまでMV Youtube
+      // Album Youtube表示
+      tag += '            <div class="card-iframe-container">';
+      tag += '                 <iframe ';
+      tag +=
+        '                       src="https://www.youtube.com/embed/' +
+        'videoseries?list=' +
+        album[5] +
+        '" frameborder="0" allowfullscreen>';
+      tag += '                </iframe> ';
+      tag += '             </div> ';
+      // ここまでAlbum Youtube
 
-      // // MV 情報
-      // tag +=
-      //   '<div class="mv-info-container">' +
-      //   '<div class="mv-info">作詞：' +
+      // アルバム 情報
+      tag += '<div class="card-info-container">';
+      //   '<div class="card-info">作詞：' +
       //   album[appsettings.writerCol] +
       //   '<br>作曲：' +
       //   album[appsettings.composerCol] +
@@ -227,39 +225,24 @@ function createDisplay(mode, page) {
       //   album[appsettings.mvDirectorCol] +
       //   '</div>';
 
-      // // アルバム
-      // tag += ' <div class="mv-album-container">';
-      // var album = album[appsettings.albumCol];
-      // if (album !== appsettings.noDataString) {
-      //   tag +=
-      //     '<img src="' +
-      //     appsettings.albumImagePath +
-      //     album +
-      //     '.jpg" alt="' +
-      //     album +
-      //     '"class="album">';
-      // }
-
-      // // ミニアルバム
-      // var minialbum = album[appsettings.minialbumCol];
-      // if (minialbum !== appsettings.noDataString) {
-      //   tag +=
-      //     '<img src="' +
-      //     appsettings.minialbumImagePath +
-      //     minialbum +
-      //     '.jpg" alt="' +
-      //     minialbum +
-      //     '" class="album">';
-      // }
-      // tag += '        </div>'; //mv-album-container
-      // tag += '        </div>'; //mv-info-container
+      // アルバム
+      tag += ' <div class="card-album-container">';
+      tag +=
+        '<img src="' +
+        appsettings.albumImagePath +
+        album[2] +
+        '.jpg" alt="' +
+        album[2] +
+        '"class="album">';
+      tag += '        </div>'; //card-album-container
+      tag += '        </div>'; //card-info-container
 
       // MV公開年月日
-      tag += '           <div class="mv-date">' + releaseDateStr + '</div>';
+      tag += '           <div class="card-date">' + releaseDateStr + '</div>';
 
-      tag += '        </div>'; //mv-item
+      tag += '        </div>'; //card-item
     });
-    tag += '         </div>'; //mv-list
+    tag += '         </div>'; //card-list
   }
 
   // ページング作成
