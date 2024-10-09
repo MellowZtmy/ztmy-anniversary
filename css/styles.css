@@ -145,8 +145,8 @@ h1 {
 }
 
 .album-for-mv  {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 10px;
   margin-left: 5px;
   transition: transform 0.3s ease;
@@ -159,8 +159,8 @@ h1 {
 }
 
 .album-for-album  {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 10px;
   margin-left: 5px;
   transition: transform 0.3s ease;

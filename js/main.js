@@ -203,6 +203,13 @@ function createDisplay(mode, page) {
         '</span>日</div>';
 
       // Album ティザー or プレイリストYoutube表示
+
+      tag +=
+        '<div class="card-info">【' +
+        (album[8] !== appsettings.noDataString
+          ? 'ティザーPV'
+          : 'プレイリスト') +
+        '】</div>';
       tag += '            <div class="card-iframe-container">';
       tag += '                 <iframe ';
       tag +=
