@@ -3,9 +3,9 @@
  */
 // 画面表示モード、表示文字列、ページ
 var DISPLAY = {
-  MV: { code: 0, name: 'MV', page: 1 },
-  ALBUM: { code: 1, name: 'Album', page: 1 },
-  LIVE: { code: 2, name: 'Live', page: 1 },
+  MV: { code: 0, name: 'MV', page: 1, data: [], sortCol: null },
+  ALBUM: { code: 1, name: 'Album', page: 1, data: [], sortCol: null },
+  LIVE: { code: 2, name: 'Live', page: 1, data: [], sortCol: null },
 };
 // 画面ロードした日時を取得
 const globalToday = new Date();
@@ -13,8 +13,6 @@ const globalToday = new Date();
 var appsettings = [];
 // 全楽曲情報
 var songsData = [];
-// MV曲情報
-var mvsData = [];
 // カラーセット
 var colorSets = [];
 
@@ -32,11 +30,19 @@ $(document).ready(async function () {
       appsettings.songsFileName,
       appsettings.songSkipRowCount
     );
-    mvsData = songsData.filter(
+    DISPLAY.MV.data = songsData.filter(
       (row) => row[appsettings.MVReleaseDateCol] !== appsettings.noDataString
     );
+    DISPLAY.MV.sortCol = appsettings.MVReleaseDateCol;
 
-    // 3. カラーセット読み込み
+    // 3. アルバム情報読み込み
+    DISPLAY.ALBUM.data = await fetchCsvData(
+      appsettings.albumsFileName,
+      appsettings.albumsSkipRowCount
+    );
+    DISPLAY.ALBUM.sortCol = appsettings.albumReleaseDateCol;
+
+    // 4. カラーセット読み込み
     colorSets = await fetchCsvData(
       appsettings.colorSetsFileName,
       appsettings.colorSkipRowCount
@@ -52,8 +58,9 @@ $(document).ready(async function () {
 
 // 画面タグ作成
 function createDisplay(mode, page) {
-  // 楽曲を日付順に並び変える TODO アルバムに対応
-  var sortedMvsData = sortByMonthDay(mvsData, appsettings.MVReleaseDateCol);
+  // 楽曲を日付順に並び変える
+  var display = Object.values(DISPLAY).find((item) => item.code === mode);
+  var sortedData = sortByMonthDay(display.data, display.sortCol);
 
   // 表示開始/終了index
   var listStartIndex = appsettings.cardPerPage * (page - 1);
@@ -87,8 +94,8 @@ function createDisplay(mode, page) {
   });
   tag += ' </div>';
 
-  // ページング作成 TODO アルバムに対応
-  tag += createPagingTag(mode, page, sortedMvsData.length);
+  // ページング作成
+  tag += createPagingTag(mode, page, sortedData.length);
 
   // タグ作成
   if (mode === DISPLAY.MV.code) {
@@ -96,7 +103,7 @@ function createDisplay(mode, page) {
     // MV情報
     //////////////////////////////////////////
     tag += '     <div class="mv-list">';
-    sortedMvsData.slice(listStartIndex, listEndIndex).forEach(function (song) {
+    sortedData.slice(listStartIndex, listEndIndex).forEach(function (song) {
       // MV日付情報取得
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
@@ -140,7 +147,7 @@ function createDisplay(mode, page) {
         '</div>';
 
       // アルバム
-      tag += ' <div class="album-container">';
+      tag += ' <div class="mv-album-container">';
       var album = song[appsettings.albumCol];
       if (album !== appsettings.noDataString) {
         tag +=
@@ -163,7 +170,7 @@ function createDisplay(mode, page) {
           minialbum +
           '" class="album">';
       }
-      tag += '        </div>'; //mv-info
+      tag += '        </div>'; //mv-album-container
       tag += '        </div>'; //mv-info-container
 
       // MV公開年月日
@@ -172,10 +179,91 @@ function createDisplay(mode, page) {
       tag += '        </div>'; //mv-item
     });
     tag += '         </div>'; //mv-list
+  } else if (mode === DISPLAY.ALBUM.code) {
+    //////////////////////////////////////////
+    // アルバム情報
+    //////////////////////////////////////////
+    tag += '     <div class="mv-list">';
+    sortedData.slice(listStartIndex, listEndIndex).forEach(function (album) {
+      // アルバム日付情報取得
+      const releaseDateStr = album[display.sortCol];
+      const leftDays = getDaysToNextMonthDay(releaseDateStr);
+
+      // 各MV生成
+      tag += '      <div name="mv" class="mv-item" >';
+      tag +=
+        '              <div class="mv-name">' +
+        album[2] +
+        '<br><span class="highlight">' +
+        getYearsToNextMonthDay(releaseDateStr) +
+        '</span>周年まで</div>';
+      tag +=
+        '                  <div class="mv-days">あと <span class="highlight">' +
+        leftDays +
+        '</span>日</div>';
+      // // MV Youtube表示
+      // tag += '            <div class="mv-iframe-container">';
+      // tag += '                 <iframe ';
+      // tag +=
+      //   '                       src="https://www.youtube.com/embed/' +
+      //   album[appsettings.mvIdCol] +
+      //   '?loop=1&playlist=' +
+      //   album[appsettings.mvIdCol] +
+      //   '" frameborder="0" allowfullscreen>';
+      // tag += '                </iframe> ';
+      // tag += '             </div> ';
+      // // ここまでMV Youtube
+
+      // // MV 情報
+      // tag +=
+      //   '<div class="mv-info-container">' +
+      //   '<div class="mv-info">作詞：' +
+      //   album[appsettings.writerCol] +
+      //   '<br>作曲：' +
+      //   album[appsettings.composerCol] +
+      //   '<br>編曲：' +
+      //   album[appsettings.arrangerCol] +
+      //   '<br>監督：' +
+      //   album[appsettings.mvDirectorCol] +
+      //   '</div>';
+
+      // // アルバム
+      // tag += ' <div class="mv-album-container">';
+      // var album = album[appsettings.albumCol];
+      // if (album !== appsettings.noDataString) {
+      //   tag +=
+      //     '<img src="' +
+      //     appsettings.albumImagePath +
+      //     album +
+      //     '.jpg" alt="' +
+      //     album +
+      //     '"class="album">';
+      // }
+
+      // // ミニアルバム
+      // var minialbum = album[appsettings.minialbumCol];
+      // if (minialbum !== appsettings.noDataString) {
+      //   tag +=
+      //     '<img src="' +
+      //     appsettings.minialbumImagePath +
+      //     minialbum +
+      //     '.jpg" alt="' +
+      //     minialbum +
+      //     '" class="album">';
+      // }
+      // tag += '        </div>'; //mv-album-container
+      // tag += '        </div>'; //mv-info-container
+
+      // MV公開年月日
+      tag += '           <div class="mv-date">' + releaseDateStr + '</div>';
+
+      tag += '        </div>'; //mv-item
+    });
+    tag += '         </div>'; //mv-list
   }
 
-  // ページング作成 TODO アルバムに対応
-  tag += createPagingTag(mode, page, sortedMvsData.length);
+  // ページング作成
+  tag += createPagingTag(mode, page, sortedData.length);
 
   // カラーチェンジ
   tag +=
