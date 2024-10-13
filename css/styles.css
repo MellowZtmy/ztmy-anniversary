@@ -138,29 +138,14 @@ h1 {
   font-weight: bold;
 }
 
-/* アルバム画像用CSS MV */
-.album-container-for-mv {
+/* アルバム画像用CSS */
+.album-container {
   text-align: right;
   margin-left: 10px;
 }
 
-.album-for-mv  {
+.album {
   width: 80px;
-  height: 80px;
-  border-radius: 10px;
-  margin-left: 5px;
-  transition: transform 0.3s ease;
-}
-
-/* アルバム画像用CSS アルバム */
-.album-container-for-album {
-  text-align: right;
-  margin-left: 10px;
-}
-
-.album-for-album  {
-  width: 80px;
-  height: 80px;
   border-radius: 10px;
   margin-left: 5px;
   transition: transform 0.3s ease;

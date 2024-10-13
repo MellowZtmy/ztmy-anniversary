@@ -170,7 +170,7 @@ function createDisplay(mode, page) {
         '</div>';
 
       // アルバム
-      tag += ' <div class="album-container-for-mv">';
+      tag += ' <div class="album-container">';
       var album = song[appsettings.albumCol];
       if (album !== appsettings.noDataString) {
         tag +=
@@ -179,7 +179,7 @@ function createDisplay(mode, page) {
           album +
           '.jpg" alt="' +
           album +
-          '"class="album album-for-mv">';
+          '"class="album album">';
       }
 
       // ミニアルバム
@@ -191,9 +191,9 @@ function createDisplay(mode, page) {
           minialbum +
           '.jpg" alt="' +
           minialbum +
-          '" class="album album-for-mv">';
+          '" class="album album">';
       }
-      tag += '        </div>'; //album-container-for-mv
+      tag += '        </div>'; //album-container
       tag += '        </div>'; //card-info-container
 
       // MV公開年月日
@@ -260,15 +260,15 @@ function createDisplay(mode, page) {
       tag += '</div>';
 
       // アルバム 画像
-      tag += ' <div class="album-container-for-album">';
+      tag += ' <div class="album-container">';
       tag +=
         '<img src="' +
         appsettings.albumImagePath +
         album[2] +
         '.jpg" alt="' +
         album[2] +
-        '"class="album album-for-album">';
-      tag += '        </div>'; //album-container-for-album
+        '"class="album album">';
+      tag += '        </div>'; //album-container
       // ここまで アルバム 画像
 
       tag += '        </div>'; //card-info-container
