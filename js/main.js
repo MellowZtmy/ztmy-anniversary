@@ -226,13 +226,13 @@ function createDisplay(mode, page) {
         '</span>日</div>';
 
       // Album ティザー Youtube表示
-      if (album[8] !== appsettings.noDataString) {
+      if (album[9] !== appsettings.noDataString) {
         tag += '<div class="card-info">【ティザーPV】</div>';
         tag += '            <div class="card-iframe-container">';
         tag += '                 <iframe ';
         tag +=
           '                       src="https://www.youtube.com/embed/?loop=1&playlist=' +
-          album[8] +
+          album[9] +
           '" frameborder="0" allowfullscreen>';
         tag += '                </iframe> ';
         tag += '             </div> ';
@@ -253,15 +253,11 @@ function createDisplay(mode, page) {
 
       // アルバム 情報
       tag += '<div class="card-info-container">';
-      //   '<div class="card-info">作詞：' +
-      //   album[appsettings.writerCol] +
-      //   '<br>作曲：' +
-      //   album[appsettings.composerCol] +
-      //   '<br>編曲：' +
-      //   album[appsettings.arrangerCol] +
-      //   '<br>監督：' +
-      //   album[appsettings.mvDirectorCol] +
-      //   '</div>';
+      tag += '<div class="card-info">';
+      album[6].split(appsettings.comma).forEach(function (song, index) {
+        tag += (index + 1).toString().padStart(2, '0') + '. ' + song + '<br>';
+      });
+      tag += '</div>';
 
       // アルバム 画像
       tag += ' <div class="album-container-for-album">';
