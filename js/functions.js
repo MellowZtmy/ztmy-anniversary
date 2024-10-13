@@ -220,14 +220,16 @@ function addEnlargeImageEvent() {
   // すべてのimgタグにクリックイベントを追加
   document.querySelectorAll('img').forEach((image) => {
     image.addEventListener('click', () => {
-      overlay.style.display = 'flex';
+      overlay.classList.add('active');
       overlayImage.src = image.src;
     });
   });
 
   // オーバーレイをクリックすると閉じる
   overlay.addEventListener('click', () => {
-    overlay.style.display = 'none';
-    overlayImage.src = ''; // 拡大表示終了時に画像をクリア
+    overlay.classList.remove('active');
+    setTimeout(() => {
+      overlayImage.src = ''; // フェードアウト後に画像をクリア
+    }, 500); // トランジションの時間と合わせる
   });
 }

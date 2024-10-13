@@ -223,14 +223,30 @@ h1 {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
-  display: none; /* デフォルトでは非表示 */
+  display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0; /* 初期状態では透明 */
+  visibility: hidden; /* 初期状態では非表示 */
+  transition: opacity 0.5s ease, visibility 0s 0.5s; /* トランジション効果 */
   z-index: 1000;
+}
+
+/* オーバーレイが表示された時の状態 */
+#overlay.active {
+  opacity: 1;
+  visibility: visible; /* フェードイン後に表示 */
+  transition: opacity 0.5s ease; /* フェードインのトランジション */
 }
 
 /* 画像を拡大表示するスタイル */
 #overlay img {
   max-width: 90%;
   max-height: 90%;
+  transition: transform 0.5s ease; /* 拡大時のトランジション効果 */
+}
+
+/* オーバーレイがアクティブになったときの拡大 */
+#overlay.active img {
+  transform: scale(1); /* 拡大された状態 */
 }
