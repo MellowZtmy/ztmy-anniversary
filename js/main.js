@@ -259,17 +259,28 @@ function createDisplay(mode, page) {
       });
       tag += '</div>';
 
-      // アルバム 画像
+      // 画像
       tag += ' <div class="album-container">';
+      // アルバム 画像
       tag +=
         '<img src="' +
         appsettings.albumImagePath +
         album[2] +
         '.jpg" alt="' +
         album[2] +
-        '"class="album album">';
-      tag += '        </div>'; //album-container
+        '"class="album">';
       // ここまで アルバム 画像
+
+      // 魔導書 画像
+      tag +=
+        '<img src="' +
+        appsettings.grimoireImagePath +
+        album[2] +
+        '.jpg" alt="' +
+        album[2] +
+        '"class="album">';
+      // ここまで 魔導書 画像
+      tag += '        </div>'; //album-container
 
       tag += '        </div>'; //card-info-container
 
