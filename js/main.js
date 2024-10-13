@@ -286,7 +286,7 @@ function createDisplay(mode, page) {
 
   // カラーチェンジ
   tag +=
-    ' <h2 id="changeColor" class="center-text margin-top-20" onclick="changeColor(1)">Color ↺</h2>';
+    ' <h2 id="changeColor" class="center-text margin-top-20" style="cursor: pointer;" onclick="changeColor(1)">Color ↺</h2>';
 
   // タグ流し込み
   $('#display').append(tag);
