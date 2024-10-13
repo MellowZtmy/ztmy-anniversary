@@ -210,3 +210,24 @@ function createPagingTag(currentMode, currentPage, listLength, cardPerPage) {
 
   return tag;
 }
+
+// 画像クリックイベント追加
+function addEnlargeImageEvent() {
+  // 拡大表示用の要素を取得
+  const overlay = document.getElementById('overlay');
+  const overlayImage = overlay.querySelector('img');
+
+  // すべてのimgタグにクリックイベントを追加
+  document.querySelectorAll('img').forEach((image) => {
+    image.addEventListener('click', () => {
+      overlay.style.display = 'flex';
+      overlayImage.src = image.src;
+    });
+  });
+
+  // オーバーレイをクリックすると閉じる
+  overlay.addEventListener('click', () => {
+    overlay.style.display = 'none';
+    overlayImage.src = ''; // 拡大表示終了時に画像をクリア
+  });
+}

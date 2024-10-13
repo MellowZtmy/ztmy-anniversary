@@ -294,6 +294,9 @@ function createDisplay(mode, page) {
   // CSS適用
   changeColor(0);
 
+  // 画像拡大設定
+  addEnlargeImageEvent();
+
   // ページング保持
   for (let key in DISPLAY) {
     if (DISPLAY[key].code === mode) {
