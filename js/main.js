@@ -3,9 +3,30 @@
  */
 // 画面表示モード、表示文字列、ページ
 var DISPLAY = {
-  MV: { code: 0, name: 'MV', page: 1, data: [], sortCol: null },
-  ALBUM: { code: 1, name: 'Album', page: 1, data: [], sortCol: null },
-  LIVE: { code: 2, name: 'Live', page: 1, data: [], sortCol: null },
+  MV: {
+    code: 0,
+    name: 'MV',
+    page: 1,
+    data: [],
+    sortCol: null,
+    cardPerPage: null,
+  },
+  ALBUM: {
+    code: 1,
+    name: 'Album',
+    page: 1,
+    data: [],
+    sortCol: null,
+    cardPerPage: null,
+  },
+  LIVE: {
+    code: 2,
+    name: 'Live',
+    page: 1,
+    data: [],
+    sortCol: null,
+    cardPerPage: null,
+  },
 };
 // 画面ロードした日時を取得
 const globalToday = new Date();
@@ -34,6 +55,7 @@ $(document).ready(async function () {
       (row) => row[appsettings.MVReleaseDateCol] !== appsettings.noDataString
     );
     DISPLAY.MV.sortCol = appsettings.MVReleaseDateCol;
+    DISPLAY.MV.cardPerPage = appsettings.cardPerPageMV;
 
     // 3. アルバム情報読み込み
     DISPLAY.ALBUM.data = await fetchCsvData(
@@ -41,6 +63,7 @@ $(document).ready(async function () {
       appsettings.albumsSkipRowCount
     );
     DISPLAY.ALBUM.sortCol = appsettings.albumReleaseDateCol;
+    DISPLAY.ALBUM.cardPerPage = appsettings.cardPerPageAlbum;
 
     // 4. カラーセット読み込み
     colorSets = await fetchCsvData(
@@ -63,8 +86,8 @@ function createDisplay(mode, page) {
   var sortedData = sortByMonthDay(display.data, display.sortCol);
 
   // 表示開始/終了index
-  var listStartIndex = appsettings.cardPerPage * (page - 1);
-  var listEndIndex = listStartIndex + appsettings.cardPerPage;
+  var listStartIndex = display.cardPerPage * (page - 1);
+  var listEndIndex = listStartIndex + display.cardPerPage;
 
   // タグクリア
   $('#display').empty();
@@ -95,7 +118,7 @@ function createDisplay(mode, page) {
   tag += ' </div>';
 
   // ページング作成
-  tag += createPagingTag(mode, page, sortedData.length);
+  tag += createPagingTag(mode, page, sortedData.length, display.cardPerPage);
 
   // タグ作成
   if (mode === DISPLAY.MV.code) {
@@ -202,25 +225,31 @@ function createDisplay(mode, page) {
         leftDays +
         '</span>日</div>';
 
-      // Album ティザー or プレイリストYoutube表示
+      // Album ティザー Youtube表示
+      if (album[8] !== appsettings.noDataString) {
+        tag += '<div class="card-info">【ティザーPV】</div>';
+        tag += '            <div class="card-iframe-container">';
+        tag += '                 <iframe ';
+        tag +=
+          '                       src="https://www.youtube.com/embed/?loop=1&playlist=' +
+          album[8] +
+          '" frameborder="0" allowfullscreen>';
+        tag += '                </iframe> ';
+        tag += '             </div> ';
+      }
+      // ここまでAlbum ティザー Youtube表示
 
-      tag +=
-        '<div class="card-info">【' +
-        (album[8] !== appsettings.noDataString
-          ? 'ティザーPV'
-          : 'プレイリスト') +
-        '】</div>';
+      // Album ティザー Youtube表示
+      tag += '<div class="card-info">【プレイリスト】</div>';
       tag += '            <div class="card-iframe-container">';
       tag += '                 <iframe ';
       tag +=
-        '                       src="https://www.youtube.com/embed/' +
-        (album[8] !== appsettings.noDataString
-          ? album[8] + '?loop=1&playlist=' + album[8]
-          : 'videoseries?list=' + album[5]) +
+        '                       src="https://www.youtube.com/embed/videoseries?list=' +
+        album[5] +
         '" frameborder="0" allowfullscreen>';
       tag += '                </iframe> ';
       tag += '             </div> ';
-      // ここまでAlbum ティザー or プレイリストYoutube表示
+      // ここまでAlbum ティザー Youtube表示
 
       // アルバム 情報
       tag += '<div class="card-info-container">';
@@ -257,7 +286,7 @@ function createDisplay(mode, page) {
   }
 
   // ページング作成
-  tag += createPagingTag(mode, page, sortedData.length);
+  tag += createPagingTag(mode, page, sortedData.length, display.cardPerPage);
 
   // カラーチェンジ
   tag +=

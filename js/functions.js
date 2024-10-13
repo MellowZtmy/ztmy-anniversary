@@ -183,7 +183,7 @@ function sortByMonthDay(arr, sortColIndex) {
 }
 
 // ページングタグ作成
-function createPagingTag(currentMode, currentPage, listLength) {
+function createPagingTag(currentMode, currentPage, listLength, cardPerPage) {
   // 変数初期化
   var tag = '';
   var pageIndex = 0;
@@ -192,7 +192,7 @@ function createPagingTag(currentMode, currentPage, listLength) {
   tag += '<div class="pagination">';
 
   // 設定ファイルの「1ページ当たり表示数」分行ループ
-  for (let i = 0; i < listLength; i += appsettings.cardPerPage) {
+  for (let i = 0; i < listLength; i += cardPerPage) {
     pageIndex++;
     tag +=
       ' <a class="' +
