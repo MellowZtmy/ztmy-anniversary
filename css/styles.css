@@ -80,6 +80,7 @@ h1 {
   border-radius: 12px;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
+  width: 100%;
 }
 
 .card-item:hover {
@@ -91,6 +92,34 @@ h1 {
   font-size: 1.2em;
   color: #555;
 }
+
+.card-iframe-container iframe {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+/* 横並びにするメディアクエリ */
+@media (min-width: 768px) {
+  .card-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .card-item {
+    flex: 1 1 100%; /* 1列に並ぶ */
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-item {
+    flex: 1 1 calc(33.33% - 20px); /* 3列に並ぶ */
+    max-width: calc(33.33% - 20px);
+  }
+}
+
+
 
 /* 強調スタイル */
 .highlight {
