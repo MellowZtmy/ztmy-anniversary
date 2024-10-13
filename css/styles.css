@@ -108,8 +108,8 @@ h1 {
 
 @media (min-width: 1024px) {
   .card-item {
-    flex: 1 1 calc(33.33% - 60px); /* 3列に並ぶ */
-    max-width: calc(33.33% - 60px);
+    flex: 1 1 calc(33.33% - 55px); /* 3列に並ぶ */
+    max-width: calc(33.33% - 55px);
   }
 }
 
