@@ -228,8 +228,6 @@ function addEnlargeImageEvent() {
   // オーバーレイをクリックすると閉じる
   overlay.addEventListener('click', () => {
     overlay.classList.remove('active');
-    setTimeout(() => {
-      overlayImage.src = ''; // フェードアウト後に画像をクリア
-    }, 500); // トランジションの時間と合わせる
+    overlayImage.src = ''; // フェードアウト後に画像をクリア
   });
 }
