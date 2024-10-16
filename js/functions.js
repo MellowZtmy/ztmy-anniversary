@@ -125,7 +125,13 @@ function sortByMonthDay(arr, sortColIndex) {
 }
 
 // ページングタグ作成
-function createPagingTag(currentMode, currentPage, listLength, cardPerPage) {
+function createPagingTag(
+  currentMode,
+  currentPage,
+  listLength,
+  cardPerPage,
+  sortMode
+) {
   // 変数初期化
   var tag = '';
   var pageIndex = 0;
@@ -143,6 +149,8 @@ function createPagingTag(currentMode, currentPage, listLength, cardPerPage) {
       currentMode +
       ',' +
       pageIndex +
+      ',' +
+      sortMode +
       ')">' +
       pageIndex +
       '</a>';

@@ -6,6 +6,11 @@
 const globalToday = new Date();
 // 画面表示モード、表示文字列、ページ
 var DISPLAY = {};
+// ソートモード
+var SORTMODE = {
+  monthDay: 0,
+  yearMonthDay: 1,
+};
 // 設定ファイル情報
 var appsettings = [];
 // 全楽曲情報
@@ -39,6 +44,7 @@ $(document).ready(async function () {
             row[appsettings.MVReleaseDateCol] !== appsettings.noDataString
         ),
         sortCol: appsettings.MVReleaseDateCol,
+        sortMode: SORTMODE.monthDay,
         cardPerPage: appsettings.cardPerPageMV,
       },
       ALBUM: {
@@ -50,6 +56,7 @@ $(document).ready(async function () {
           appsettings.albumsSkipRowCount
         ),
         sortCol: appsettings.albumReleaseDateCol,
+        sortMode: SORTMODE.monthDay,
         cardPerPage: appsettings.cardPerPageAlbum,
       },
       LIVE: {
@@ -58,6 +65,7 @@ $(document).ready(async function () {
         page: 1,
         data: [],
         sortCol: null,
+        sortMode: SORTMODE.monthDay,
         cardPerPage: null,
       },
     };
@@ -69,7 +77,7 @@ $(document).ready(async function () {
     );
 
     // 開始画面を表示
-    createDisplay(DISPLAY.MV.code, 1);
+    createDisplay(DISPLAY.MV.code, 1, SORTMODE.monthDay);
   } catch (error) {
     // エラーハンドリング
     showError('Failed to load data:', error);
@@ -77,10 +85,13 @@ $(document).ready(async function () {
 });
 
 // 画面タグ作成
-function createDisplay(mode, page) {
+function createDisplay(mode, page, sortMode) {
   // 楽曲を日付順に並び変える
   var display = Object.values(DISPLAY).find((item) => item.code === mode);
-  var sortedData = sortByMonthDay(display.data, display.sortCol);
+  var sortedData =
+    sortMode === SORTMODE.monthDay
+      ? sortByMonthDay(display.data, display.sortCol)
+      : display.data;
 
   // 表示開始/終了index
   var listStartIndex = display.cardPerPage * (page - 1);
@@ -106,6 +117,8 @@ function createDisplay(mode, page) {
       display.code +
       ',' +
       display.page +
+      ',' +
+      display.sortMode +
       ')" class="tab-item ' +
       (display.code === mode ? 'tab-selected' : 'tab-unselected') +
       '">' +
@@ -115,7 +128,13 @@ function createDisplay(mode, page) {
   tag += ' </div>';
 
   // ページング作成
-  tag += createPagingTag(mode, page, sortedData.length, display.cardPerPage);
+  tag += createPagingTag(
+    mode,
+    page,
+    sortedData.length,
+    display.cardPerPage,
+    display.sortMode
+  );
 
   // タグ作成
   if (mode === DISPLAY.MV.code) {
@@ -290,7 +309,13 @@ function createDisplay(mode, page) {
   }
 
   // ページング作成
-  tag += createPagingTag(mode, page, sortedData.length, display.cardPerPage);
+  tag += createPagingTag(
+    mode,
+    page,
+    sortedData.length,
+    display.cardPerPage,
+    display.sortMode
+  );
 
   // カラーチェンジ
   tag +=
