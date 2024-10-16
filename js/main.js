@@ -1,35 +1,11 @@
 /**
  * 【定数設定】
  */
-// 画面表示モード、表示文字列、ページ
-var DISPLAY = {
-  MV: {
-    code: 0,
-    name: 'MV',
-    page: 1,
-    data: [],
-    sortCol: null,
-    cardPerPage: null,
-  },
-  ALBUM: {
-    code: 1,
-    name: 'Album',
-    page: 1,
-    data: [],
-    sortCol: null,
-    cardPerPage: null,
-  },
-  LIVE: {
-    code: 2,
-    name: 'Live',
-    page: 1,
-    data: [],
-    sortCol: null,
-    cardPerPage: null,
-  },
-};
+
 // 画面ロードした日時を取得
 const globalToday = new Date();
+// 画面表示モード、表示文字列、ページ
+var DISPLAY = {};
 // 設定ファイル情報
 var appsettings = [];
 // 全楽曲情報
@@ -51,27 +27,48 @@ $(document).ready(async function () {
       appsettings.songsFileName,
       appsettings.songSkipRowCount
     );
-    DISPLAY.MV.data = songsData.filter(
-      (row) => row[appsettings.MVReleaseDateCol] !== appsettings.noDataString
-    );
-    DISPLAY.MV.sortCol = appsettings.MVReleaseDateCol;
-    DISPLAY.MV.cardPerPage = appsettings.cardPerPageMV;
 
-    // 3. アルバム情報読み込み
-    DISPLAY.ALBUM.data = await fetchCsvData(
-      appsettings.albumsFileName,
-      appsettings.albumsSkipRowCount
-    );
-    DISPLAY.ALBUM.sortCol = appsettings.albumReleaseDateCol;
-    DISPLAY.ALBUM.cardPerPage = appsettings.cardPerPageAlbum;
+    // 3. 画面表示モード、表示文字列、ページ
+    DISPLAY = {
+      MV: {
+        code: 0,
+        name: 'MV',
+        page: 1,
+        data: songsData.filter(
+          (row) =>
+            row[appsettings.MVReleaseDateCol] !== appsettings.noDataString
+        ),
+        sortCol: appsettings.MVReleaseDateCol,
+        cardPerPage: appsettings.cardPerPageMV,
+      },
+      ALBUM: {
+        code: 1,
+        name: 'ALBUM',
+        page: 1,
+        data: await fetchCsvData(
+          appsettings.albumsFileName,
+          appsettings.albumsSkipRowCount
+        ),
+        sortCol: appsettings.albumReleaseDateCol,
+        cardPerPage: appsettings.cardPerPageAlbum,
+      },
+      LIVE: {
+        code: 2,
+        name: 'LIVE',
+        page: 1,
+        data: [],
+        sortCol: null,
+        cardPerPage: null,
+      },
+    };
 
-    // 4. カラーセット読み込み
+    // 4. カラーセット
     colorSets = await fetchCsvData(
       appsettings.colorSetsFileName,
       appsettings.colorSkipRowCount
     );
 
-    // 5. 開始画面を表示
+    // 開始画面を表示
     createDisplay(DISPLAY.MV.code, 1);
   } catch (error) {
     // エラーハンドリング
