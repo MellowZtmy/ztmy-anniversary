@@ -36,7 +36,7 @@ $(document).ready(async function () {
     // 3. 画面表示モード、表示文字列、ページ
     DISPLAY = {
       MV: {
-        code: 0,
+        mode: 0,
         name: 'MV',
         page: 1,
         data: songsData.filter(
@@ -48,7 +48,7 @@ $(document).ready(async function () {
         cardPerPage: appsettings.cardPerPageMV,
       },
       ALBUM: {
-        code: 1,
+        mode: 1,
         name: 'ALBUM',
         page: 1,
         data: await fetchCsvData(
@@ -60,7 +60,7 @@ $(document).ready(async function () {
         cardPerPage: appsettings.cardPerPageAlbum,
       },
       LIVE: {
-        code: 2,
+        mode: 2,
         name: 'LIVE',
         page: 1,
         data: [],
@@ -77,7 +77,7 @@ $(document).ready(async function () {
     );
 
     // 開始画面を表示
-    createDisplay(DISPLAY.MV.code, 1, SORTMODE.monthDay);
+    createDisplay(DISPLAY.MV.mode, 1, SORTMODE.monthDay);
   } catch (error) {
     // エラーハンドリング
     showError('Failed to load data:', error);
@@ -86,15 +86,24 @@ $(document).ready(async function () {
 
 // 画面タグ作成
 function createDisplay(mode, page, sortMode) {
+  // ページング、ソートモード保持
+  for (let key in DISPLAY) {
+    if (DISPLAY[key].mode === mode) {
+      DISPLAY[key].page = page;
+      DISPLAY[key].sortMode = sortMode;
+      break;
+    }
+  }
+
   // 楽曲を日付順に並び変える
-  var display = Object.values(DISPLAY).find((item) => item.code === mode);
+  var display = Object.values(DISPLAY).find((item) => item.mode === mode);
   var sortedData =
     sortMode === SORTMODE.monthDay
       ? sortByMonthDay(display.data, display.sortCol)
       : display.data;
 
   // 表示開始/終了index
-  var listStartIndex = display.cardPerPage * (page - 1);
+  var listStartIndex = display.cardPerPage * (display.page - 1);
   var listEndIndex = listStartIndex + display.cardPerPage;
 
   // タグクリア
@@ -111,33 +120,33 @@ function createDisplay(mode, page, sortMode) {
 
   // タイトル
   tag += ' <div class="tab-content">';
-  Object.values(DISPLAY).forEach(function (display) {
+  Object.values(DISPLAY).forEach(function (disp) {
     tag +=
       ' <div onclick="createDisplay(' +
-      display.code +
+      disp.mode +
       ',' +
-      display.page +
+      disp.page +
       ',' +
-      display.sortMode +
+      disp.sortMode +
       ')" class="tab-item ' +
-      (display.code === mode ? 'tab-selected' : 'tab-unselected') +
+      (disp.mode === display.mode ? 'tab-selected' : 'tab-unselected') +
       '">' +
-      display.name +
+      disp.name +
       '</div>';
   });
   tag += ' </div>';
 
   // ページング作成
   tag += createPagingTag(
-    mode,
-    page,
+    display.mode,
+    display.page,
     sortedData.length,
     display.cardPerPage,
     display.sortMode
   );
 
   // タグ作成
-  if (mode === DISPLAY.MV.code) {
+  if (display.mode === DISPLAY.MV.mode) {
     //////////////////////////////////////////
     // MV情報
     //////////////////////////////////////////
@@ -218,7 +227,7 @@ function createDisplay(mode, page, sortMode) {
       tag += '        </div>'; //card-item
     });
     tag += '         </div>'; //card-list
-  } else if (mode === DISPLAY.ALBUM.code) {
+  } else if (display.mode === DISPLAY.ALBUM.mode) {
     //////////////////////////////////////////
     // アルバム情報
     //////////////////////////////////////////
@@ -310,8 +319,8 @@ function createDisplay(mode, page, sortMode) {
 
   // ページング作成
   tag += createPagingTag(
-    mode,
-    page,
+    display.mode,
+    display.page,
     sortedData.length,
     display.cardPerPage,
     display.sortMode
@@ -329,12 +338,4 @@ function createDisplay(mode, page, sortMode) {
 
   // 画像拡大設定
   addEnlargeImageEvent();
-
-  // ページング保持
-  for (let key in DISPLAY) {
-    if (DISPLAY[key].code === mode) {
-      DISPLAY[key].page = page;
-      break;
-    }
-  }
 }
