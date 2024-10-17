@@ -80,6 +80,24 @@ h1 {
   border-radius: 12px;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
+  position: relative; /* 擬似要素を配置するために必要 */
+  overflow: hidden; /* 内容がカードの枠を超えないように */
+}
+
+/* 背景画像用設定 */
+.card-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../images/album/正しい偽りからの起床.jpg'); /* 背景画像のパス */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.2; /* 透明度を設定 (0.0 〜 1.0) */
+  z-index: 1; /* 背景画像を最背面に */
 }
 
 .card-item:hover {
