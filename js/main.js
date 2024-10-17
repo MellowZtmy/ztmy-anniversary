@@ -8,8 +8,14 @@ const globalToday = new Date();
 var DISPLAY = {};
 // ソートモード
 var SORTMODE = {
-  monthDay: 0,
-  yearMonthDay: 1,
+  MONTH_DAY: {
+    code: 0,
+    name: '記念日順',
+  },
+  YEAR_MONTH_DAY: {
+    code: 1,
+    name: '公開順',
+  },
 };
 // 設定ファイル情報
 var appsettings = [];
@@ -44,7 +50,7 @@ $(document).ready(async function () {
             row[appsettings.MVReleaseDateCol] !== appsettings.noDataString
         ),
         sortCol: appsettings.MVReleaseDateCol,
-        sortMode: SORTMODE.monthDay,
+        sortMode: SORTMODE.MONTH_DAY.code,
         cardPerPage: appsettings.cardPerPageMV,
       },
       ALBUM: {
@@ -56,7 +62,7 @@ $(document).ready(async function () {
           appsettings.albumsSkipRowCount
         ),
         sortCol: appsettings.albumReleaseDateCol,
-        sortMode: SORTMODE.monthDay,
+        sortMode: SORTMODE.MONTH_DAY.code,
         cardPerPage: appsettings.cardPerPageAlbum,
       },
       LIVE: {
@@ -65,7 +71,7 @@ $(document).ready(async function () {
         page: 1,
         data: [],
         sortCol: null,
-        sortMode: SORTMODE.monthDay,
+        sortMode: SORTMODE.MONTH_DAY.code,
         cardPerPage: null,
       },
     };
@@ -77,7 +83,7 @@ $(document).ready(async function () {
     );
 
     // 開始画面を表示
-    createDisplay(DISPLAY.MV.mode, 1, SORTMODE.monthDay);
+    createDisplay(DISPLAY.MV.mode, 1, SORTMODE.MONTH_DAY.code);
   } catch (error) {
     // エラーハンドリング
     showError('Failed to load data:', error);
@@ -98,7 +104,7 @@ function createDisplay(mode, page, sortMode) {
   // 楽曲を日付順に並び変える
   var display = Object.values(DISPLAY).find((item) => item.mode === mode);
   var sortedData =
-    sortMode === SORTMODE.monthDay
+    sortMode === SORTMODE.MONTH_DAY.code
       ? sortByMonthDay(display.data, display.sortCol)
       : display.data;
 
@@ -118,23 +124,30 @@ function createDisplay(mode, page, sortMode) {
     globalToday.toLocaleDateString('ja-JP').replace(/\./g, '/') +
     '</p>';
 
-  // タイトル
+  // タブ
   tag += ' <div class="tab-content">';
   Object.values(DISPLAY).forEach(function (disp) {
     tag +=
-      ' <div onclick="createDisplay(' +
-      disp.mode +
-      ',' +
-      disp.page +
-      ',' +
-      disp.sortMode +
-      ')" class="tab-item ' +
+      ' <div ' +
+      (disp.mode !== display.mode
+        ? 'onclick="createDisplay(' +
+          disp.mode +
+          ',' +
+          disp.page +
+          ',' +
+          disp.sortMode +
+          ')"'
+        : '') +
+      ' class="tab-item ' +
       (disp.mode === display.mode ? 'tab-selected' : 'tab-unselected') +
       '">' +
       disp.name +
       '</div>';
   });
   tag += ' </div>';
+
+  // ソート作成
+  tag += createSortTag(display.mode, display.page, display.sortMode);
 
   // ページング作成
   tag += createPagingTag(

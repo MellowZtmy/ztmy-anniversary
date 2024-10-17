@@ -124,6 +124,35 @@ function sortByMonthDay(arr, sortColIndex) {
   );
 }
 
+// ソートタグ作成
+function createSortTag(currentMode, currentPage, currentSortMode) {
+  // 変数初期化
+  var tag = '';
+
+  // タグ生成
+  // ソートタグ生成
+  tag += '<div class="sort">';
+  Object.values(SORTMODE).forEach(function (sortMode) {
+    tag +=
+      ' <a class="' +
+      (sortMode.code === currentSortMode ? 'disabled' : 'active') +
+      '" onclick="createDisplay(' +
+      currentMode +
+      ',' +
+      currentPage +
+      ',' +
+      sortMode.code +
+      ')" class="tab-item ' +
+      (sortMode.code === currentSortMode ? 'tab-selected' : 'tab-unselected') +
+      '">' +
+      sortMode.name +
+      '</a>';
+  });
+  tag += '</div>';
+
+  return tag;
+}
+
 // ページングタグ作成
 function createPagingTag(
   currentMode,
