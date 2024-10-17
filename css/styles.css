@@ -43,8 +43,8 @@ h1 {
 
 /* テキスト用CSS */
 *{
-  font-family: "misaki_gothic_2nd";
-  transition: background-color 0.3s, color 0.3s;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700; /* 見出しは太字に */
 }
 
 .center-text {
@@ -173,12 +173,12 @@ h1 {
   object-fit: cover; /* 高さに合わせて画像を拡大し、はみ出た部分を切り抜く */
   object-position: center; /* 中央を基準にして切り抜く */
   transition: transform 0.3s ease;
-  cursor: pointer;
 }
 
 /* アルバム画像用CSS 共通 */
 .album :hover {
-  transform: scale(1.1);
+  transform: scale(1.2); /* ホバー時にさらに拡大 */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* 影を強調 */
 }
 
 /* 日付スタイル */
@@ -222,6 +222,30 @@ h1 {
 }
 
 .pagination a.disabled {
+  pointer-events: none;
+}
+
+/* ソート用 */
+.sort {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.sort a {
+  padding: 10px 15px;
+  margin: 0 5px;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sort a.active {
+  border: 1px solid ;
+}
+
+.sort a.disabled {
   pointer-events: none;
 }
 
