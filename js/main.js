@@ -169,18 +169,28 @@ function createDisplay(mode, page, sortMode) {
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
 
-      // 各MV生成
+      // カード生成
       tag += '      <div class="card-item" >';
-      tag +=
-        '              <div class="card-name">' +
-        song[appsettings.songNameCol] +
-        '<br><span class="highlight">' +
-        getYearsToNextMonthDay(MVReleaseDateStr) +
-        '</span>周年まで</div>';
-      tag +=
-        '                  <div class="card-days">あと <span class="highlight">' +
-        mvLeftDays +
-        '</span>日</div>';
+      if (mvLeftDays == 0) {
+        // 今日が記念日の場合
+        tag +=
+          '              <div class="card-name">今日は...<br>' +
+          song[appsettings.songNameCol] +
+          '<span class="highlight">' +
+          getYearsToNextMonthDay(MVReleaseDateStr) +
+          '</span>周年!!</div><br>';
+      } else {
+        tag +=
+          '              <div class="card-name">' +
+          song[appsettings.songNameCol] +
+          '<br><span class="highlight">' +
+          getYearsToNextMonthDay(MVReleaseDateStr) +
+          '</span>周年まで</div>';
+        tag +=
+          '                  <div class="card-days">あと <span class="highlight">' +
+          mvLeftDays +
+          '</span>日</div>';
+      }
       // MV Youtube表示
       tag += '            <div class="card-iframe-container">';
       tag += '                 <iframe ';
@@ -250,18 +260,28 @@ function createDisplay(mode, page, sortMode) {
       const releaseDateStr = album[display.sortCol];
       const leftDays = getDaysToNextMonthDay(releaseDateStr);
 
-      // 各MV生成
+      // 各カード生成
       tag += '      <div class="card-item" >';
-      tag +=
-        '              <div class="card-name">' +
-        album[2] +
-        '<br><span class="highlight">' +
-        getYearsToNextMonthDay(releaseDateStr) +
-        '</span>周年まで</div>';
-      tag +=
-        '                  <div class="card-days">あと <span class="highlight">' +
-        leftDays +
-        '</span>日</div>';
+      if (leftDays == 0) {
+        // 今日が記念日の場合
+        tag +=
+          '              <div class="card-name">今日は...<br>' +
+          album[2] +
+          '<span class="highlight">' +
+          getYearsToNextMonthDay(releaseDateStr) +
+          '</span>周年!!</div><br>';
+      } else {
+        tag +=
+          '              <div class="card-name">' +
+          album[2] +
+          '<br><span class="highlight">' +
+          getYearsToNextMonthDay(releaseDateStr) +
+          '</span>周年まで</div>';
+        tag +=
+          '                  <div class="card-days">あと <span class="highlight">' +
+          leftDays +
+          '</span>日</div>';
+      }
 
       // Album ティザー Youtube表示
       if (album[9] !== appsettings.noDataString) {
