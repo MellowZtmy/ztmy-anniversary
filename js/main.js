@@ -371,10 +371,4 @@ function createDisplay(mode, page, sortMode) {
 
   // 画像拡大設定
   addEnlargeImageEvent();
-
-  // スクロール
-  window.scroll({
-    top: 0,
-    behavior: 'smooth',
-  });
 }
