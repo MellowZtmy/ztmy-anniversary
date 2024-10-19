@@ -14,7 +14,7 @@ var SORTMODE = {
   },
   YEAR_MONTH_DAY: {
     code: 1,
-    name: '公開順',
+    name: '時系列順',
   },
 };
 // 設定ファイル情報
@@ -371,4 +371,10 @@ function createDisplay(mode, page, sortMode) {
 
   // 画像拡大設定
   addEnlargeImageEvent();
+
+  // スクロール
+  window.scroll({
+    top: 0,
+    behavior: 'smooth',
+  });
 }
