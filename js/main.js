@@ -69,10 +69,13 @@ $(document).ready(async function () {
         mode: 2,
         name: 'LIVE',
         page: 1,
-        data: [],
-        sortCol: null,
+        data: await fetchCsvData(
+          appsettings.livesFileName,
+          appsettings.liveSkipRowCount
+        ),
+        sortCol: appsettings.liveReleaseDateCol,
         sortMode: SORTMODE.MONTH_DAY.code,
-        cardPerPage: null,
+        cardPerPage: appsettings.cardPerPageLive,
       },
     };
 
@@ -253,6 +256,104 @@ function createDisplay(mode, page, sortMode) {
   } else if (display.mode === DISPLAY.ALBUM.mode) {
     //////////////////////////////////////////
     // アルバム情報
+    //////////////////////////////////////////
+    tag += '     <div class="card-list">';
+    sortedData.slice(listStartIndex, listEndIndex).forEach(function (album) {
+      // アルバム日付情報取得
+      const releaseDateStr = album[display.sortCol];
+      const leftDays = getDaysToNextMonthDay(releaseDateStr);
+
+      // 各カード生成
+      tag += '      <div class="card-item" >';
+      if (leftDays == 0) {
+        // 今日が記念日の場合
+        tag +=
+          '              <div class="card-name">今日は...<br>' +
+          album[2] +
+          '<span class="highlight">' +
+          getYearsToNextMonthDay(releaseDateStr) +
+          '</span>周年!!</div><br>';
+      } else {
+        tag +=
+          '              <div class="card-name">' +
+          album[2] +
+          '<br><span class="highlight">' +
+          getYearsToNextMonthDay(releaseDateStr) +
+          '</span>周年まで</div>';
+        tag +=
+          '                  <div class="card-days">あと <span class="highlight">' +
+          leftDays +
+          '</span>日</div>';
+      }
+
+      // Album ティザー Youtube表示
+      if (album[9] !== appsettings.noDataString) {
+        tag += '<div class="card-info">【ティザーPV】</div>';
+        tag += '            <div class="card-iframe-container">';
+        tag += '                 <iframe ';
+        tag +=
+          '                       src="https://www.youtube.com/embed/?loop=1&playlist=' +
+          album[9] +
+          '" frameborder="0" allowfullscreen>';
+        tag += '                </iframe> ';
+        tag += '             </div> ';
+      }
+      // ここまでAlbum ティザー Youtube表示
+
+      // Album ティザー Youtube表示
+      tag += '<div class="card-info">【プレイリスト】</div>';
+      tag += '            <div class="card-iframe-container">';
+      tag += '                 <iframe ';
+      tag +=
+        '                       src="https://www.youtube.com/embed/videoseries?list=' +
+        album[5] +
+        '" frameborder="0" allowfullscreen>';
+      tag += '                </iframe> ';
+      tag += '             </div> ';
+      // ここまでAlbum ティザー Youtube表示
+
+      // アルバム 情報
+      tag += '<div class="card-info-container">';
+      tag += '<div class="card-info">';
+      album[6].split(appsettings.comma).forEach(function (song, index) {
+        tag += (index + 1).toString().padStart(2, '0') + '. ' + song + '<br>';
+      });
+      tag += '</div>';
+
+      // 画像
+      tag += ' <div class="album-container">';
+      // アルバム 画像
+      tag +=
+        '<img src="' +
+        appsettings.albumImagePath +
+        album[2] +
+        '.jpg" alt="' +
+        album[2] +
+        '"class="album">';
+      // ここまで アルバム 画像
+
+      // 魔導書 画像
+      tag +=
+        '<img src="' +
+        appsettings.grimoireImagePath +
+        album[2] +
+        '.jpg" alt="' +
+        album[2] +
+        '"class="album">';
+      // ここまで 魔導書 画像
+      tag += '        </div>'; //album-container
+
+      tag += '        </div>'; //card-info-container
+
+      // MV公開年月日
+      tag += '           <div class="card-date">' + releaseDateStr + '</div>';
+
+      tag += '        </div>'; //card-item
+    });
+    tag += '         </div>'; //card-list
+  } else if (display.mode === DISPLAY.LIVE.mode) {
+    //////////////////////////////////////////
+    // ライブ情報
     //////////////////////////////////////////
     tag += '     <div class="card-list">';
     sortedData.slice(listStartIndex, listEndIndex).forEach(function (album) {
