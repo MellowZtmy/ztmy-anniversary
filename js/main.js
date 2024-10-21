@@ -175,16 +175,16 @@ function createDisplay(mode, page, sortMode) {
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
 
-      // 背景画像設定
+      // 背景画像設定(ミニアルバム優先)
       var imageName = '';
       if (
         song[appsettings.albumCol] !== appsettings.noDataString ||
         song[appsettings.minialbumCol] !== appsettings.noDataString
       ) {
         imageName =
-          song[appsettings.albumCol] !== appsettings.noDataString
-            ? song[appsettings.albumCol]
-            : song[appsettings.minialbumCol];
+          song[appsettings.minialbumCol] !== appsettings.noDataString
+            ? song[appsettings.minialbumCol]
+            : song[appsettings.albumCol];
         styleSheet.insertRule(
           '.card-item.' +
             imageName +
