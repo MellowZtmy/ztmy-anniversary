@@ -190,6 +190,24 @@ function createPagingTag(
   return tag;
 }
 
+// Youtubeタグ作成
+function createYoutubeTag(id, isPlayList) {
+  // 変数初期化
+  var tag = '';
+
+  // タグ生成
+  tag += '<div class="card-iframe-container">';
+  tag +=
+    '        <iframe src="https://www.youtube.com/embed/' +
+    (isPlayList ? 'videoseries?list=' : '?loop=1&playlist=') +
+    id +
+    '" frameborder="0" allowfullscreen>';
+  tag += '   </iframe> ';
+  tag += '</div> ';
+
+  return tag;
+}
+
 // 画像クリックイベント追加
 function addEnlargeImageEvent() {
   // 拡大表示用の要素を取得
@@ -209,4 +227,24 @@ function addEnlargeImageEvent() {
     overlay.classList.remove('active');
     overlayImage.src = ''; // フェードアウト後に画像をクリア
   });
+}
+
+// CSSルール作成
+function addCssRule(selector, cssRules, imagePath) {
+  // CSSルール作成
+  var rule =
+    ' .card-item.' +
+    selector +
+    '::before { background-image: url(../' +
+    imagePath +
+    selector +
+    '.jpg); } ';
+
+  // CSSルールにまだない場合
+  if (!cssRules.includes(rule)) {
+    // CSSルール追加
+    cssRules.push(rule);
+  }
+
+  return cssRules;
 }

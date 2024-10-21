@@ -106,6 +106,7 @@ function createDisplay(mode, page, sortMode) {
 
   // スタイルシートを取得(背景画像設定用)
   const styleSheet = document.styleSheets[0];
+  var cssRules = [];
 
   // 楽曲を日付順に並び変える
   var display = Object.values(DISPLAY).find((item) => item.mode === mode);
@@ -175,25 +176,14 @@ function createDisplay(mode, page, sortMode) {
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
 
-      // 背景画像設定(ミニアルバム優先)
-      var imageName = '';
-      if (
-        song[appsettings.albumCol] !== appsettings.noDataString ||
+      // アルバム画像名取得
+      var imageName =
         song[appsettings.minialbumCol] !== appsettings.noDataString
-      ) {
-        imageName =
-          song[appsettings.minialbumCol] !== appsettings.noDataString
-            ? song[appsettings.minialbumCol]
-            : song[appsettings.albumCol];
-        styleSheet.insertRule(
-          '.card-item.' +
-            imageName +
-            '::before { background-image: url(../images/album/' +
-            imageName +
-            '.jpg); }',
-          styleSheet.cssRules.length
-        );
-      }
+          ? song[appsettings.minialbumCol]
+          : song[appsettings.albumCol];
+
+      // 背景画像設定(ミニアルバム優先,すでにあるものは追加しない)
+      addCssRule(imageName, cssRules, appsettings.albumImagePath);
 
       // カード生成
       tag += '      <div class="card-item ' + imageName + '">';
@@ -217,17 +207,9 @@ function createDisplay(mode, page, sortMode) {
           mvLeftDays +
           '</span>日</div>';
       }
+
       // MV Youtube表示
-      tag += '            <div class="card-iframe-container">';
-      tag += '                 <iframe ';
-      tag +=
-        '                       src="https://www.youtube.com/embed/' +
-        song[appsettings.mvIdCol] +
-        '?loop=1&playlist=' +
-        song[appsettings.mvIdCol] +
-        '" frameborder="0" allowfullscreen>';
-      tag += '                </iframe> ';
-      tag += '             </div> ';
+      tag += createYoutubeTag(song[appsettings.mvIdCol], false);
       // ここまでMV Youtube
 
       // MV 情報
@@ -286,15 +268,8 @@ function createDisplay(mode, page, sortMode) {
       const releaseDateStr = album[display.sortCol];
       const leftDays = getDaysToNextMonthDay(releaseDateStr);
 
-      // 背景画像設定
-      styleSheet.insertRule(
-        '.card-item.' +
-          album[2] +
-          '::before { background-image: url(../images/grimoire/' +
-          album[2] +
-          '.jpg); }',
-        styleSheet.cssRules.length
-      );
+      // 背景画像設定CSSルール追加(すでにあるものは追加しない)
+      addCssRule(album[2], cssRules, appsettings.grimoireImagePath);
 
       // カード生成
       tag += '      <div class="card-item ' + album[2] + '">';
@@ -322,27 +297,13 @@ function createDisplay(mode, page, sortMode) {
       // Album ティザー Youtube表示
       if (album[9] !== appsettings.noDataString) {
         tag += '<div class="card-info">【ティザーPV】</div>';
-        tag += '            <div class="card-iframe-container">';
-        tag += '                 <iframe ';
-        tag +=
-          '                       src="https://www.youtube.com/embed/?loop=1&playlist=' +
-          album[9] +
-          '" frameborder="0" allowfullscreen>';
-        tag += '                </iframe> ';
-        tag += '             </div> ';
+        tag += createYoutubeTag(album[9], false);
       }
       // ここまでAlbum ティザー Youtube表示
 
       // Album ティザー Youtube表示
       tag += '<div class="card-info">【プレイリスト】</div>';
-      tag += '            <div class="card-iframe-container">';
-      tag += '                 <iframe ';
-      tag +=
-        '                       src="https://www.youtube.com/embed/videoseries?list=' +
-        album[5] +
-        '" frameborder="0" allowfullscreen>';
-      tag += '                </iframe> ';
-      tag += '             </div> ';
+      tag += createYoutubeTag(album[5], true);
       // ここまでAlbum ティザー Youtube表示
 
       // アルバム 情報
@@ -502,6 +463,11 @@ function createDisplay(mode, page, sortMode) {
 
   // CSS適用
   changeColor(0);
+
+  // 背景画像のcss設定
+  cssRules.forEach((rule) =>
+    styleSheet.insertRule(rule, styleSheet.cssRules.length)
+  );
 
   // 画像拡大設定
   addEnlargeImageEvent();
