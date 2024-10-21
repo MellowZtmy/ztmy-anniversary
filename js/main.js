@@ -104,6 +104,9 @@ function createDisplay(mode, page, sortMode) {
     }
   }
 
+  // スタイルシートを取得(背景画像設定用)
+  const styleSheet = document.styleSheets[0];
+
   // 楽曲を日付順に並び変える
   var display = Object.values(DISPLAY).find((item) => item.mode === mode);
   var sortedData =
@@ -172,8 +175,28 @@ function createDisplay(mode, page, sortMode) {
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
 
+      // 背景画像設定
+      var imageName = '';
+      if (
+        song[appsettings.albumCol] !== appsettings.noDataString ||
+        song[appsettings.minialbumCol] !== appsettings.noDataString
+      ) {
+        imageName =
+          song[appsettings.albumCol] !== appsettings.noDataString
+            ? song[appsettings.albumCol]
+            : song[appsettings.minialbumCol];
+        styleSheet.insertRule(
+          '.card-item.' +
+            imageName +
+            '::before { background-image: url(../images/album/' +
+            imageName +
+            '.jpg); }',
+          styleSheet.cssRules.length
+        );
+      }
+
       // カード生成
-      tag += '      <div class="card-item" >';
+      tag += '      <div class="card-item ' + imageName + '">';
       if (mvLeftDays == 0) {
         // 今日が記念日の場合
         tag +=
@@ -263,8 +286,18 @@ function createDisplay(mode, page, sortMode) {
       const releaseDateStr = album[display.sortCol];
       const leftDays = getDaysToNextMonthDay(releaseDateStr);
 
-      // 各カード生成
-      tag += '      <div class="card-item" >';
+      // 背景画像設定
+      styleSheet.insertRule(
+        '.card-item.' +
+          album[2] +
+          '::before { background-image: url(../images/grimoire/' +
+          album[2] +
+          '.jpg); }',
+        styleSheet.cssRules.length
+      );
+
+      // カード生成
+      tag += '      <div class="card-item ' + album[2] + '">';
       if (leftDays == 0) {
         // 今日が記念日の場合
         tag +=
