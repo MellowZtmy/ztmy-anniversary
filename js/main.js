@@ -192,7 +192,7 @@ function createDisplay(mode, page, sortMode) {
         tag +=
           '              <div class="card-name">今日は...<br>' +
           song[appsettings.songNameCol] +
-          '<span class="highlight">' +
+          '<span class="highlight"> ' +
           getYearsToNextMonthDay(MVReleaseDateStr) +
           '</span>周年!!</div><br>';
       } else {
@@ -278,7 +278,7 @@ function createDisplay(mode, page, sortMode) {
         tag +=
           '              <div class="card-name">今日は...<br>' +
           album[2] +
-          '<span class="highlight">' +
+          '<span class="highlight"> ' +
           getYearsToNextMonthDay(releaseDateStr) +
           '</span>周年!!</div><br>';
       } else {
