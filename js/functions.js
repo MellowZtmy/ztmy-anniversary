@@ -190,6 +190,36 @@ function createPagingTag(
   return tag;
 }
 
+// カートタイトルタグ作成
+function createCardTitleTag(leftDays, releaseDateStr, name) {
+  // 変数初期化
+  var tag = '';
+
+  // タグ生成
+  if (leftDays == 0) {
+    // 今日が記念日の場合
+    tag +=
+      '<div class="card-name">今日は...<br>' +
+      name +
+      '<span class="highlight"> ' +
+      getYearsToNextMonthDay(releaseDateStr) +
+      '</span>周年！</div><br>';
+  } else {
+    tag +=
+      '<div class="card-name">' +
+      name +
+      '<br><span class="highlight">' +
+      getYearsToNextMonthDay(releaseDateStr) +
+      '</span>周年まで</div>';
+    tag +=
+      '<div class="card-days">あと <span class="highlight">' +
+      leftDays +
+      '</span>日</div>';
+  }
+
+  return tag;
+}
+
 // Youtubeタグ作成
 function createYoutubeTag(id, isPlayList) {
   // 変数初期化

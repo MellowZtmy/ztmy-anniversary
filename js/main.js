@@ -187,26 +187,11 @@ function createDisplay(mode, page, sortMode) {
 
       // カード生成
       tag += '      <div class="card-item ' + imageName + '">';
-      if (mvLeftDays == 0) {
-        // 今日が記念日の場合
-        tag +=
-          '              <div class="card-name">今日は...<br>' +
-          song[appsettings.songNameCol] +
-          '<span class="highlight"> ' +
-          getYearsToNextMonthDay(MVReleaseDateStr) +
-          '</span>周年!!</div><br>';
-      } else {
-        tag +=
-          '              <div class="card-name">' +
-          song[appsettings.songNameCol] +
-          '<br><span class="highlight">' +
-          getYearsToNextMonthDay(MVReleaseDateStr) +
-          '</span>周年まで</div>';
-        tag +=
-          '                  <div class="card-days">あと <span class="highlight">' +
-          mvLeftDays +
-          '</span>日</div>';
-      }
+      tag += createCardTitleTag(
+        mvLeftDays,
+        MVReleaseDateStr,
+        song[appsettings.songNameCol]
+      );
 
       // MV Youtube表示
       tag += createYoutubeTag(song[appsettings.mvIdCol], false);
@@ -273,26 +258,7 @@ function createDisplay(mode, page, sortMode) {
 
       // カード生成
       tag += '      <div class="card-item ' + album[2] + '">';
-      if (leftDays == 0) {
-        // 今日が記念日の場合
-        tag +=
-          '              <div class="card-name">今日は...<br>' +
-          album[2] +
-          '<span class="highlight"> ' +
-          getYearsToNextMonthDay(releaseDateStr) +
-          '</span>周年!!</div><br>';
-      } else {
-        tag +=
-          '              <div class="card-name">' +
-          album[2] +
-          '<br><span class="highlight">' +
-          getYearsToNextMonthDay(releaseDateStr) +
-          '</span>周年まで</div>';
-        tag +=
-          '                  <div class="card-days">あと <span class="highlight">' +
-          leftDays +
-          '</span>日</div>';
-      }
+      tag += createCardTitleTag(leftDays, releaseDateStr, album[2]);
 
       // Album ティザー Youtube表示
       if (album[9] !== appsettings.noDataString) {
@@ -350,92 +316,23 @@ function createDisplay(mode, page, sortMode) {
     // ライブ情報
     //////////////////////////////////////////
     tag += '     <div class="card-list">';
-    sortedData.slice(listStartIndex, listEndIndex).forEach(function (album) {
-      // アルバム日付情報取得
-      const releaseDateStr = album[display.sortCol];
+    sortedData.slice(listStartIndex, listEndIndex).forEach(function (live) {
+      // ライブ日付情報取得
+      const releaseDateStr = live[display.sortCol];
       const leftDays = getDaysToNextMonthDay(releaseDateStr);
 
       // 各カード生成
       tag += '      <div class="card-item" >';
-      if (leftDays == 0) {
-        // 今日が記念日の場合
-        tag +=
-          '              <div class="card-name">今日は...<br>' +
-          album[2] +
-          '<span class="highlight">' +
-          getYearsToNextMonthDay(releaseDateStr) +
-          '</span>周年!!</div><br>';
-      } else {
-        tag +=
-          '              <div class="card-name">' +
-          album[2] +
-          '<br><span class="highlight">' +
-          getYearsToNextMonthDay(releaseDateStr) +
-          '</span>周年まで</div>';
-        tag +=
-          '                  <div class="card-days">あと <span class="highlight">' +
-          leftDays +
-          '</span>日</div>';
-      }
+      tag += createCardTitleTag(leftDays, releaseDateStr, live[2]);
 
-      // Album ティザー Youtube表示
-      if (album[9] !== appsettings.noDataString) {
-        tag += '<div class="card-info">【ティザーPV】</div>';
-        tag += '            <div class="card-iframe-container">';
-        tag += '                 <iframe ';
-        tag +=
-          '                       src="https://www.youtube.com/embed/?loop=1&playlist=' +
-          album[9] +
-          '" frameborder="0" allowfullscreen>';
-        tag += '                </iframe> ';
-        tag += '             </div> ';
-      }
-      // ここまでAlbum ティザー Youtube表示
-
-      // Album ティザー Youtube表示
-      tag += '<div class="card-info">【プレイリスト】</div>';
-      tag += '            <div class="card-iframe-container">';
-      tag += '                 <iframe ';
-      tag +=
-        '                       src="https://www.youtube.com/embed/videoseries?list=' +
-        album[5] +
-        '" frameborder="0" allowfullscreen>';
-      tag += '                </iframe> ';
-      tag += '             </div> ';
-      // ここまでAlbum ティザー Youtube表示
-
-      // アルバム 情報
+      // ライブ 情報
       tag += '<div class="card-info-container">';
-      tag += '<div class="card-info">';
-      album[6].split(appsettings.comma).forEach(function (song, index) {
+      tag += '   <div class="card-info">【セットリスト】<br>';
+      live[4].split(appsettings.comma).forEach(function (song, index) {
         tag += (index + 1).toString().padStart(2, '0') + '. ' + song + '<br>';
       });
-      tag += '</div>';
-
-      // 画像
-      tag += ' <div class="album-container">';
-      // アルバム 画像
-      tag +=
-        '<img src="' +
-        appsettings.albumImagePath +
-        album[2] +
-        '.jpg" alt="' +
-        album[2] +
-        '"class="album">';
-      // ここまで アルバム 画像
-
-      // 魔導書 画像
-      tag +=
-        '<img src="' +
-        appsettings.grimoireImagePath +
-        album[2] +
-        '.jpg" alt="' +
-        album[2] +
-        '"class="album">';
-      // ここまで 魔導書 画像
-      tag += '        </div>'; //album-container
-
-      tag += '        </div>'; //card-info-container
+      tag += '   </div>';
+      tag += '</div>'; //card-info-container
 
       // MV公開年月日
       tag += '           <div class="card-date">' + releaseDateStr + '</div>';
