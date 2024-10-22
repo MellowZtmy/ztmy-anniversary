@@ -201,7 +201,7 @@ function createYoutubeTag(id, isPlayList) {
     '        <iframe src="https://www.youtube.com/embed/' +
     (isPlayList ? 'videoseries?list=' : '?loop=1&playlist=') +
     id +
-    '" frameborder="0" allowfullscreen>';
+    '&mute=1" frameborder="0" allowfullscreen>';
   tag += '   </iframe> ';
   tag += '</div> ';
 
