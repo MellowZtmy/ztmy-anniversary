@@ -104,6 +104,22 @@ function getYearsToNextMonthDay(pastDateString) {
   );
 }
 
+// 過去日からの日数取得
+function getDaysFromDate(dateString) {
+  const inputDate = new Date(dateString.replace(/\//g, '-'));
+  const diffTime = globalToday - inputDate.getTime();
+  return Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+}
+
+// 二次元配列を年月日でソート
+function sortByYearMonthDay(data, sortColIndex) {
+  return data.sort((a, b) => {
+    const dateA = new Date(a[sortColIndex]);
+    const dateB = new Date(b[sortColIndex]);
+    return dateB - dateA; // 降順
+  });
+}
+
 // 二次元配列を月日でソート
 function sortByMonthDay(arr, sortColIndex) {
   const today = new Date(globalToday.setHours(0, 0, 0, 0));
@@ -191,29 +207,39 @@ function createPagingTag(
 }
 
 // カートタイトルタグ作成
-function createCardTitleTag(leftDays, releaseDateStr, name) {
+function createCardTitleTag(leftDays, releaseDateStr, name, sortMode) {
   // 変数初期化
   var tag = '';
 
   // タグ生成
-  if (leftDays == 0) {
-    // 今日が記念日の場合
+  if (sortMode === SORTMODE.MONTH_DAY.code) {
+    // 記念日モード
+    if (leftDays == 0) {
+      // 今日が記念日の場合
+      tag +=
+        '<div class="card-name">今日は...<br>' +
+        name +
+        '<span class="highlight"> ' +
+        getYearsToNextMonthDay(releaseDateStr) +
+        '</span>周年！</div><br>';
+    } else {
+      tag +=
+        '<div class="card-name">' +
+        name +
+        '<br><span class="highlight">' +
+        getYearsToNextMonthDay(releaseDateStr) +
+        '</span>周年まで</div>';
+      tag +=
+        '<div class="card-days">あと <span class="highlight">' +
+        leftDays +
+        '</span>日</div>';
+    }
+  } else if (sortMode === SORTMODE.YEAR_MONTH_DAY.code) {
+    // 過去モード
+    tag += '<div class="card-name">' + name + '<br>公開から</div>';
     tag +=
-      '<div class="card-name">今日は...<br>' +
-      name +
-      '<span class="highlight"> ' +
-      getYearsToNextMonthDay(releaseDateStr) +
-      '</span>周年！</div><br>';
-  } else {
-    tag +=
-      '<div class="card-name">' +
-      name +
-      '<br><span class="highlight">' +
-      getYearsToNextMonthDay(releaseDateStr) +
-      '</span>周年まで</div>';
-    tag +=
-      '<div class="card-days">あと <span class="highlight">' +
-      leftDays +
+      '<div class="card-days"><span class="highlight">' +
+      getDaysFromDate(releaseDateStr) +
       '</span>日</div>';
   }
 

@@ -14,7 +14,7 @@ var SORTMODE = {
   },
   YEAR_MONTH_DAY: {
     code: 1,
-    name: '時系列順',
+    name: '最新順',
   },
 };
 // 設定ファイル情報
@@ -114,7 +114,7 @@ function createDisplay(mode, page, sortMode) {
   var sortedData =
     sortMode === SORTMODE.MONTH_DAY.code
       ? sortByMonthDay(display.data, display.sortCol)
-      : display.data;
+      : sortByYearMonthDay(display.data, display.sortCol);
 
   // 表示開始/終了index
   var listStartIndex = display.cardPerPage * (display.page - 1);
@@ -191,7 +191,8 @@ function createDisplay(mode, page, sortMode) {
       tag += createCardTitleTag(
         mvLeftDays,
         MVReleaseDateStr,
-        song[appsettings.songNameCol]
+        song[appsettings.songNameCol],
+        display.sortMode
       );
 
       // MV Youtube表示
@@ -259,7 +260,12 @@ function createDisplay(mode, page, sortMode) {
 
       // カード生成
       tag += '      <div class="card-item ' + album[2] + '">';
-      tag += createCardTitleTag(leftDays, releaseDateStr, album[2]);
+      tag += createCardTitleTag(
+        leftDays,
+        releaseDateStr,
+        album[2],
+        display.sortMode
+      );
 
       // Album ティザー Youtube表示
       if (album[9] !== appsettings.noDataString) {
@@ -324,7 +330,12 @@ function createDisplay(mode, page, sortMode) {
 
       // 各カード生成
       tag += '      <div class="card-item" >';
-      tag += createCardTitleTag(leftDays, releaseDateStr, live[2]);
+      tag += createCardTitleTag(
+        leftDays,
+        releaseDateStr,
+        live[2],
+        display.sortMode
+      );
 
       // ライブ 情報
       tag += '<div class="card-info-container">';
