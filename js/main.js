@@ -65,18 +65,19 @@ $(document).ready(async function () {
         sortMode: SORTMODE.MONTH_DAY.code,
         cardPerPage: appsettings.cardPerPageAlbum,
       },
-      LIVE: {
-        mode: 2,
-        name: 'LIVE',
-        page: 1,
-        data: await fetchCsvData(
-          appsettings.livesFileName,
-          appsettings.liveSkipRowCount
-        ),
-        sortCol: appsettings.liveReleaseDateCol,
-        sortMode: SORTMODE.MONTH_DAY.code,
-        cardPerPage: appsettings.cardPerPageLive,
-      },
+      // TODO実装
+      // LIVE: {
+      //   mode: 2,
+      //   name: 'LIVE',
+      //   page: 1,
+      //   data: await fetchCsvData(
+      //     appsettings.livesFileName,
+      //     appsettings.liveSkipRowCount
+      //   ),
+      //   sortCol: appsettings.liveReleaseDateCol,
+      //   sortMode: SORTMODE.MONTH_DAY.code,
+      //   cardPerPage: appsettings.cardPerPageLive,
+      // },
     };
 
     // 4. カラーセット
