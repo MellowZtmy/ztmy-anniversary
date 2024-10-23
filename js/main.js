@@ -93,7 +93,7 @@ $(document).ready(async function () {
     );
 
     // 開始画面を表示
-    createDisplay(DISPLAY.MV.mode, 1, SORTMODE.MONTH_DAY.code, SORTORDER.asc);
+    createDisplay(DISPLAY.MV.mode, 1, SORTMODE.MONTH_DAY.code);
   } catch (error) {
     // エラーハンドリング
     showError('Failed to load data:', error);
@@ -101,13 +101,12 @@ $(document).ready(async function () {
 });
 
 // 画面タグ作成
-function createDisplay(mode, page, sortMode, sortOrder) {
+function createDisplay(mode, page, sortMode) {
   // ページング、ソートモード保持
   for (let key in DISPLAY) {
     if (DISPLAY[key].mode === mode) {
       DISPLAY[key].page = page;
       DISPLAY[key].sortMode = sortMode;
-      DISPLAY[key].sortOrder = sortOrder;
       break;
     }
   }
@@ -151,8 +150,6 @@ function createDisplay(mode, page, sortMode, sortOrder) {
           disp.page +
           ',' +
           disp.sortMode +
-          ',' +
-          disp.sortOrder +
           ')"'
         : '') +
       ' class="tab-item ' +

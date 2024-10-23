@@ -154,24 +154,15 @@ function createSortTag(display) {
   Object.values(SORTMODE).forEach(function (sortMode) {
     tag +=
       ' <a class="' +
-      (sortMode.code === display.sortMode ? 'active' : 'active') +
+      (sortMode.code === display.sortMode ? 'disabled' : 'active') +
       '" onclick="createDisplay(' +
       display.mode +
       ',' +
       display.page +
       ',' +
       sortMode.code +
-      ',' +
-      (sortMode.code === display.sortMode
-        ? !display.sortOrder
-        : SORTORDER.asc) +
       ')">' +
       sortMode.name +
-      (sortMode.code === display.sortMode
-        ? display.sortOrder === SORTORDER.asc
-          ? '▲'
-          : '▼'
-        : '') +
       '</a>';
   });
   tag += '</div>';
@@ -200,8 +191,6 @@ function createPagingTag(display) {
       pageIndex +
       ',' +
       display.sortMode +
-      ',' +
-      display.sortOrder +
       ')">' +
       pageIndex +
       '</a>';
