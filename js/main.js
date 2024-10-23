@@ -65,19 +65,18 @@ $(document).ready(async function () {
         sortMode: SORTMODE.MONTH_DAY.code,
         cardPerPage: appsettings.cardPerPageAlbum,
       },
-      // TODO実装
-      // LIVE: {
-      //   mode: 2,
-      //   name: 'LIVE',
-      //   page: 1,
-      //   data: await fetchCsvData(
-      //     appsettings.livesFileName,
-      //     appsettings.liveSkipRowCount
-      //   ),
-      //   sortCol: appsettings.liveReleaseDateCol,
-      //   sortMode: SORTMODE.MONTH_DAY.code,
-      //   cardPerPage: appsettings.cardPerPageLive,
-      // },
+      LIVE: {
+        mode: 2,
+        name: 'LIVE',
+        page: 1,
+        data: await fetchCsvData(
+          appsettings.livesFileName,
+          appsettings.liveSkipRowCount
+        ),
+        sortCol: appsettings.liveReleaseDateCol,
+        sortMode: SORTMODE.MONTH_DAY.code,
+        cardPerPage: appsettings.cardPerPageLive,
+      },
     };
 
     // 4. カラーセット
@@ -192,7 +191,8 @@ function createDisplay(mode, page, sortMode) {
         mvLeftDays,
         MVReleaseDateStr,
         song[appsettings.songNameCol],
-        display.sortMode
+        display.sortMode,
+        '公開'
       );
 
       // MV Youtube表示
@@ -264,7 +264,8 @@ function createDisplay(mode, page, sortMode) {
         leftDays,
         releaseDateStr,
         album[2],
-        display.sortMode
+        display.sortMode,
+        '発売'
       );
 
       // Album ティザー Youtube表示
@@ -339,10 +340,19 @@ function createDisplay(mode, page, sortMode) {
 
       // ライブ 情報
       tag += '<div class="card-info-container">';
+      // セトリ
       tag += '   <div class="card-info">【セットリスト】<br>';
       live[4].split(appsettings.comma).forEach(function (song, index) {
         tag += (index + 1).toString().padStart(2, '0') + '. ' + song + '<br>';
       });
+
+      // アンコール
+      if (live[5] !== appsettings.noDataString) {
+        tag += '--------Encore--------<br>';
+        live[5].split(appsettings.comma).forEach(function (song, index) {
+          tag += (index + 1).toString().padStart(2, '0') + '. ' + song + '<br>';
+        });
+      }
       tag += '   </div>';
       tag += '</div>'; //card-info-container
 

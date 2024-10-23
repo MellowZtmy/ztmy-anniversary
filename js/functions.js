@@ -207,7 +207,13 @@ function createPagingTag(
 }
 
 // カートタイトルタグ作成
-function createCardTitleTag(leftDays, releaseDateStr, name, sortMode) {
+function createCardTitleTag(
+  leftDays,
+  releaseDateStr,
+  name,
+  sortMode,
+  startPhrase = ''
+) {
   // 変数初期化
   var tag = '';
 
@@ -236,7 +242,8 @@ function createCardTitleTag(leftDays, releaseDateStr, name, sortMode) {
     }
   } else if (sortMode === SORTMODE.YEAR_MONTH_DAY.code) {
     // 過去モード
-    tag += '<div class="card-name">' + name + '<br>公開から</div>';
+    tag +=
+      '<div class="card-name">' + name + '<br>' + startPhrase + 'から</div>';
     tag +=
       '<div class="card-days"><span class="highlight">' +
       getDaysFromDate(releaseDateStr) +
