@@ -112,16 +112,16 @@ function getDaysFromDate(dateString) {
 }
 
 // 二次元配列を年月日でソート
-function sortByYearMonthDay(data, sortColIndex) {
+function sortByYearMonthDay(data, sortColIndex, sortOrder) {
   return data.sort((a, b) => {
     const dateA = new Date(a[sortColIndex]);
     const dateB = new Date(b[sortColIndex]);
-    return dateB - dateA; // 降順
+    return sortOrder ? dateA - dateB : dateB - dateA; // 昇順：降順
   });
 }
 
 // 二次元配列を月日でソート
-function sortByMonthDay(arr, sortColIndex) {
+function sortByMonthDay(arr, sortColIndex, sortOrder) {
   const today = new Date(globalToday.setHours(0, 0, 0, 0));
 
   function daysToToday(dateString) {
@@ -136,12 +136,15 @@ function sortByMonthDay(arr, sortColIndex) {
 
   // コピーをソート
   return arrCopy.sort(
-    (a, b) => daysToToday(a[sortColIndex]) - daysToToday(b[sortColIndex])
+    (a, b) =>
+      sortOrder
+        ? daysToToday(a[sortColIndex]) - daysToToday(b[sortColIndex]) // 昇順
+        : daysToToday(b[sortColIndex]) - daysToToday(a[sortColIndex]) // 降順
   );
 }
 
 // ソートタグ作成
-function createSortTag(currentMode, currentPage, currentSortMode) {
+function createSortTag(display) {
   // 変数初期化
   var tag = '';
 
@@ -151,17 +154,24 @@ function createSortTag(currentMode, currentPage, currentSortMode) {
   Object.values(SORTMODE).forEach(function (sortMode) {
     tag +=
       ' <a class="' +
-      (sortMode.code === currentSortMode ? 'disabled' : 'active') +
+      (sortMode.code === display.sortMode ? 'active' : 'active') +
       '" onclick="createDisplay(' +
-      currentMode +
+      display.mode +
       ',' +
-      currentPage +
+      display.page +
       ',' +
       sortMode.code +
-      ')" class="tab-item ' +
-      (sortMode.code === currentSortMode ? 'tab-selected' : 'tab-unselected') +
-      '">' +
+      ',' +
+      (sortMode.code === display.sortMode
+        ? !display.sortOrder
+        : SORTORDER.asc) +
+      ')">' +
       sortMode.name +
+      (sortMode.code === display.sortMode
+        ? display.sortOrder === SORTORDER.asc
+          ? '▲'
+          : '▼'
+        : '') +
       '</a>';
   });
   tag += '</div>';
@@ -170,13 +180,7 @@ function createSortTag(currentMode, currentPage, currentSortMode) {
 }
 
 // ページングタグ作成
-function createPagingTag(
-  currentMode,
-  currentPage,
-  listLength,
-  cardPerPage,
-  sortMode
-) {
+function createPagingTag(display) {
   // 変数初期化
   var tag = '';
   var pageIndex = 0;
@@ -185,17 +189,19 @@ function createPagingTag(
   tag += '<div class="pagination">';
 
   // 設定ファイルの「1ページ当たり表示数」分行ループ
-  for (let i = 0; i < listLength; i += cardPerPage) {
+  for (let i = 0; i < display.data.length; i += display.cardPerPage) {
     pageIndex++;
     tag +=
       ' <a class="' +
-      (currentPage === pageIndex ? 'disabled' : 'active') +
+      (display.page === pageIndex ? 'disabled' : 'active') +
       '" onclick="createDisplay(' +
-      currentMode +
+      display.mode +
       ',' +
       pageIndex +
       ',' +
-      sortMode +
+      display.sortMode +
+      ',' +
+      display.sortOrder +
       ')">' +
       pageIndex +
       '</a>';

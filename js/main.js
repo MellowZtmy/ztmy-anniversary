@@ -14,8 +14,13 @@ var SORTMODE = {
   },
   YEAR_MONTH_DAY: {
     code: 1,
-    name: '最新順',
+    name: '時系列順',
   },
+};
+// ソート順
+var SORTORDER = {
+  asc: true,
+  desc: false,
 };
 // 設定ファイル情報
 var appsettings = [];
@@ -51,6 +56,7 @@ $(document).ready(async function () {
         ),
         sortCol: appsettings.MVReleaseDateCol,
         sortMode: SORTMODE.MONTH_DAY.code,
+        sortOrder: SORTORDER.asc,
         cardPerPage: appsettings.cardPerPageMV,
       },
       ALBUM: {
@@ -63,20 +69,21 @@ $(document).ready(async function () {
         ),
         sortCol: appsettings.albumReleaseDateCol,
         sortMode: SORTMODE.MONTH_DAY.code,
+        sortOrder: SORTORDER.asc,
         cardPerPage: appsettings.cardPerPageAlbum,
       },
-      LIVE: {
-        mode: 2,
-        name: 'LIVE',
-        page: 1,
-        data: await fetchCsvData(
-          appsettings.livesFileName,
-          appsettings.liveSkipRowCount
-        ),
-        sortCol: appsettings.liveReleaseDateCol,
-        sortMode: SORTMODE.MONTH_DAY.code,
-        cardPerPage: appsettings.cardPerPageLive,
-      },
+      // LIVE: {
+      //   mode: 2,
+      //   name: 'LIVE',
+      //   page: 1,
+      //   data: await fetchCsvData(
+      //     appsettings.livesFileName,
+      //     appsettings.liveSkipRowCount
+      //   ),
+      //   sortCol: appsettings.liveReleaseDateCol,
+      //   sortMode: SORTMODE.MONTH_DAY.code,
+      //   cardPerPage: appsettings.cardPerPageLive,
+      // },
     };
 
     // 4. カラーセット
@@ -86,7 +93,7 @@ $(document).ready(async function () {
     );
 
     // 開始画面を表示
-    createDisplay(DISPLAY.MV.mode, 1, SORTMODE.MONTH_DAY.code);
+    createDisplay(DISPLAY.MV.mode, 1, SORTMODE.MONTH_DAY.code, SORTORDER.asc);
   } catch (error) {
     // エラーハンドリング
     showError('Failed to load data:', error);
@@ -94,12 +101,13 @@ $(document).ready(async function () {
 });
 
 // 画面タグ作成
-function createDisplay(mode, page, sortMode) {
+function createDisplay(mode, page, sortMode, sortOrder) {
   // ページング、ソートモード保持
   for (let key in DISPLAY) {
     if (DISPLAY[key].mode === mode) {
       DISPLAY[key].page = page;
       DISPLAY[key].sortMode = sortMode;
+      DISPLAY[key].sortOrder = sortOrder;
       break;
     }
   }
@@ -112,8 +120,8 @@ function createDisplay(mode, page, sortMode) {
   var display = Object.values(DISPLAY).find((item) => item.mode === mode);
   var sortedData =
     sortMode === SORTMODE.MONTH_DAY.code
-      ? sortByMonthDay(display.data, display.sortCol)
-      : sortByYearMonthDay(display.data, display.sortCol);
+      ? sortByMonthDay(display.data, display.sortCol, display.sortOrder)
+      : sortByYearMonthDay(display.data, display.sortCol, display.sortOrder);
 
   // 表示開始/終了index
   var listStartIndex = display.cardPerPage * (display.page - 1);
@@ -143,6 +151,8 @@ function createDisplay(mode, page, sortMode) {
           disp.page +
           ',' +
           disp.sortMode +
+          ',' +
+          disp.sortOrder +
           ')"'
         : '') +
       ' class="tab-item ' +
@@ -154,16 +164,10 @@ function createDisplay(mode, page, sortMode) {
   tag += ' </div>';
 
   // ソート作成
-  tag += createSortTag(display.mode, display.page, display.sortMode);
+  tag += createSortTag(display);
 
   // ページング作成
-  tag += createPagingTag(
-    display.mode,
-    display.page,
-    sortedData.length,
-    display.cardPerPage,
-    display.sortMode
-  );
+  tag += createPagingTag(display);
 
   // タグ作成
   if (display.mode === DISPLAY.MV.mode) {
@@ -365,13 +369,7 @@ function createDisplay(mode, page, sortMode) {
   }
 
   // ページング作成
-  tag += createPagingTag(
-    display.mode,
-    display.page,
-    sortedData.length,
-    display.cardPerPage,
-    display.sortMode
-  );
+  tag += createPagingTag(display);
 
   // カラーチェンジ
   tag +=
