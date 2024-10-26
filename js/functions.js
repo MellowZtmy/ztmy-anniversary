@@ -157,9 +157,7 @@ function createSortTag(display) {
       (sortMode.code === display.sortMode ? 'disabled' : 'active') +
       '" onclick="createDisplay(' +
       display.mode +
-      ',' +
-      display.page +
-      ',' +
+      ',1,' +
       sortMode.code +
       ')">' +
       sortMode.name +

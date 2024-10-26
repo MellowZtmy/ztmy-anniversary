@@ -146,10 +146,8 @@ function createDisplay(mode, page, sortMode) {
       (disp.mode !== display.mode
         ? 'onclick="createDisplay(' +
           disp.mode +
-          ',' +
-          disp.page +
-          ',' +
-          disp.sortMode +
+          ',1,' +
+          SORTMODE.ANNIVERSARY.code +
           ')"'
         : '') +
       ' class="tab-item ' +
