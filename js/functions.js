@@ -213,7 +213,7 @@ function createCardTitleTag(
   var tag = '';
 
   // タグ生成
-  if (sortMode === SORTMODE.MONTH_DAY.code) {
+  if (sortMode === SORTMODE.ANNIVERSARY.code) {
     // 記念日モード
     if (leftDays == 0) {
       // 今日が記念日の場合
@@ -235,7 +235,7 @@ function createCardTitleTag(
         leftDays +
         '</span>日</div>';
     }
-  } else if (sortMode === SORTMODE.YEAR_MONTH_DAY.code) {
+  } else if (sortMode === SORTMODE.HISTORY.code) {
     // 過去モード
     tag +=
       '<div class="card-name">' + name + '<br>' + startPhrase + 'から</div>';

@@ -8,11 +8,11 @@ const globalToday = new Date();
 var DISPLAY = {};
 // ソートモード
 var SORTMODE = {
-  MONTH_DAY: {
+  ANNIVERSARY: {
     code: 0,
     name: '記念日順',
   },
-  YEAR_MONTH_DAY: {
+  HISTORY: {
     code: 1,
     name: '時系列順',
   },
@@ -55,7 +55,7 @@ $(document).ready(async function () {
             row[appsettings.MVReleaseDateCol] !== appsettings.noDataString
         ),
         sortCol: appsettings.MVReleaseDateCol,
-        sortMode: SORTMODE.MONTH_DAY.code,
+        sortMode: SORTMODE.ANNIVERSARY.code,
         sortOrder: SORTORDER.asc,
         cardPerPage: appsettings.cardPerPageMV,
       },
@@ -68,7 +68,7 @@ $(document).ready(async function () {
           appsettings.albumsSkipRowCount
         ),
         sortCol: appsettings.albumReleaseDateCol,
-        sortMode: SORTMODE.MONTH_DAY.code,
+        sortMode: SORTMODE.ANNIVERSARY.code,
         sortOrder: SORTORDER.asc,
         cardPerPage: appsettings.cardPerPageAlbum,
       },
@@ -81,7 +81,7 @@ $(document).ready(async function () {
       //     appsettings.liveSkipRowCount
       //   ),
       //   sortCol: appsettings.liveReleaseDateCol,
-      //   sortMode: SORTMODE.MONTH_DAY.code,
+      //   sortMode: SORTMODE.ANNIVERSARY.code,
       //   cardPerPage: appsettings.cardPerPageLive,
       // },
     };
@@ -93,7 +93,7 @@ $(document).ready(async function () {
     );
 
     // 開始画面を表示
-    createDisplay(DISPLAY.MV.mode, 1, SORTMODE.MONTH_DAY.code);
+    createDisplay(DISPLAY.MV.mode, 1, SORTMODE.ANNIVERSARY.code);
   } catch (error) {
     // エラーハンドリング
     showError('Failed to load data:', error);
@@ -118,7 +118,7 @@ function createDisplay(mode, page, sortMode) {
   // 楽曲を日付順に並び変える
   var display = Object.values(DISPLAY).find((item) => item.mode === mode);
   var sortedData =
-    sortMode === SORTMODE.MONTH_DAY.code
+    sortMode === SORTMODE.ANNIVERSARY.code
       ? sortByMonthDay(display.data, display.sortCol, display.sortOrder)
       : sortByYearMonthDay(display.data, display.sortCol, display.sortOrder);
 
