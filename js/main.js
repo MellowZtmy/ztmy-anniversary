@@ -119,12 +119,14 @@ function createDisplay(mode, page, sortMode) {
   var display = Object.values(DISPLAY).find((item) => item.mode === mode);
   var sortedData =
     sortMode === SORTMODE.ANNIVERSARY.code
-      ? sortByMonthDay(
+      ? // 記念日順の場合 今日に近い未来の日付昇順
+        sortByMonthDay(
           display.data,
           display.sortCol,
           SORTMODE.ANNIVERSARY.defaultSortOrder
         )
-      : sortByYearMonthDay(
+      : // 時系列順の場合 今日に近い未来の日付昇順
+        sortByYearMonthDay(
           display.data,
           display.sortCol,
           SORTMODE.HISTORY.defaultSortOrder
