@@ -6,21 +6,23 @@
 const globalToday = new Date();
 // 画面表示モード、表示文字列、ページ
 var DISPLAY = {};
+// ソート順
+var SORTORDER = {
+  asc: true,
+  desc: false,
+};
 // ソートモード
 var SORTMODE = {
   ANNIVERSARY: {
     code: 0,
     name: '記念日順',
+    defaultSortOrder: SORTORDER.asc,
   },
   HISTORY: {
     code: 1,
     name: '時系列順',
+    defaultSortOrder: SORTORDER.desc,
   },
-};
-// ソート順
-var SORTORDER = {
-  asc: true,
-  desc: false,
 };
 // 設定ファイル情報
 var appsettings = [];
@@ -56,7 +58,6 @@ $(document).ready(async function () {
         ),
         sortCol: appsettings.MVReleaseDateCol,
         sortMode: SORTMODE.ANNIVERSARY.code,
-        sortOrder: SORTORDER.asc,
         cardPerPage: appsettings.cardPerPageMV,
       },
       ALBUM: {
@@ -69,7 +70,6 @@ $(document).ready(async function () {
         ),
         sortCol: appsettings.albumReleaseDateCol,
         sortMode: SORTMODE.ANNIVERSARY.code,
-        sortOrder: SORTORDER.asc,
         cardPerPage: appsettings.cardPerPageAlbum,
       },
       // LIVE: {
@@ -119,8 +119,16 @@ function createDisplay(mode, page, sortMode) {
   var display = Object.values(DISPLAY).find((item) => item.mode === mode);
   var sortedData =
     sortMode === SORTMODE.ANNIVERSARY.code
-      ? sortByMonthDay(display.data, display.sortCol, display.sortOrder)
-      : sortByYearMonthDay(display.data, display.sortCol, display.sortOrder);
+      ? sortByMonthDay(
+          display.data,
+          display.sortCol,
+          SORTMODE.ANNIVERSARY.defaultSortOrder
+        )
+      : sortByYearMonthDay(
+          display.data,
+          display.sortCol,
+          SORTMODE.HISTORY.defaultSortOrder
+        );
 
   // 表示開始/終了index
   var listStartIndex = display.cardPerPage * (display.page - 1);
