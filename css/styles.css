@@ -232,6 +232,7 @@ h1 {
   justify-content: center;
   align-items: center;
   margin: 20px 0;
+  flex-wrap: wrap; /* 改行を許可 */
 }
 
 .pagination a {
@@ -243,7 +244,7 @@ h1 {
 }
 
 .pagination a.active {
-  border: 1px solid ;
+  border: 1px solid;
 }
 
 .pagination a.disabled {
