@@ -181,11 +181,8 @@ function createPagingTag(display) {
   for (let i = 0; i < display.data.length; i += display.cardPerPage) {
     pageIndex++;
     tag +=
-      (pageIndex % appsettings.maxPagingBottunPerRow === 1
-        ? '<div class="break-before">'
-        : '') + // Nつで改行
       ' <a class="' +
-      (display.page === pageIndex ? 'disabled' : 'active') + // 選択したものを非活性
+      (display.page === pageIndex ? 'disabled' : 'active') +
       '" onclick="createDisplay(' +
       display.mode +
       ',' +
@@ -194,12 +191,8 @@ function createPagingTag(display) {
       display.sortMode +
       ')">' +
       pageIndex +
-      '</a>' +
-      (pageIndex % appsettings.maxPagingBottunPerRow === 0 ? '</div>' : ''); // Nつで改行
+      '</a>';
   }
-
-  // break-beforeの分</div>で閉じる
-  tag += tag.endsWith('</div>') ? '' : '</div>';
 
   tag += '</div>';
 

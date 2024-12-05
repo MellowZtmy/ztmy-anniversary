@@ -233,7 +233,6 @@ h1 {
   align-items: center;
   margin: 20px 0;
   flex-wrap: wrap; /* 改行を許可 */
-  flex-direction:column;
 }
 
 .pagination a {
@@ -250,12 +249,6 @@ h1 {
 
 .pagination a.disabled {
   pointer-events: none;
-}
-
-/* 改行用スタイル */
-.pagination .break-before {
-  flex-basis: 100%; /* 改行させる */
-  margin-top: 20px; /* 上にスペースを追加（任意） */
 }
 
 /* ソート用 */
