@@ -372,6 +372,8 @@ function createDisplay(mode, page, sortMode) {
     });
     tag += '         </div>'; //card-list
   }
+  // 敬称略
+  tag += '<div class="right-text">※敬称略</div>';
 
   // ページング作成
   tag += createPagingTag(display);
