@@ -205,10 +205,7 @@ function createDisplay(mode, page, sortMode) {
 
       // カード生成
       tag += '      <div class="card-item ' + imageName + '">';
-      // 記念日の場合紙吹雪用のタグ生成
-      if (mvLeftDays == 0) {
-        tag += '<div id="confetti" class="confetti">';
-      }
+
       tag += createCardTitleTag(
         mvLeftDays,
         MVReleaseDateStr,
@@ -263,11 +260,6 @@ function createDisplay(mode, page, sortMode) {
 
       // MV公開年月日
       tag += '           <div class="card-date">' + MVReleaseDateStr + '</div>';
-
-      // 記念日の場合 紙吹雪用のタグ閉じる
-      if (mvLeftDays == 0) {
-        tag += '        </div>'; //confetti
-      }
 
       tag += '        </div>'; //card-item
     });
