@@ -8,13 +8,10 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <div id="confetti" class="confetti">
-      <canvas></canvas>
-      <h1 id="header" class="center-text" onclick="location.reload(true) ">
-        ずとまよ <br />ANNIVERSARY
-      </h1>
-      <div class="margin-bottom-100" id="display"></div>
-    </div>
+    <h1 id="header" class="center-text" onclick="location.reload(true) ">
+      ずとまよ <br />ANNIVERSARY
+    </h1>
+    <div class="margin-bottom-100" id="display"></div>
     <!-- オーバーレイと拡大画像表示用の要素 -->
     <div id="overlay">
       <img src="" alt="拡大表示画像" />
@@ -24,6 +21,10 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"
+    ></script>
     <script src="js/confetti.js"></script>
     <script src="js/functions.js"></script>
     <script src="js/main.js"></script>

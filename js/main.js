@@ -139,8 +139,12 @@ function createDisplay(mode, page, sortMode) {
   // タグクリア
   $('#display').empty();
 
+  // 紙吹雪解除
+  $('canvas')?.remove();
+
   // 変数初期化
   var tag = '';
+  var isExistAnniversary = false;
 
   // 今日日付
   tag +=
@@ -185,6 +189,11 @@ function createDisplay(mode, page, sortMode) {
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
 
+      // 記念日フラグ保持
+      if (!isExistAnniversary) {
+        isExistAnniversary = mvLeftDays == 0;
+      }
+
       // アルバム画像名取得
       var imageName =
         song[appsettings.minialbumCol] !== appsettings.noDataString
@@ -196,6 +205,10 @@ function createDisplay(mode, page, sortMode) {
 
       // カード生成
       tag += '      <div class="card-item ' + imageName + '">';
+      // 記念日の場合紙吹雪用のタグ生成
+      if (mvLeftDays == 0) {
+        tag += '<div id="confetti" class="confetti">';
+      }
       tag += createCardTitleTag(
         mvLeftDays,
         MVReleaseDateStr,
@@ -250,6 +263,11 @@ function createDisplay(mode, page, sortMode) {
 
       // MV公開年月日
       tag += '           <div class="card-date">' + MVReleaseDateStr + '</div>';
+
+      // 記念日の場合 紙吹雪用のタグ閉じる
+      if (mvLeftDays == 0) {
+        tag += '        </div>'; //confetti
+      }
 
       tag += '        </div>'; //card-item
     });
@@ -384,6 +402,12 @@ function createDisplay(mode, page, sortMode) {
 
   // タグ流し込み
   $('#display').append(tag);
+
+  // 紙吹雪
+  if (isExistAnniversary) {
+    $('#confetti').prepend('<canvas id="canvas"></canvas>');
+    dispConfetti();
+  }
 
   // CSS適用
   changeColor(0);
