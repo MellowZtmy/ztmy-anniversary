@@ -274,6 +274,11 @@ function createDisplay(mode, page, sortMode) {
       const releaseDateStr = album[display.sortCol];
       const leftDays = getDaysToNextMonthDay(releaseDateStr);
 
+      // 記念日フラグ保持
+      if (!isExistAnniversary) {
+        isExistAnniversary = leftDays == 0;
+      }
+
       // 背景画像設定CSSルール追加(すでにあるものは追加しない)
       addCssRule(album[2], cssRules, appsettings.grimoireImagePath);
 
@@ -347,6 +352,11 @@ function createDisplay(mode, page, sortMode) {
       // ライブ日付情報取得
       const releaseDateStr = live[display.sortCol];
       const leftDays = getDaysToNextMonthDay(releaseDateStr);
+
+      // 記念日フラグ保持
+      if (!isExistAnniversary) {
+        isExistAnniversary = leftDays == 0;
+      }
 
       // 各カード生成
       tag += '      <div class="card-item" >';
