@@ -144,7 +144,7 @@ function createDisplay(mode, page, sortMode) {
 
   // 変数初期化
   var tag = '';
-  var isExistAnniversary = false;
+  var leftDaysList = [];
 
   // 今日日付
   tag +=
@@ -188,11 +188,7 @@ function createDisplay(mode, page, sortMode) {
       // MV日付情報取得
       const MVReleaseDateStr = song[appsettings.MVReleaseDateCol];
       const mvLeftDays = getDaysToNextMonthDay(MVReleaseDateStr);
-
-      // 記念日フラグ保持
-      if (!isExistAnniversary) {
-        isExistAnniversary = mvLeftDays == 0;
-      }
+      leftDaysList.push(mvLeftDays);
 
       // アルバム画像名取得
       var imageName =
@@ -273,11 +269,7 @@ function createDisplay(mode, page, sortMode) {
       // アルバム日付情報取得
       const releaseDateStr = album[display.sortCol];
       const leftDays = getDaysToNextMonthDay(releaseDateStr);
-
-      // 記念日フラグ保持
-      if (!isExistAnniversary) {
-        isExistAnniversary = leftDays == 0;
-      }
+      leftDaysList.push(leftDays);
 
       // 背景画像設定CSSルール追加(すでにあるものは追加しない)
       addCssRule(album[2], cssRules, appsettings.grimoireImagePath);
@@ -352,11 +344,7 @@ function createDisplay(mode, page, sortMode) {
       // ライブ日付情報取得
       const releaseDateStr = live[display.sortCol];
       const leftDays = getDaysToNextMonthDay(releaseDateStr);
-
-      // 記念日フラグ保持
-      if (!isExistAnniversary) {
-        isExistAnniversary = leftDays == 0;
-      }
+      leftDaysList.push(leftDays);
 
       // 各カード生成
       tag += '      <div class="card-item" >';
@@ -406,7 +394,7 @@ function createDisplay(mode, page, sortMode) {
   $('#display').append(tag);
 
   // 紙吹雪
-  if (isExistAnniversary) {
+  if (leftDaysList.includes(0)) {
     $('#confetti').prepend('<canvas id="canvas"></canvas>');
     dispConfetti();
   }
