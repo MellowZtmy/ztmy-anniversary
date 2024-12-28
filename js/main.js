@@ -197,7 +197,7 @@ function createDisplay(mode, page, sortMode) {
           : song[appsettings.albumCol];
 
       // 背景画像設定(ミニアルバム優先,すでにあるものは追加しない)
-      addCssRule(imageName, cssRules, appsettings.albumImagePath);
+      cssRules = addCssRule(imageName, cssRules, appsettings.albumImagePath);
 
       // カード生成
       tag += '      <div class="card-item ' + imageName + '">';
@@ -274,7 +274,7 @@ function createDisplay(mode, page, sortMode) {
       leftDaysList.push(leftDays);
 
       // 背景画像設定CSSルール追加(すでにあるものは追加しない)
-      addCssRule(album[2], cssRules, appsettings.grimoireImagePath);
+      cssRules = addCssRule(album[2], cssRules, appsettings.grimoireImagePath);
 
       // カード生成
       tag += '      <div class="card-item ' + album[2] + '">';
@@ -348,8 +348,16 @@ function createDisplay(mode, page, sortMode) {
       const leftDays = getDaysToNextMonthDay(releaseDateStr);
       leftDaysList.push(leftDays);
 
+      // 画像は個別化デフォルトか
+      var liveImage = JSON.parse(live[6])
+        ? live[2]
+        : appsettings.liveImageDefault;
+
+      // 背景画像設定CSSルール追加(すでにあるものは追加しない)
+      cssRules = addCssRule(liveImage, cssRules, appsettings.liveImagePath);
+
       // 各カード生成
-      tag += '      <div class="card-item" >';
+      tag += '      <div class="card-item ' + liveImage + '">';
       tag += createCardTitleTag(
         leftDays,
         releaseDateStr,
@@ -372,7 +380,27 @@ function createDisplay(mode, page, sortMode) {
           tag += (index + 1).toString().padStart(2, '0') + '. ' + song + '<br>';
         });
       }
-      tag += '   </div>';
+
+      tag += '   </div>'; //card-info
+
+      // ライブ画像
+      tag += ' <div class="album-container">';
+      if (liveImage !== appsettings.noDataString) {
+        tag +=
+          '<img src="' +
+          appsettings.liveImagePath +
+          liveImage +
+          '.jpg" ' +
+          'alt="' +
+          liveImage +
+          '" ' +
+          'class="album" ' +
+          'onerror="this.onerror=null; this.src=\'' +
+          appsettings.liveImagePath +
+          appsettings.liveImageDefault +
+          '.jpg\';" >';
+      }
+      tag += '        </div>'; // album-container
       tag += '</div>'; //card-info-container
 
       // MV公開年月日
