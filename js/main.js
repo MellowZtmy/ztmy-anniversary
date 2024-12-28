@@ -72,18 +72,18 @@ $(document).ready(async function () {
         sortMode: SORTMODE.ANNIVERSARY.code,
         cardPerPage: appsettings.cardPerPageAlbum,
       },
-      // LIVE: {
-      //   mode: 2,
-      //   name: 'LIVE',
-      //   page: 1,
-      //   data: await fetchCsvData(
-      //     appsettings.livesFileName,
-      //     appsettings.liveSkipRowCount
-      //   ),
-      //   sortCol: appsettings.liveReleaseDateCol,
-      //   sortMode: SORTMODE.ANNIVERSARY.code,
-      //   cardPerPage: appsettings.cardPerPageLive,
-      // },
+      LIVE: {
+        mode: 2,
+        name: 'LIVE',
+        page: 1,
+        data: await fetchCsvData(
+          appsettings.livesFileName,
+          appsettings.liveSkipRowCount
+        ),
+        sortCol: appsettings.liveReleaseDateCol,
+        sortMode: SORTMODE.ANNIVERSARY.code,
+        cardPerPage: appsettings.cardPerPageLive,
+      },
     };
 
     // 4. カラーセット
@@ -260,6 +260,8 @@ function createDisplay(mode, page, sortMode) {
       tag += '        </div>'; //card-item
     });
     tag += '         </div>'; //card-list
+    // 敬称略
+    tag += '<div class="right-text">※敬称略です</div>';
   } else if (display.mode === DISPLAY.ALBUM.mode) {
     //////////////////////////////////////////
     // アルバム情報
@@ -380,8 +382,6 @@ function createDisplay(mode, page, sortMode) {
     });
     tag += '         </div>'; //card-list
   }
-  // 敬称略
-  tag += '<div class="right-text">※敬称略です</div>';
 
   // ページング作成
   tag += createPagingTag(display);
