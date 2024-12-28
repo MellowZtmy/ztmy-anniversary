@@ -286,19 +286,14 @@ function addEnlargeImageEvent() {
 }
 
 // CSSルール作成
-function addCssRule(
-  selector,
-  cssRules,
-  imagePath,
-  fallbackPath = appsettings.liveImageDefault
-) {
+function addCssRule(selector, cssRules, imagePath) {
   // CSSルール作成
   var rule =
     ' .card-item.' +
     selector +
     '::before { background-image: url(../' +
     imagePath +
-    escapeCSS(selector) +
+    selector +
     '.jpg); } ';
 
   // CSSルールにまだない場合
@@ -307,28 +302,5 @@ function addCssRule(
     cssRules.push(rule);
   }
 
-  // 画像の有無を確認して、エラー時にフォールバック画像を使用
-  var img = new Image();
-  img.src = '../' + imagePath + escapeCSS(selector);
-
-  img.onerror = function () {
-    // フォールバック画像を適用
-    var fallbackRule =
-      ' .card-item.' +
-      selector +
-      '::before { background-image: url(../' +
-      fallbackPath +
-      '); } ';
-    if (!cssRules.includes(fallbackRule)) {
-      cssRules.push(fallbackRule);
-    }
-  };
-
   return cssRules;
-}
-
-function escapeCSS(text) {
-  return text
-    .replace(/([ !"#$%&'()*+,./:;<=>?@[\\\]^`{|}~])/g, '\\$1')
-    .replace(/^(\d)/, '\\3$1 ');
 }

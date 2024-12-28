@@ -197,7 +197,7 @@ function createDisplay(mode, page, sortMode) {
           : song[appsettings.albumCol];
 
       // 背景画像設定(ミニアルバム優先,すでにあるものは追加しない)
-      cssRules = addCssRule(imageName, cssRules, appsettings.albumImagePath);
+      addCssRule(imageName, cssRules, appsettings.albumImagePath);
 
       // カード生成
       tag += '      <div class="card-item ' + imageName + '">';
@@ -274,7 +274,7 @@ function createDisplay(mode, page, sortMode) {
       leftDaysList.push(leftDays);
 
       // 背景画像設定CSSルール追加(すでにあるものは追加しない)
-      cssRules = addCssRule(album[2], cssRules, appsettings.grimoireImagePath);
+      addCssRule(album[2], cssRules, appsettings.grimoireImagePath);
 
       // カード生成
       tag += '      <div class="card-item ' + album[2] + '">';
@@ -348,9 +348,6 @@ function createDisplay(mode, page, sortMode) {
       const leftDays = getDaysToNextMonthDay(releaseDateStr);
       leftDaysList.push(leftDays);
 
-      // 背景画像設定CSSルール追加(パフォーマンスの関係上すでにあるものは追加しない)
-      cssRules = addCssRule(live[2], cssRules, appsettings.liveImagePath);
-
       // 各カード生成
       tag += '      <div class="card-item" >';
       tag += createCardTitleTag(
@@ -375,27 +372,7 @@ function createDisplay(mode, page, sortMode) {
           tag += (index + 1).toString().padStart(2, '0') + '. ' + song + '<br>';
         });
       }
-      tag += '   </div>'; //card-info
-
-      // ライブ画像
-      tag += ' <div class="album-container">';
-      var liveImage = live[2];
-      if (liveImage !== appsettings.noDataString) {
-        tag +=
-          '<img src="' +
-          appsettings.liveImagePath +
-          liveImage +
-          '.jpg" ' +
-          'alt="' +
-          liveImage +
-          '" ' +
-          'class="album" ' +
-          'onerror="this.onerror=null; this.src=\'' +
-          appsettings.liveImagePath +
-          appsettings.liveImageDefault +
-          '\';" >';
-      }
-      tag += '        </div>'; // album-container
+      tag += '   </div>';
       tag += '</div>'; //card-info-container
 
       // MV公開年月日
