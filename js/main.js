@@ -349,9 +349,10 @@ function createDisplay(mode, page, sortMode) {
       leftDaysList.push(leftDays);
 
       // 画像は個別化デフォルトか
-      var liveImage = JSON.parse(live[6])
-        ? live[2]
-        : appsettings.liveImageDefault;
+      var liveImage =
+        live[6] !== appsettings.noDataString
+          ? live[6]
+          : appsettings.liveImageDefault;
 
       // 背景画像設定CSSルール追加(すでにあるものは追加しない)
       cssRules = addCssRule(liveImage, cssRules, appsettings.liveImagePath);
