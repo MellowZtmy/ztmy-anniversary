@@ -194,7 +194,9 @@ function createDisplay(mode, page, sortMode) {
       var imageName =
         song[appsettings.minialbumCol] !== appsettings.noDataString
           ? song[appsettings.minialbumCol]
-          : song[appsettings.albumCol];
+          : song[appsettings.albumCol] !== appsettings.noDataString
+          ? song[appsettings.albumCol]
+          : appsettings.liveImageDefault;
 
       // 背景画像設定(ミニアルバム優先,すでにあるものは追加しない)
       cssRules = addCssRule(imageName, cssRules, appsettings.albumImagePath);
