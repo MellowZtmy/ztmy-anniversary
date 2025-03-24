@@ -91,9 +91,16 @@ $(document).ready(async function () {
       appsettings.colorSetsFileName,
       appsettings.colorSkipRowCount
     );
+    // バージョンアップしていればカラー初期化
+    if (appsettings.version !== getLocal('version')) {
+      removeLocal('colorIndex');
+    }
 
     // 開始画面を表示
     createDisplay(DISPLAY.MV.mode, 1, SORTMODE.ANNIVERSARY.code);
+
+    // バージョン保存
+    setLocal('version', appsettings.version);
   } catch (error) {
     // エラーハンドリング
     showError('Failed to load data:', error);
