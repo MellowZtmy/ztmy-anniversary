@@ -37,6 +37,9 @@ var colorSets = [];
 // 1. 画面表示
 $(document).ready(async function () {
   try {
+    // スピナーを表示
+    $('#spinner').show();
+
     // 1. 設定ファイル読み込み
     appsettings = await getJsonData('appsettings.json');
 
@@ -104,6 +107,9 @@ $(document).ready(async function () {
   } catch (error) {
     // エラーハンドリング
     showError('Failed to load data:', error);
+  } finally {
+    // 最後にスピナーを非表示
+    $('#spinner').hide();
   }
 });
 
