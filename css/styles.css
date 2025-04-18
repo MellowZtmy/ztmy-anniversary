@@ -45,6 +45,7 @@ h1 {
 *{
   font-family: 'Roboto', sans-serif;
   font-weight: 700; /* 見出しは太字に */
+  transition: all 0.3s;
 }
 
 .center-text {
