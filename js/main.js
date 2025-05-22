@@ -231,7 +231,7 @@ function createDisplay(mode, page, sortMode) {
         song[appsettings.composerCol] +
         '<br>編曲：' +
         song[appsettings.arrangerCol] +
-        '<br>監督：' +
+        '<br>MV：' +
         song[appsettings.mvDirectorCol] +
         '</div>';
 
