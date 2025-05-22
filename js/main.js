@@ -427,6 +427,12 @@ function createDisplay(mode, page, sortMode) {
   tag +=
     ' <h2 id="changeColor" class="center-text margin-top-20" style="cursor: pointer;" onclick="changeColor(1)">Color ↺</h2>';
 
+  // サイト情報
+  tag += ' <footer style="text-align: center; margin-top: 2rem;">';
+  tag +=
+    '   <a href="about.html" target="_blank" rel="noopener noreferrer">サイト情報</a>';
+  tag += ' </footer>';
+
   // タグ流し込み
   $('#display').append(tag);
 

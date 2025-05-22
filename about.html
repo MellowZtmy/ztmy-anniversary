@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>サイト情報 | ずとまよANNIVERSARY</title>
+    <style>
+      body {
+        font-family: 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+        line-height: 1.8;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        color: #333;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #222;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 0.3rem;
+      }
+      .tabs {
+        display: flex;
+        border-bottom: 2px solid #ccc;
+        margin-bottom: 1rem;
+      }
+      .tab {
+        padding: 0.5rem 1.5rem;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        border-bottom: none;
+        background: #eee;
+        margin-right: 0.3rem;
+        border-radius: 5px 5px 0 0;
+        user-select: none;
+      }
+      .tab.active {
+        background: #fff;
+        font-weight: bold;
+        border-bottom: 2px solid #fff;
+      }
+      .tab-content {
+        display: none;
+        background: #fff;
+        padding-bottom: 2rem;
+      }
+      .tab-content.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>サイト情報 | ずとまよANNIVERSARY</h1>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="about">このサイトについて</div>
+      <div class="tab" data-tab="disclaimer">免責事項</div>
+      <div class="tab" data-tab="copyright">著作権・引用</div>
+      <div class="tab" data-tab="privacy">プライバシーポリシー</div>
+    </div>
+
+    <section id="about" class="tab-content active">
+      <h2>このサイトについて</h2>
+      <p>
+        当サイトは、ずっと真夜中でいいのに。の楽曲投稿日の記念日をファンの皆さまと祝うことを目的とした非公式のファンサイトです。
+      </p>
+      <p>
+        楽曲や画像などの著作権は各権利者様に帰属しており、当サイトは権利を侵害する意図は一切ございません。
+      </p>
+      <p>
+        サイトの内容は個人の趣味の範囲であり、営利目的ではありません。公式情報は各公式メディアをご確認ください。
+      </p>
+    </section>
+
+    <section id="disclaimer" class="tab-content">
+      <h2>免責事項</h2>
+      <p>
+        当サイトに掲載されている情報は、できる限り正確なものを掲載するよう努めていますが、その正確性や安全性を保証するものではありません。
+      </p>
+      <p>
+        掲載された情報によって生じたいかなる損害に対しても、当サイト運営者は一切の責任を負いかねます。
+      </p>
+      <p>
+        また、外部リンク先でのトラブル・損害についても責任を負いかねますのでご了承ください。
+      </p>
+    </section>
+
+    <section id="copyright" class="tab-content">
+      <h2>著作権・引用について</h2>
+      <p>
+        当サイトに掲載されている文章・画像・リンク情報等の著作権は、各権利者または当サイト管理人に帰属します。
+      </p>
+      <p>
+        楽曲タイトルや画像などを紹介する際には、可能な限り出典や公式リンクを明記しています。
+        著作権法第32条に基づく「引用」の範囲内での使用を心がけています。
+      </p>
+      <p>
+        万が一、権利者の方からの削除・修正依頼があった場合には、速やかに対応させていただきます。
+        下記メールアドレスまでご連絡ください。
+      </p>
+      <p>
+        📩 連絡先：<a href="mailto:mellowztmy@gmail.com"
+          >mellowztmy@gmail.com</a
+        >
+      </p>
+    </section>
+
+    <section id="privacy" class="tab-content">
+      <h2>プライバシーポリシー</h2>
+      <p>
+        Cookieの無効化はお使いのブラウザの設定で可能です。
+        ご自身で設定を行っていただくことで、情報収集を拒否することができます。
+      </p>
+    </section>
+
+    <script>
+      const tabs = document.querySelectorAll('.tab');
+      const contents = document.querySelectorAll('.tab-content');
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          tabs.forEach((t) => t.classList.remove('active'));
+          tab.classList.add('active');
+
+          const target = tab.dataset.tab;
+          contents.forEach((c) => {
+            c.classList.toggle('active', c.id === target);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
