@@ -2,50 +2,109 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>サイト情報 | ずとまよANNIVERSARY</title>
     <style>
+      :root {
+        --accent-color: #b449e2;
+        --bg-color: #f9f9fb;
+        --text-color: #333;
+        --tab-bg: #e0e7ef;
+        --tab-active-bg: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
         font-family: 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+        background: var(--bg-color);
+        color: var(--text-color);
         line-height: 1.8;
         max-width: 800px;
         margin: 0 auto;
         padding: 2rem;
-        color: #333;
       }
+
       h1,
-      h2,
-      h3 {
-        color: #222;
+      h2 {
+        color: var(--accent-color);
         border-bottom: 1px solid #ccc;
         padding-bottom: 0.3rem;
       }
+
       .tabs {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
         border-bottom: 2px solid #ccc;
         margin-bottom: 1rem;
+        gap: 0.5rem;
       }
+
       .tab {
-        padding: 0.5rem 1.5rem;
+        flex: 1 1 auto;
+        text-align: center;
+        padding: 0.6rem 1rem;
         cursor: pointer;
-        border: 1px solid #ccc;
-        border-bottom: none;
-        background: #eee;
-        margin-right: 0.3rem;
-        border-radius: 5px 5px 0 0;
-        user-select: none;
+        background: var(--tab-bg);
+        border-radius: 8px 8px 0 0;
+        transition: all 0.2s ease-in-out;
+        font-weight: 500;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        min-width: 120px;
+        white-space: nowrap;
       }
+
+      .tab:hover {
+        background: #d0dbea;
+      }
+
       .tab.active {
-        background: #fff;
+        background: var(--tab-active-bg);
         font-weight: bold;
-        border-bottom: 2px solid #fff;
+        border-bottom: 2px solid var(--tab-active-bg);
       }
+
       .tab-content {
         display: none;
         background: #fff;
-        padding-bottom: 2rem;
+        padding: 1.5rem;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       }
+
       .tab-content.active {
         display: block;
+      }
+
+      a {
+        word-break: break-word;
+        color: var(--accent-color);
+      }
+
+      @media screen and (max-width: 600px) {
+        body {
+          padding: 1rem;
+        }
+
+        .tab {
+          flex: 1 1 100%;
+          font-size: 1rem;
+        }
+
+        h1 {
+          font-size: 1.3rem;
+        }
+
+        h2 {
+          font-size: 1.1rem;
+        }
+
+        p {
+          font-size: 0.95rem;
+        }
       }
     </style>
   </head>
@@ -91,12 +150,10 @@
         当サイトに掲載されている文章・画像・リンク情報等の著作権は、各権利者または当サイト管理人に帰属します。
       </p>
       <p>
-        楽曲タイトルや画像などを紹介する際には、可能な限り出典や公式リンクを明記しています。
-        著作権法第32条に基づく「引用」の範囲内での使用を心がけています。
+        楽曲タイトルや画像などを紹介する際には、可能な限り出典や公式リンクを明記しています。著作権法第32条に基づく「引用」の範囲内での使用を心がけています。
       </p>
       <p>
-        万が一、権利者の方からの削除・修正依頼があった場合には、速やかに対応させていただきます。
-        下記メールアドレスまでご連絡ください。
+        万が一、権利者の方からの削除・修正依頼があった場合には、速やかに対応させていただきます。下記メールアドレスまでご連絡ください。
       </p>
       <p>
         📩 連絡先：<a href="mailto:mellowztmy@gmail.com"
@@ -108,8 +165,7 @@
     <section id="privacy" class="tab-content">
       <h2>プライバシーポリシー</h2>
       <p>
-        Cookieの無効化はお使いのブラウザの設定で可能です。
-        ご自身で設定を行っていただくことで、情報収集を拒否することができます。
+        Cookieの無効化はお使いのブラウザの設定で可能です。ご自身で設定を行っていただくことで、情報収集を拒否することができます。
       </p>
     </section>
 
