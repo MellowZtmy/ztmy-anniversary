@@ -246,7 +246,11 @@ function createCardTitleTag(
   } else if (sortMode === SORTMODE.HISTORY.code) {
     // 過去モード
     tag +=
-      '<div class="card-name">' + name + '<br>' + startPhrase + 'から</div>';
+      '<div class="card-name">『' +
+      name +
+      '』<br>' +
+      startPhrase +
+      'から</div>';
     tag +=
       '<div class="card-days"><span class="highlight">' +
       getDaysFromDate(releaseDateStr) +
