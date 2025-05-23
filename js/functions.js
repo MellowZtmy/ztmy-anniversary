@@ -226,17 +226,16 @@ function createCardTitleTag(
     // 記念日モード
     if (leftDays == 0) {
       // 今日が記念日の場合
+      tag += '<div class="card-name">今日は...<br>『' + name + '』</div>';
       tag +=
-        '<div class="card-name">今日は...<br>' +
-        name +
-        '<span class="highlight"> ' +
+        '<div class="card-days"><span class="highlight"> ' +
         getYearsToNextMonthDay(releaseDateStr) +
-        '</span>周年！</div><br>';
+        '</span>周年！</div>';
     } else {
       tag +=
-        '<div class="card-name">' +
+        '<div class="card-name">『' +
         name +
-        '<br><span class="highlight">' +
+        '』<br><span class="highlight">' +
         getYearsToNextMonthDay(releaseDateStr) +
         '</span>周年まで</div>';
       tag +=
