@@ -83,7 +83,7 @@ $(document).ready(async function () {
           appsettings.livesFileName,
           appsettings.liveSkipRowCount
         ),
-        sortCol: appsettings.liveStartDateCol,
+        sortCol: appsettings.liveEndDateCol,
         sortMode: SORTMODE.ANNIVERSARY.code,
         cardPerPage: appsettings.cardPerPageLive,
       },
@@ -418,7 +418,14 @@ function createDisplay(mode, page, sortMode) {
       tag += '</div>'; //card-info-container
 
       // MV公開年月日
-      tag += '           <div class="card-date">' + releaseDateStr + '</div>';
+      tag += '           <div class="card-date">';
+      tag +=
+        live[appsettings.liveStartDateCol] === live[appsettings.liveEndDateCol] // 開始終了一致の場合ば開始日のみ表示
+          ? live[appsettings.liveStartDateCol]
+          : live[appsettings.liveStartDateCol] +
+            ' ～ ' +
+            live[appsettings.liveEndDateCol];
+      tag += '</div>';
 
       tag += '        </div>'; //card-item
     });
