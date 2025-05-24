@@ -83,7 +83,7 @@ $(document).ready(async function () {
           appsettings.livesFileName,
           appsettings.liveSkipRowCount
         ),
-        sortCol: appsettings.liveReleaseDateCol,
+        sortCol: appsettings.liveStartDateCol,
         sortMode: SORTMODE.ANNIVERSARY.code,
         cardPerPage: appsettings.cardPerPageLive,
       },
@@ -358,8 +358,8 @@ function createDisplay(mode, page, sortMode) {
 
       // 画像は個別化デフォルトか
       var liveImage =
-        live[6] !== appsettings.noDataString
-          ? live[6]
+        live[appsettings.liveImageCol] !== appsettings.noDataString
+          ? live[appsettings.liveImageCol]
           : appsettings.liveImageDefault;
 
       // 背景画像設定CSSルール追加(すでにあるものは追加しない)
@@ -370,7 +370,7 @@ function createDisplay(mode, page, sortMode) {
       tag += createCardTitleTag(
         leftDays,
         releaseDateStr,
-        live[2],
+        live[appsettings.liveNameCol],
         display.sortMode
       );
 
@@ -378,16 +378,21 @@ function createDisplay(mode, page, sortMode) {
       tag += '<div class="card-info-container">';
       // セトリ
       tag += '   <div class="card-info">【セットリスト】<br>';
-      live[4].split(appsettings.comma).forEach(function (song, index) {
-        tag += (index + 1).toString().padStart(2, '0') + '. ' + song + '<br>';
-      });
-
-      // アンコール
-      if (live[5] !== appsettings.noDataString) {
-        tag += '--------Encore--------<br>';
-        live[5].split(appsettings.comma).forEach(function (song, index) {
+      live[appsettings.liveSetListCol]
+        .split(appsettings.comma)
+        .forEach(function (song, index) {
           tag += (index + 1).toString().padStart(2, '0') + '. ' + song + '<br>';
         });
+
+      // アンコール
+      if (live[appsettings.liveEncoreCol] !== appsettings.noDataString) {
+        tag += '--------Encore--------<br>';
+        live[appsettings.liveEncoreCol]
+          .split(appsettings.comma)
+          .forEach(function (song, index) {
+            tag +=
+              (index + 1).toString().padStart(2, '0') + '. ' + song + '<br>';
+          });
       }
 
       tag += '   </div>'; //card-info
