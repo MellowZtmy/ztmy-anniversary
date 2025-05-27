@@ -417,6 +417,15 @@ function createDisplay(mode, page, sortMode) {
       tag += '        </div>'; // album-container
       tag += '</div>'; //card-info-container
 
+      // LIVE情報URL
+      if (live[appsettings.liveUrlCol] !== appsettings.noDataString) {
+        tag +=
+          '<div class="card-url"><a href="' +
+          appsettings.liveUrlBase +
+          live[appsettings.liveUrlCol] +
+          '" target="_blank" rel="noopener noreferrer">公式サイト <i class="fas fa-arrow-up-right-from-square"></i></a></div>';
+      }
+
       // MV公開年月日
       tag += '           <div class="card-date">';
       tag +=

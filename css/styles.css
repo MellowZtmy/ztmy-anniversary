@@ -207,6 +207,17 @@ h1 {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* 影を強調 */
 }
 
+/* LIVE情報リンクスタイル */
+.card-url:link,
+.card-url:visited,
+.card-url:hover,
+.card-url:active,
+.card-url {
+  text-align: right;
+  color: #a813de;
+  margin-top: 15px;
+}
+
 /* 日付スタイル */
 .card-date {
   text-align: right;
