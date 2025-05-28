@@ -441,6 +441,9 @@ function createDisplay(mode, page, sortMode) {
       tag += '        </div>'; //card-item
     });
     tag += '         </div>'; //card-list
+    // セットリストに関する備考
+    tag +=
+      '<div class="right-text">※セットリストは正確ではない場合があります</div>';
   }
 
   // ページング作成
