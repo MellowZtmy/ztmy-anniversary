@@ -345,6 +345,8 @@ function createDisplay(mode, page, sortMode) {
       tag += '        </div>'; //card-item
     });
     tag += '         </div>'; //card-list
+    // 収録曲に関する備考
+    tag += '<div class="right-text">※収録曲は正確ではない場合があります</div>';
   } else if (display.mode === DISPLAY.LIVE.mode) {
     //////////////////////////////////////////
     // ライブ情報
