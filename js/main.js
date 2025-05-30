@@ -282,36 +282,43 @@ function createDisplay(mode, page, sortMode) {
       leftDaysList.push(leftDays);
 
       // 背景画像設定CSSルール追加(すでにあるものは追加しない)
-      cssRules = addCssRule(album[2], cssRules, appsettings.grimoireImagePath);
+      cssRules = addCssRule(
+        album[appsettings.albumNameCol],
+        cssRules,
+        appsettings.grimoireImagePath
+      );
 
       // カード生成
-      tag += '      <div class="card-item ' + album[2] + '">';
+      tag +=
+        '      <div class="card-item ' + album[appsettings.albumNameCol] + '">';
       tag += createCardTitleTag(
         leftDays,
         releaseDateStr,
-        album[2],
+        album[appsettings.albumNameCol],
         display.sortMode,
         '発売'
       );
 
       // Album ティザー Youtube表示
-      if (album[9] !== appsettings.noDataString) {
+      if (album[appsettings.albumPvIdCol] !== appsettings.noDataString) {
         tag += '<div class="card-info">【ティザーPV】</div>';
-        tag += createYoutubeTag(album[9], false);
+        tag += createYoutubeTag(album[appsettings.albumPvIdCol], false);
       }
       // ここまでAlbum ティザー Youtube表示
 
       // Album ティザー Youtube表示
       tag += '<div class="card-info">【プレイリスト】</div>';
-      tag += createYoutubeTag(album[5], true);
+      tag += createYoutubeTag(album[appsettings.albumPlayListIdCol], true);
       // ここまでAlbum ティザー Youtube表示
 
       // アルバム 情報
       tag += '<div class="card-info-container">';
-      tag += '<div class="card-info">';
-      album[6].split(appsettings.comma).forEach(function (song, index) {
-        tag += (index + 1).toString().padStart(2, '0') + '. ' + song + '<br>';
-      });
+      tag += '<div class="card-info">【通常版収録曲】<br>';
+      album[appsettings.albumPlayListCol]
+        .split(appsettings.comma)
+        .forEach(function (song, index) {
+          tag += (index + 1).toString().padStart(2, '0') + '. ' + song + '<br>';
+        });
       tag += '</div>';
 
       // 画像
@@ -320,9 +327,9 @@ function createDisplay(mode, page, sortMode) {
       tag +=
         '<img src="' +
         appsettings.albumImagePath +
-        album[2] +
+        album[appsettings.albumNameCol] +
         '.jpg" alt="' +
-        album[2] +
+        album[appsettings.albumNameCol] +
         '"class="album">';
       // ここまで アルバム 画像
 
@@ -330,14 +337,23 @@ function createDisplay(mode, page, sortMode) {
       tag +=
         '<img src="' +
         appsettings.grimoireImagePath +
-        album[2] +
+        album[appsettings.albumNameCol] +
         '.jpg" alt="' +
-        album[2] +
+        album[appsettings.albumNameCol] +
         '"class="album">';
       // ここまで 魔導書 画像
       tag += '        </div>'; //album-container
 
       tag += '        </div>'; //card-info-container
+
+      // ALBUM情報公式URL
+      if (album[appsettings.albumUrlCol] !== appsettings.noDataString) {
+        tag +=
+          '<div class="card-url"><a href="' +
+          appsettings.albumUrlBase +
+          album[appsettings.albumUrlCol] +
+          '" target="_blank" rel="noopener noreferrer">公式サイト <i class="fas fa-arrow-up-right-from-square"></i></a></div>';
+      }
 
       // MV公開年月日
       tag += '           <div class="card-date">' + releaseDateStr + '</div>';
@@ -345,8 +361,6 @@ function createDisplay(mode, page, sortMode) {
       tag += '        </div>'; //card-item
     });
     tag += '         </div>'; //card-list
-    // 収録曲に関する備考
-    tag += '<div class="right-text">※収録曲は正確ではない場合があります</div>';
   } else if (display.mode === DISPLAY.LIVE.mode) {
     //////////////////////////////////////////
     // ライブ情報
@@ -419,7 +433,7 @@ function createDisplay(mode, page, sortMode) {
       tag += '        </div>'; // album-container
       tag += '</div>'; //card-info-container
 
-      // LIVE情報URL
+      // LIVE情報公式URL
       if (live[appsettings.liveUrlCol] !== appsettings.noDataString) {
         tag +=
           '<div class="card-url"><a href="' +
