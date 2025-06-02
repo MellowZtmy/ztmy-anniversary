@@ -390,6 +390,11 @@ function createDisplay(mode, page, sortMode) {
         display.sortMode
       );
 
+      // // Live プレイリスト Youtube表示
+      // tag += '<div class="card-info">【プレイリスト】</div>';
+      // tag += createYoutubeListTag(live[appsettings.liveSetListCol], true);
+      // // ここまでLive プレイリスト Youtube表示
+
       // ライブ 情報
       tag += '<div class="card-info-container">';
       // セトリ

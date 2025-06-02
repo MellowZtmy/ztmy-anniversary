@@ -278,6 +278,23 @@ function createYoutubeTag(id, isPlayList) {
   return tag;
 }
 
+// Youtubeタグ作成
+function createYoutubeListTag(ids) {
+  // 変数初期化
+  var tag = '';
+
+  // タグ生成
+  tag += '<div class="card-iframe-container">';
+  tag +=
+    '        <iframe src="https://www.youtube.com/watch_videos?video_ids=' +
+    ids +
+    '" frameborder="0" allowfullscreen>';
+  tag += '   </iframe> ';
+  tag += '</div> ';
+
+  return tag;
+}
+
 // 画像クリックイベント追加
 function addEnlargeImageEvent() {
   // 拡大表示用の要素を取得
