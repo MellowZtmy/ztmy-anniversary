@@ -482,7 +482,12 @@ function createDisplay(mode, page, sortMode) {
   $('#display').append(tag);
 
   // 紙吹雪
-  if (leftDaysList.includes(0)) {
+  if (globalToday.getMonth() === 5 && globalToday.getDate() === 4) {
+    // 6月4日限定の紙吹雪
+    $('#confetti').prepend('<canvas id="canvas"></canvas>');
+    dispConfettifor0604();
+  } else if (leftDaysList.includes(0)) {
+    // 記念日のものがある場合
     $('#confetti').prepend('<canvas id="canvas"></canvas>');
     dispConfetti();
   }
