@@ -103,7 +103,7 @@ $(document).ready(async function () {
     //6/4の場合、タイトル変更
     if (isJuneFourth) {
       $('#header').html(
-        `ずとまよ <br />${globalToday.getFullYear() - 2018}th ANNIVERSARY🎉`
+        `ずとまよ <br />${globalToday.getFullYear() - 2018}th ANNIVERSARY!!`
       );
     }
   } catch (error) {
