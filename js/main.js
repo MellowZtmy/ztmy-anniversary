@@ -97,15 +97,18 @@ $(document).ready(async function () {
       appsettings.colorSkipRowCount
     );
 
-    // 開始画面を表示
-    createDisplay(DISPLAY.MV.mode, 1, SORTMODE.ANNIVERSARY.code);
-
-    //6/4の場合、タイトル変更
+    //6/4の場合
     if (isJuneFourth) {
+      // タイトル変更;
       $('#header').html(
         `ずとまよ <br />${globalToday.getFullYear() - 2018}th ANNIVERSARY!!`
       );
+      //カラーを花一匁に変更
+      setLocal('colorIndex', 16);
     }
+
+    // 開始画面を表示
+    createDisplay(DISPLAY.MV.mode, 1, SORTMODE.ANNIVERSARY.code);
   } catch (error) {
     // エラーハンドリング
     showError('Failed to load data:', error);
