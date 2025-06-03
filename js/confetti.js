@@ -30,118 +30,38 @@ function dispConfetti() {
 }
 // 6/4専用
 function dispConfettifor0604() {
-  (function () {
-    window.requestAnimationFrame =
-      window.requestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.webkitRequestAnimationFrame;
+  var duration = 5 * 1000;
+  var animationEnd = Date.now() + duration;
+  var defaults = {
+    startVelocity: 30,
+    spread: 360,
+    ticks: 60,
+    zIndex: 0,
+    colors: ['#f9e7c3', '#e3b458', '#9d7d1d'], // 金色っぽいカラー
+  };
 
-    var canvas = document.querySelector('canvas');
-    if (canvas) {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      var ctx = canvas.getContext('2d');
-      ctx.globalCompositeOperation = 'source-over';
-      var particles = [];
-      var pIndex = 0;
-      var frameId;
+  function randomInRange(min, max) {
+    return Math.random() * (max - min) + min;
+  }
 
-      function Dot(x, y, vx, vy, color) {
-        this.x = x;
-        this.y = y;
-        this.vx = vx;
-        this.vy = vy;
-        this.color = color;
-        particles[pIndex] = this;
-        this.id = pIndex;
-        pIndex++;
-        this.life = 0;
-        this.maxlife = 1000;
-        this.degree = getRandom(0, 360);
-        this.size = Math.floor(getRandom(5, 7));
-      }
+  var interval = setInterval(function () {
+    var timeLeft = animationEnd - Date.now();
 
-      Dot.prototype.draw = function () {
-        this.degree += 1;
-        this.vx *= 0.99;
-        this.vy *= 0.999;
-        this.x += this.vx + Math.cos((this.degree * Math.PI) / 400);
-        this.y += this.vy;
-        this.width = this.size;
-        this.height = Math.cos((this.degree * Math.PI) / 20) * this.size;
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.moveTo(this.x + this.width / 2, this.y + this.height / 2);
-        ctx.lineTo(
-          this.x + this.width / 2 + this.width / 2,
-          this.y + this.height
-        );
-        ctx.lineTo(this.x + this.width + this.width / 2, this.y + this.height);
-        ctx.lineTo(this.x + this.width, this.y);
-        ctx.closePath();
-        ctx.fill();
-        this.life++;
-        if (this.life >= this.maxlife) {
-          delete particles[this.id];
-        }
-      };
-
-      window.addEventListener('resize', function () {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      });
-
-      let animationActive = true;
-
-      function loop() {
-        if (!animationActive) return;
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        new Dot(
-          Math.random() * canvas.width,
-          -50,
-          getRandom(-3, 3),
-          getRandom(2, 4),
-          '#f9e7c3'
-        );
-        new Dot(
-          Math.random() * canvas.width,
-          -50,
-          getRandom(-3, 3),
-          getRandom(2, 4),
-          '#e3b458'
-        );
-        new Dot(
-          Math.random() * canvas.width,
-          -50,
-          getRandom(-3, 3),
-          getRandom(2, 4),
-          '#9d7d1d'
-        );
-
-        for (var i in particles) {
-          particles[i].draw();
-        }
-
-        frameId = requestAnimationFrame(loop);
-      }
-
-      // 開始
-      loop();
-
-      // 10秒後に停止 & canvas削除
-      setTimeout(() => {
-        animationActive = false;
-        if (canvas && canvas.parentNode) {
-          canvas.parentNode.removeChild(canvas);
-        }
-        cancelAnimationFrame(frameId);
-      }, 10000); // 10000ms = 10秒
-
-      function getRandom(min, max) {
-        return Math.random() * (max - min) + min;
-      }
+    if (timeLeft <= 0) {
+      return clearInterval(interval);
     }
-  })();
+
+    var particleCount = 50 * (timeLeft / duration);
+    // since particles fall down, start a bit higher than random
+    confetti({
+      ...defaults,
+      particleCount,
+      origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+    });
+    confetti({
+      ...defaults,
+      particleCount,
+      origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+    });
+  }, 250);
 }

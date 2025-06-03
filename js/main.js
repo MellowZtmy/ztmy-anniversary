@@ -30,6 +30,8 @@ var appsettings = [];
 var songsData = [];
 // カラーセット
 var colorSets = [];
+//6/4か
+var isJuneFourth = globalToday.getMonth() === 5 && globalToday.getDate() === 4;
 
 /**
  * 【イベント処理】
@@ -482,7 +484,7 @@ function createDisplay(mode, page, sortMode) {
   $('#display').append(tag);
 
   // 紙吹雪
-  if (globalToday.getMonth() === 5 && globalToday.getDate() === 4) {
+  if (isJuneFourth) {
     // 6月4日限定の紙吹雪
     $('#confetti').prepend('<canvas id="canvas"></canvas>');
     dispConfettifor0604();
