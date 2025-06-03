@@ -99,6 +99,13 @@ $(document).ready(async function () {
 
     // 開始画面を表示
     createDisplay(DISPLAY.MV.mode, 1, SORTMODE.ANNIVERSARY.code);
+
+    //6/4の場合、タイトル変更
+    if (isJuneFourth) {
+      $('#header').html(
+        `ずとまよ <br />${globalToday.getFullYear() - 2018}th ANNIVERSARY🎉`
+      );
+    }
   } catch (error) {
     // エラーハンドリング
     showError('Failed to load data:', error);
