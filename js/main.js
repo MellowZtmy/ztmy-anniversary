@@ -274,6 +274,13 @@ function createDisplay(mode, page, sortMode) {
       tag += '        </div>'; //album-container
       tag += '        </div>'; //card-info-container
 
+      tag +=
+        '<div class="card-url"><a href="' +
+        appsettings.mvUrlBaseYoutube +
+        song[appsettings.mvIdCol] +
+        '" target="_blank" rel="noopener noreferrer">' +
+        'Youtubeで見る<i class="fas fa-arrow-up-right-from-square"></i></a></div>';
+
       // MV公開年月日
       tag += '           <div class="card-date">' + MVReleaseDateStr + '</div>';
 
