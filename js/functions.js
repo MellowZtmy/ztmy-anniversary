@@ -337,14 +337,20 @@ function addCssRule(selector, cssRules, imagePath) {
 }
 
 //スクロールでぼかし解除
-$(window).scroll(function () {
+$(window).on('scroll', function () {
   $('.blur').each(function () {
-    var elemPos = $(this).offset().top,
-      scroll = $(window).scrollTop(),
-      windowHeight = $(window).height();
+    var $elem = $(this);
 
-    if (scroll > elemPos - windowHeight + 150) {
-      $(this).addClass('scrollin');
+    if ($elem.hasClass('scrollin')) return;
+
+    var elemTop = $elem.offset().top;
+    var scrollTop = $(window).scrollTop();
+    var windowHeight = $(window).height();
+
+    var centerOfWindow = scrollTop + windowHeight / 2;
+
+    if (elemTop < centerOfWindow) {
+      $elem.addClass('scrollin');
     }
   });
 });
