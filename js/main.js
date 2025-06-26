@@ -194,7 +194,7 @@ function createDisplay(mode, page, sortMode) {
   tag += createSortTag(display);
 
   // ページング作成
-  tag += createPagingTag(display);
+  tag += createPagingTag(display, sortedData);
 
   // タグ作成
   if (display.mode === DISPLAY.MV.mode) {
@@ -487,7 +487,7 @@ function createDisplay(mode, page, sortMode) {
   }
 
   // ページング作成
-  tag += createPagingTag(display);
+  tag += createPagingTag(display, sortedData);
 
   // カラーチェンジ
   tag +=
