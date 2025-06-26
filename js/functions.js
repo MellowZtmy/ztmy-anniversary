@@ -338,6 +338,11 @@ function addCssRule(selector, cssRules, imagePath) {
 
 //スクロールでぼかし解除
 $(window).on('scroll', function () {
+  removeBlur();
+});
+
+//ぼかし解除
+function removeBlur() {
   $('.blur').each(function () {
     var $elem = $(this);
 
@@ -352,4 +357,4 @@ $(window).on('scroll', function () {
       $elem.addClass('scrollin'); // 一度だけぼかし解除
     }
   });
-});
+}
