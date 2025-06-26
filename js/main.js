@@ -220,7 +220,7 @@ function createDisplay(mode, page, sortMode) {
       cssRules = addCssRule(imageName, cssRules, appsettings.albumImagePath);
 
       // カード生成
-      tag += '      <div class="card-item ' + imageName + '">';
+      tag += '      <div class="card-item ' + imageName + ' blur">';
 
       tag += createCardTitleTag(
         mvLeftDays,
@@ -309,7 +309,9 @@ function createDisplay(mode, page, sortMode) {
 
       // カード生成
       tag +=
-        '      <div class="card-item ' + album[appsettings.albumNameCol] + '">';
+        '      <div class="card-item ' +
+        album[appsettings.albumNameCol] +
+        ' blur">';
       tag += createCardTitleTag(
         leftDays,
         releaseDateStr,
@@ -401,7 +403,7 @@ function createDisplay(mode, page, sortMode) {
       cssRules = addCssRule(liveImage, cssRules, appsettings.liveImagePath);
 
       // 各カード生成
-      tag += '      <div class="card-item ' + liveImage + '">';
+      tag += '      <div class="card-item ' + liveImage + ' blur">';
       tag += createCardTitleTag(
         leftDays,
         releaseDateStr,
