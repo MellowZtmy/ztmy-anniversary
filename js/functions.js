@@ -344,13 +344,12 @@ $(window).on('scroll', function () {
     if ($elem.hasClass('scrollin')) return;
 
     var elemTop = $elem.offset().top;
+    var elemBottom = elemTop + $elem.outerHeight();
     var scrollTop = $(window).scrollTop();
-    var windowHeight = $(window).height();
+    var windowBottom = scrollTop + $(window).height();
 
-    var centerOfWindow = scrollTop + windowHeight / 2;
-
-    if (elemTop < centerOfWindow) {
-      $elem.addClass('scrollin');
+    if (elemBottom > scrollTop && elemTop < windowBottom) {
+      $elem.addClass('scrollin'); // 一度だけぼかし解除
     }
   });
 });
