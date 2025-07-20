@@ -339,7 +339,7 @@ function addCssRule(selector, cssRules, imagePath) {
   var rule =
     ' .card-item.' +
     selector +
-    '::before { background-image: url(../' +
+    '::before { background-image: url(' +
     imagePath +
     selector +
     '.jpg); } ';
