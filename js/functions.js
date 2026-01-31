@@ -56,7 +56,7 @@ function getLocalArray(key) {
 function setLocalArray(key, array) {
   localStorage.setItem(
     appsettings.appName + '.' + key,
-    JSON.stringify(array ?? [])
+    JSON.stringify(array ?? []),
   );
 }
 
@@ -88,7 +88,7 @@ function changeColor(plusCount) {
   setLocal('colorIndex', colorIndexNow);
   // 今のカラー表示
   $('#changeColor').html(
-    'Color ↺ <br>(' + (colorIndexNow + 1) + '/' + colorSets.length + ')'
+    'Color ↺ <br>(' + (colorIndexNow + 1) + '/' + colorSets.length + ')',
   );
 }
 
@@ -150,7 +150,7 @@ function sortByMonthDay(arr, sortColIndex, sortOrder) {
     (a, b) =>
       sortOrder
         ? daysToToday(a[sortColIndex]) - daysToToday(b[sortColIndex]) // 昇順
-        : daysToToday(b[sortColIndex]) - daysToToday(a[sortColIndex]) // 降順
+        : daysToToday(b[sortColIndex]) - daysToToday(a[sortColIndex]), // 降順
   );
 }
 
@@ -233,7 +233,7 @@ function createCardTitleTag(
   releaseDateStr,
   name,
   sortMode,
-  startPhrase = ''
+  startPhrase = '',
 ) {
   // 変数初期化
   var tag = '';
@@ -267,10 +267,13 @@ function createCardTitleTag(
       name +
       '』<br>' +
       startPhrase +
-      'から</div>';
+      (getDaysFromDate(releaseDateStr) > 0 ? 'から' : 'まであと') +
+      '</div>';
     tag +=
       '<div class="card-days"><span class="highlight">' +
-      getDaysFromDate(releaseDateStr) +
+      (getDaysFromDate(releaseDateStr) > 0
+        ? getDaysFromDate(releaseDateStr)
+        : -getDaysFromDate(releaseDateStr)) +
       '</span>日</div>';
   }
 
